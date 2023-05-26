@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 
 from sklearn import preprocessing, feature_selection
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
 
 
 class FeatureSelector:
@@ -93,10 +95,16 @@ class FeatureSelector:
             A list of all the deleted columns
         """
         df_clone: pd.DataFrame = self.df.loc[:, self.df.columns != y].copy()
+        
+        # Computes the mean of the variance of each column and deduces the 
+        # value to delete that will be below the percentage given by the user
+        computed_treshold: int = self.df.var(axis=1).mean() * variance_threshold
+        #computed_treshold = variance_threshold   
+
         if verbose:
             print("===== INITIAL SHAPE =====")
             print(df_clone.shape)
-        Vt: feature_selection.VarianceThreshold = feature_selection.VarianceThreshold(threshold=variance_threshold)
+        Vt: feature_selection.VarianceThreshold = feature_selection.VarianceThreshold(threshold=computed_treshold)
         high_variance = Vt.fit_transform(df_clone)
         if verbose:
             print("===== CLEANED SHAPE =====")
@@ -115,7 +123,7 @@ class FeatureSelector:
             print(cleaned_df.shape)
 
         if inplace:
-            self.df = cleaned_df
+            self.df = cleaned_df.copy()
 
         return cleaned_df, deleted_features
     
@@ -224,8 +232,6 @@ class FeatureSelector:
         """
         if df is None:
             df = self.df.copy()
-        print("vrai df: ", df.shape)
-        print("correlation df: ", df_correlation.shape)
 
         iters: range = range(len(df_correlation.columns) - 1)
         drop_cols: list = [] #cols to be dropped in the real dataframe
@@ -262,6 +268,25 @@ class FeatureSelector:
             self.df = dropped_df.copy()
 
         return dropped_df
+
+
+    # WARNING: This function only works if the number of observations is higher or close to the number of features
+    # https://stats.stackexchange.com/a/583502
+    def remove_multicollinearity(self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"):
+        if df is None:
+            df = self.df.copy()
+
+        df = df.loc[:, df.columns != y]
+        
+        # This is needed to do correctly the VIF
+        df = add_constant(df)
+
+        df_vif: pd.DataFrame = pd.DataFrame()
+        df_vif["VIF_factor"] = [variance_inflation_factor(df.values, i) for i in range(df.shape[1])]
+        df_vif["features"] = df.columns
+        
+        print(df_vif)
+
 
 
 def open_data(path: str, delimiter: str = ";") -> pd.DataFrame:
