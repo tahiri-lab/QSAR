@@ -1,5 +1,5 @@
 """
-TITLE
+Feature selector class
 """
 
 
@@ -362,43 +362,3 @@ class FeatureSelector:
         self.remove_low_variance(inplace=True)
         self.remove_highly_correlated(inplace=True)
         return self.df
-
-
-
-
-def open_data(path: str, delimiter: str = ";") -> pd.DataFrame:
-    df: pd.DataFrame = pd.read_csv(path, delimiter=delimiter)
-    return df
-
-
-
-
-
-
-
-
-
-
-def find_correlation(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Tries to find the correlation between all the features in the dataframe
-
-    Parameters
-    ----------
-    df: pd.DataFrame
-        A dataframe with only continuous data describing the observations and features
-
-    Returns
-    ----------
-    pd.DataFrame
-
-    """
-    return 
-    # TODO: Check this https://scikit-learn.org/stable/auto_examples/feature_selection/plot_f_test_vs_mi.html#sphx-glr-auto-examples-feature-selection-plot-f-test-vs-mi-py
-
-# df = open_data("../../Data/full_dataset_test_divprio.csv", ";")
-# df_normalized: pd.DataFrame = scale_data(df)
-# df_2, l = remove_low_variance(df)
-# print(df_2.head())
-# print(l)
-# mutual_info_reg(df_normalized)
