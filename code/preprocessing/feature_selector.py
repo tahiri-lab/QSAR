@@ -11,8 +11,13 @@ from scipy.spatial import distance
 from scipy.cluster import hierarchy
 
 from sklearn import preprocessing, feature_selection
+from sklearn.cluster import KMeans
+
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
+
+from matplotlib import patches
+import matplotlib.pyplot as plt
 
 
 class FeatureSelector:
@@ -221,6 +226,7 @@ class FeatureSelector:
         df_corr = df_corr.corr(method)
         return df_corr.dropna(how="all", axis=1).dropna(how="all")
 
+
     def remove_highly_correlated(self: "FeatureSelector", df_correlation: pd.DataFrame = None, 
                                  df_corr_y: pd.DataFrame = None, df: pd.DataFrame = None, 
                                  threshold: float = 0.9, verbose: bool = False, 
@@ -316,6 +322,7 @@ class FeatureSelector:
             removed_feat = df.columns.difference(dropped_df.columns)
             df_display = 1 - df_correlation.loc[removed_feat, removed_feat]
             linkage = hierarchy.linkage(distance.squareform(df_display), method="average")
+            print(linkage)
             g = sns.clustermap(df_display, row_linkage=linkage, col_linkage=linkage)
 
             mask = np.tril(np.ones_like(df_display))
@@ -362,3 +369,132 @@ class FeatureSelector:
         self.remove_low_variance(inplace=True)
         self.remove_highly_correlated(inplace=True)
         return self.df
+
+
+def display_data_cluster(df_corr: pd.DataFrame, n_clusters: int = 8, 
+                         n_init: str = 500, max_iter: int = 1000) -> None:
+    # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
+    """
+    Displays the correlated features in a clusterized graph
+
+    Parameters
+    ----------
+    df_corr: pd.Dataframe
+        A correlation dataframe
+    n_clusters (default = 8): int
+        The number of clusters kmean does
+    n_init (default = 500): int
+        number of time the KMeans algorithm is run with different centroid
+    max_iter (default = 1000): int
+        maximum number of iterations for a single run
+
+    Returns
+    ---------
+    None
+    """
+    feat_names = df_corr.columns
+    corr_feat_mtx: np.ndarray = df_corr.to_numpy()
+
+
+    kmeans = KMeans(n_clusters=n_clusters, init="k-means++", max_iter = 1000, n_init=500, random_state = 0)
+    corr_feat_labels = kmeans.fit_predict(corr_feat_mtx)
+
+    print(len(corr_feat_labels))
+
+    # Preparing a dataframe to collect some cluster stats
+    # Contains the clusters and what features they group together
+    corr_feat_clust_df = pd.DataFrame(np.c_[feat_names, corr_feat_labels])
+    corr_feat_clust_df.columns = ["feature", "cluster"]
+    corr_feat_clust_df["feat_list"] = corr_feat_clust_df.groupby(["cluster"]).transform(lambda x: ", ".join(x))
+    corr_feat_clust_df = corr_feat_clust_df.groupby(["cluster", "feat_list"]).size().reset_index(name="feat_count")
+
+
+    # Transforming our data with the KMean model
+    # Contains the feature their distance inside the cluster and their distance normalized
+    corr_node_dist = kmeans.transform(df_corr)
+    corr_clust_dist = np.c_[feat_names, np.round(corr_node_dist.min(axis=1), 3), 
+                            np.round(corr_node_dist.min(axis=1)/np.max(corr_node_dist.min(axis=1)), 3),
+                            corr_feat_labels]
+    corr_clust_dist_df = pd.DataFrame(corr_clust_dist)
+    corr_clust_dist_df.columns = ["feature", "dist_corr", "dist_corr_norm", "cluster_corr"]
+
+
+    # Method to group together in correlation matrix features with same labels
+    def clustering_corr_matrix(corr_matrix: pd.DataFrame, clustered_features: list):
+        npm: np.ndarray = corr_matrix.to_numpy()
+        # Creates an numpy array filled with zeros
+        npm_zero: np.ndarray = np.zeros(shape=(len(npm), len(npm)))
+        n: int = 0
+        for i in clustered_features:
+            m: int = 0
+            for j in clustered_features:
+                npm_zero[n, m] = npm[i-1, j-1]
+                m += 1
+            n += 1
+        return npm_zero
+
+    # Preprocessing the correlation matrix before starting the clustering based on labels
+    def processing_clustered_corr_matrix(feat_labels: np.ndarray, corr_matrix: pd.DataFrame):
+        lst_lab = list(feat_labels)
+        lst_feat = corr_matrix.columns
+
+        lab_feat_map = {i: lst_lab[i] for i in range(len(lst_lab))}
+        lab_feat_map_sorted = {k: v for k, v in sorted(lab_feat_map.items(), key=lambda item: item[1])}
+
+        clustered_features = list(map(int, lab_feat_map_sorted.keys()))
+        print(len(clustered_features))
+        return clustering_corr_matrix(corr_matrix, clustered_features)
+
+    def plot_clustered_matrix(clust_mtx: np.ndarray, feat_clust_list: np.ndarray) -> None:
+        plt.figure()
+
+        fig, ax = plt.subplots(1)
+        im = ax.imshow(clust_mtx, interpolation="nearest")
+
+        corner: int = 0
+        for s in feat_clust_list:
+            rect = patches.Rectangle((float(corner), float(corner)), float(s), float(s), angle=0.0, linewidth=2,
+                                     edgecolor='r', facecolor="none")
+            ax.add_patch(rect)
+            corner += s
+            ax.add_patch(rect)
+
+        fig.colorbar(im)
+        plt.title("Clustered feature by correlation")
+        plt.show()
+    
+    clust_mtx = processing_clustered_corr_matrix(corr_feat_labels, df_corr)
+    plot_clustered_matrix(clust_mtx, corr_feat_clust_df["feat_count"].to_numpy())
+
+
+def display_elbow(df: pd.DataFrame, max_num_clusters: int = 15) -> None:
+    """
+    Displays the elbow curve for the given dataframe and its associated Within-Cluster Sum of Square
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        A correlation dataframe
+    max_num_clusters (default = 15): int
+        The maximum number of clusters wanted
+
+    Returns
+    ---------
+    None
+    """
+    corr_feat_mtx: np.ndarray = df.to_numpy()
+
+    wcss: list = []
+    max_num_clusters = max_num_clusters
+
+    for i in range(1, max_num_clusters):
+        kmeans = KMeans(n_clusters=i, init="k-means++", max_iter=300, n_init=10, random_state=0)
+        kmeans.fit(corr_feat_mtx)
+        wcss.append(kmeans.inertia_)
+
+
+    plt.plot(range(1, max_num_clusters), wcss)
+    plt.title("Elbow method")
+    plt.xlabel("Number of clusters")
+    plt.ylabel("WCSS")
+    plt.show()
