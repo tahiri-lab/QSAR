@@ -47,7 +47,12 @@ class Utils:
             y_list.append(df.loc[df["Fold"] == i][y].copy())
         return X_list, y_list
 
-    def cv_score(self, Model, X_list, y_list) -> int:
+    def cross_value_score(self, Model, df:pd.DataFrame=None) -> int:
+        if df is None:
+            df = self.df.copy()
+
+        X_list, y_list = self.create_cv_folds(df)
+
         mean_cv_score: list = []
         for i in range(len(X_list)):
             Model_scorer = clone(Model)
@@ -81,8 +86,7 @@ class Utils:
         # Creating a train dataframe for the fold creator
         df_train = pd.concat([X_train.copy(), y_train.copy()], axis=1)
         # TODO: adapt this to get custom values for the rest
-        cv_x_train, cv_y_train = self.create_cv_folds(df_train)
-        Custom_CV = self.cv_score(clone(Model), cv_x_train, cv_y_train)
+        Custom_CV = self.cross_value_score(clone(Model), df_train)
 
         Model_scorer.fit(X_train, y_train)
         R2 = Model_scorer.score(X_train, y_train)
