@@ -97,7 +97,7 @@ class Utils:
               "\n\tR2\t\t\t:\t", R2,
               "\n\tCV\t\t\t:\t", CV,
               "\n\tCustom CV\t:\t", Custom_CV,
-              "\n\tR2\t\t\t:\t", Q2,
+              "\n\tQ2\t\t\t:\t", Q2,
               )
 
 
