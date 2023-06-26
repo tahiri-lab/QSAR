@@ -99,3 +99,23 @@ class Utils:
               "\n\tCustom CV\t:\t", Custom_CV,
               "\n\tR2\t\t\t:\t", Q2,
               )
+
+
+    def display_graph(self, Model, X_train: pd.DataFrame, X_test: pd.DataFrame,
+                      y_train: pd.DataFrame, y_test: pd.DataFrame) -> None:
+        Model_scorer = clone(Model)
+        Model_scorer.fit(X_train, y_train)
+        y_pred_train = Model_scorer.predict(X_train)
+        y_pred_test = Model_scorer.predict(X_test)
+
+        fig, ax = plt.subplots(figsize=(10,6))
+        ax.scatter(y_train, y_pred_train, c="blue", label="Train", alpha=0.7)
+        ax.scatter(y_test, y_pred_test, c="orange", label="Test", alpha=0.7)
+        ax.plot([min(y_train)-1, max(y_train)+1], [min(y_train)-1, max(y_train)+1], c="black")
+        plt.xlim((min(y_train)-2, max(y_train)+2))
+        plt.ylim((min(y_train)-2, max(y_train)+2))
+        plt.title(type(Model).__name__)
+        plt.legend(loc="upper right")
+        ax.set_ylabel("True target", fontsize=14)
+        ax.set_xlabel("Predicted target", fontsize=14)
+        plt.show()
