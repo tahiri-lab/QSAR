@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-07T16:33:17.642Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="mEpi2lOfn40t3EQuZ4dq" version="21.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-08T00:26:48.293Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="t0Z4E_xqdD0SCqLdUjR0" version="21.6.5" type="github">
   <diagram name="Page-1" id="28wtkJO0IDi1d5jMJ_gI">
-    <mxGraphModel dx="1707" dy="452" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1701" dy="452" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -10,7 +10,7 @@
         <mxCell id="GxjlaXTzECWkgNyi5c2n-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="FerazFxV_2p1zoZr2qBC-1" target="GxjlaXTzECWkgNyi5c2n-3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="FerazFxV_2p1zoZr2qBC-1" value="FILTER&lt;br&gt;(SMILES checking format)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="FerazFxV_2p1zoZr2qBC-1" value="INPUT FILTER&lt;br&gt;(SMILES checking format)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="140" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="GxjlaXTzECWkgNyi5c2n-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GxjlaXTzECWkgNyi5c2n-1" target="FerazFxV_2p1zoZr2qBC-1">
@@ -111,7 +111,7 @@
         <mxCell id="GxjlaXTzECWkgNyi5c2n-9" value="DECODE (map a given number to a character)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="1130" width="760" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GxjlaXTzECWkgNyi5c2n-12" value="New Molecular SMILES (.smi)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="GxjlaXTzECWkgNyi5c2n-12" value="New Molecules SMILES (.smi)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="360" y="1360" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GxjlaXTzECWkgNyi5c2n-33" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#d5e8d4;strokeColor=#82b366;exitX=0.933;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="GxjlaXTzECWkgNyi5c2n-45" target="GxjlaXTzECWkgNyi5c2n-7">
@@ -227,7 +227,7 @@
         <mxCell id="GxjlaXTzECWkgNyi5c2n-69" value="Récompenses des Générées" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="420" y="779" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GxjlaXTzECWkgNyi5c2n-71" value="FILTER (SMILES checking format)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="GxjlaXTzECWkgNyi5c2n-71" value="OUTPUT FILTER (SMILES checking format)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="360" y="1240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GxjlaXTzECWkgNyi5c2n-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GxjlaXTzECWkgNyi5c2n-71" target="GxjlaXTzECWkgNyi5c2n-12">
