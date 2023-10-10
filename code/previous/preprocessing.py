@@ -1,6 +1,13 @@
 # 1. Variance Threshold : Pour enlever les colonnes ayant des variances trop faibles.
 # Variance Threshold
- 
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import VarianceThreshold, SelectKBest, f_regression, RFE
+from sklearn.tree import DecisionTreeRegressor
+
+# TODO: What's the X here?
 thresholder = VarianceThreshold()
 X_high_variance = thresholder.fit_transform(X)
 X_high_variance = pd.DataFrame(X_high_variance)
@@ -90,7 +97,7 @@ featureScores = pd.concat([dfcolumns,dfscores], axis=1)
 featureScores.columns = ['Specs','Score']
 plt.figure(figsize=(12, 12))
 plt.bar(featureScores.nlargest(11, 'Score')["Specs"], featureScores.nlargest(11, 'Score')["Score"])
-plt.xticks(rotation=45);
+plt.xticks(rotation=45)
 
 #  C. RFE :
 rfe = RFE(estimator=DecisionTreeRegressor(), n_features_to_select=10)
