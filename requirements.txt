@@ -11,5 +11,6 @@ networkx~=3.1
 pydot~=1.4.2
 black~=23.9.1
 openpyxl~=3.1.2
-
-
+tenserflow~=2.14.0
+rdkit-pypi~=2022.9.5
+torch~=2.1.0
