@@ -11,12 +11,12 @@ class Utils:
         self.df = df
 
     def create_cv_folds(
-        self,
-        df: pd.DataFrame = None,
-        y: str = "Log_MP_RATIO",
-        n_folds: int = 3,
-        n_groups: int = 5,
-        display: bool = False,
+            self,
+            df: pd.DataFrame = None,
+            y: str = "Log_MP_RATIO",
+            n_folds: int = 3,
+            n_groups: int = 5,
+            display: bool = False,
     ) -> tuple:
         if df is None:
             df = self.df.copy()
@@ -56,7 +56,7 @@ class Utils:
             y_list.append(df.loc[df["Fold"] == i][y].copy())
         return X_list, y_list
 
-    def cross_value_score(self, Model, df: pd.DataFrame = None) -> int:
+    def cross_value_score(self, Model, df: pd.DataFrame = None) -> float:
         if df is None:
             df = self.df.copy()
 
@@ -117,12 +117,12 @@ class Utils:
         )
 
     def display_graph(
-        self,
-        Model,
-        X_train: pd.DataFrame,
-        X_test: pd.DataFrame,
-        y_train: pd.DataFrame,
-        y_test: pd.DataFrame,
+            self,
+            Model,
+            X_train: pd.DataFrame,
+            X_test: pd.DataFrame,
+            y_train: pd.DataFrame,
+            y_test: pd.DataFrame,
     ) -> None:
         Model_scorer = clone(Model)
         Model_scorer.fit(X_train, y_train)
