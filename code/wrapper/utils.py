@@ -10,9 +10,14 @@ class Utils:
     def __init__(self, df: pd.DataFrame):
         self.df = df
 
-    def create_cv_folds(self, df: pd.DataFrame = None, y: str = "Log_MP_RATIO",
-                        n_folds: int = 3, n_groups: int = 5,
-                        display: bool = False) -> tuple:
+    def create_cv_folds(
+        self,
+        df: pd.DataFrame = None,
+        y: str = "Log_MP_RATIO",
+        n_folds: int = 3,
+        n_groups: int = 5,
+        display: bool = False,
+    ) -> tuple:
         if df is None:
             df = self.df.copy()
 
@@ -28,7 +33,9 @@ class Utils:
             df.loc[v, "Fold"] = fold_no
 
         if display is True:
-            fig, axs = plt.subplots(1, n_folds, sharex=True, sharey=True, figsize=(10, 4))
+            fig, axs = plt.subplots(
+                1, n_folds, sharex=True, sharey=True, figsize=(10, 4)
+            )
             for i, ax in enumerate(axs):
                 ax.hist(df[df.Fold == i][y], bins=10, density=True, label=f"Fold-{i}")
                 if i == 0:
@@ -43,11 +50,13 @@ class Utils:
         y_list = []
 
         for i in range(n_folds):
-            X_list.append(df.loc[df["Fold"] == i].copy().drop(columns=["grp", "Fold", y]))
+            X_list.append(
+                df.loc[df["Fold"] == i].copy().drop(columns=["grp", "Fold", y])
+            )
             y_list.append(df.loc[df["Fold"] == i][y].copy())
         return X_list, y_list
 
-    def cross_value_score(self, Model, df:pd.DataFrame=None) -> int:
+    def cross_value_score(self, Model, df: pd.DataFrame = None) -> int:
         if df is None:
             df = self.df.copy()
 
@@ -93,27 +102,43 @@ class Utils:
         CV = cross_val_score(Model_scorer, X_train, y_train, cv=3, scoring="r2").mean()
         Q2 = Model_scorer.score(X_test, y_test)
 
-        print("===== ", type(Model).__name__, " =====",
-              "\n\tR2\t\t\t:\t", R2,
-              "\n\tCV\t\t\t:\t", CV,
-              "\n\tCustom CV\t:\t", Custom_CV,
-              "\n\tQ2\t\t\t:\t", Q2,
-              )
+        print(
+            "===== ",
+            type(Model).__name__,
+            " =====",
+            "\n\tR2\t\t\t:\t",
+            R2,
+            "\n\tCV\t\t\t:\t",
+            CV,
+            "\n\tCustom CV\t:\t",
+            Custom_CV,
+            "\n\tQ2\t\t\t:\t",
+            Q2,
+        )
 
-
-    def display_graph(self, Model, X_train: pd.DataFrame, X_test: pd.DataFrame,
-                      y_train: pd.DataFrame, y_test: pd.DataFrame) -> None:
+    def display_graph(
+        self,
+        Model,
+        X_train: pd.DataFrame,
+        X_test: pd.DataFrame,
+        y_train: pd.DataFrame,
+        y_test: pd.DataFrame,
+    ) -> None:
         Model_scorer = clone(Model)
         Model_scorer.fit(X_train, y_train)
         y_pred_train = Model_scorer.predict(X_train)
         y_pred_test = Model_scorer.predict(X_test)
 
-        fig, ax = plt.subplots(figsize=(10,6))
+        fig, ax = plt.subplots(figsize=(10, 6))
         ax.scatter(y_train, y_pred_train, c="blue", label="Train", alpha=0.7)
         ax.scatter(y_test, y_pred_test, c="orange", label="Test", alpha=0.7)
-        ax.plot([min(y_train)-1, max(y_train)+1], [min(y_train)-1, max(y_train)+1], c="black")
-        plt.xlim((min(y_train)-2, max(y_train)+2))
-        plt.ylim((min(y_train)-2, max(y_train)+2))
+        ax.plot(
+            [min(y_train) - 1, max(y_train) + 1],
+            [min(y_train) - 1, max(y_train) + 1],
+            c="black",
+        )
+        plt.xlim((min(y_train) - 2, max(y_train) + 2))
+        plt.ylim((min(y_train) - 2, max(y_train) + 2))
         plt.title(type(Model).__name__)
         plt.legend(loc="upper right")
         ax.set_ylabel("True target", fontsize=14)
