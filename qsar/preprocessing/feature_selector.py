@@ -30,7 +30,7 @@ class FeatureSelector:
     """
 
     def __init__(
-            self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore: list = []
+        self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore: list = []
     ):
         """
         Init function of the FeatureSelector class
@@ -47,10 +47,10 @@ class FeatureSelector:
         self.cols_to_ignore: list = cols_to_ignore
 
     def scale_data(
-            self: "FeatureSelector",
-            y: str = "Log_MP_RATIO",
-            verbose: bool = False,
-            inplace=False,
+        self: "FeatureSelector",
+        y: str = "Log_MP_RATIO",
+        verbose: bool = False,
+        inplace=False,
     ) -> pd.DataFrame:
         # It seems data should be normalized since not every data has a gaussian distribution
         """
@@ -95,12 +95,12 @@ class FeatureSelector:
 
     # TODO: check avec Nadia "0.01 would mean dropping the column where 99% of the values are similar."
     def remove_low_variance(
-            self: "FeatureSelector",
-            y: str = "",
-            variance_threshold: float = 0,
-            cols_to_ignore: list = [],
-            verbose: bool = False,
-            inplace: bool = False,
+        self: "FeatureSelector",
+        y: str = "",
+        variance_threshold: float = 0,
+        cols_to_ignore: list = [],
+        verbose: bool = False,
+        inplace: bool = False,
     ) -> tuple[pd.DataFrame, list]:
         """
         Remove features with a variance level below the threshold
@@ -179,11 +179,11 @@ class FeatureSelector:
         return cleaned_df, deleted_features
 
     def get_correlation_to_y(
-            self: "FeatureSelector",
-            df: pd.DataFrame = None,
-            y: str = "",
-            cols_to_ignore: list = [],
-            method: str = "kendall",
+        self: "FeatureSelector",
+        df: pd.DataFrame = None,
+        y: str = "",
+        cols_to_ignore: list = [],
+        method: str = "kendall",
     ) -> pd.DataFrame:
         """
         Calculates a correlation score of all the features depending on the y variable
@@ -219,11 +219,11 @@ class FeatureSelector:
         return df_corr_y
 
     def get_correlation(
-            self,
-            df: pd.DataFrame = None,
-            y: str = "",
-            cols_to_ignore: list = [],
-            method: str = "kendall",
+        self,
+        df: pd.DataFrame = None,
+        y: str = "",
+        cols_to_ignore: list = [],
+        method: str = "kendall",
     ) -> pd.DataFrame:
         # https://datascience.stackexchange.com/a/64261
         """
@@ -261,14 +261,14 @@ class FeatureSelector:
         return df_corr.dropna(how="all", axis=1).dropna(how="all")
 
     def remove_highly_correlated(
-            self: "FeatureSelector",
-            df_correlation: pd.DataFrame = None,
-            df_corr_y: pd.DataFrame = None,
-            df: pd.DataFrame = None,
-            threshold: float = 0.9,
-            verbose: bool = False,
-            inplace=False,
-            graph: bool = False,
+        self: "FeatureSelector",
+        df_correlation: pd.DataFrame = None,
+        df_corr_y: pd.DataFrame = None,
+        df: pd.DataFrame = None,
+        threshold: float = 0.9,
+        verbose: bool = False,
+        inplace=False,
+        graph: bool = False,
     ) -> pd.DataFrame:
         # used: https://stackoverflow.com/a/61938339
         """
@@ -277,7 +277,7 @@ class FeatureSelector:
         Parameters
         ----------
         df_correlation (default = None): pd.DataFrame
-            A dataframe representing the correlation matrix 
+            A dataframe representing the correlation matrix
         df_corr_y (default = None): pd.Dataframe
             A dataframe of correlation correlating all the features to the dependant variable
         df (default = None): pd.DataFrame
@@ -323,7 +323,7 @@ class FeatureSelector:
                 # B         ✓   ✓
                 # C             ✓
                 # D
-                item = df_correlation.iloc[j: (j + 1), (i + 1): (i + 2)]
+                item = df_correlation.iloc[j : (j + 1), (i + 1) : (i + 2)]
                 col: str = item.columns
                 row: int = item.index
                 value: int = abs(item.values)
@@ -387,7 +387,7 @@ class FeatureSelector:
     # WARNING: This function only works if the number of observations is higher or close to the number of features
     # https://stats.stackexchange.com/a/583502
     def remove_multicollinearity(
-            self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"
+        self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"
     ):
         if df is None:
             df = self.df.copy()
@@ -420,7 +420,7 @@ class FeatureSelector:
 
 
 def display_data_cluster(
-        df_corr: pd.DataFrame, n_clusters: int = 8, n_init: str = 500, max_iter: int = 1000
+    df_corr: pd.DataFrame, n_clusters: int = 8, n_init: str = 500, max_iter: int = 1000
 ) -> None:
     # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
     """
@@ -501,7 +501,7 @@ def display_data_cluster(
 
     # Preprocessing the correlation matrix before starting the clustering based on labels
     def processing_clustered_corr_matrix(
-            feat_labels: np.ndarray, corr_matrix: pd.DataFrame
+        feat_labels: np.ndarray, corr_matrix: pd.DataFrame
     ):
         lst_lab = list(feat_labels)
         lst_feat = corr_matrix.columns
@@ -516,7 +516,7 @@ def display_data_cluster(
         return clustering_corr_matrix(corr_matrix, clustered_features)
 
     def plot_clustered_matrix(
-            clust_mtx: np.ndarray, feat_clust_list: np.ndarray
+        clust_mtx: np.ndarray, feat_clust_list: np.ndarray
     ) -> None:
         plt.figure()
 

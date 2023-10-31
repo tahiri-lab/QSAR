@@ -50,7 +50,9 @@ class Extractor:
             self.dfs[name] = pd.read_csv(path)
         return self.dfs
 
-    def split_x_y(self, y_col: str) -> Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]:
+    def split_x_y(
+        self, y_col: str
+    ) -> Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]:
         """
         Splits the dataframes into X and y dataframes.
         Parameters

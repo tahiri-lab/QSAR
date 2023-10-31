@@ -26,11 +26,11 @@ class CrossValidator:
         self.df = df
 
     def create_cv_folds(
-            self,
-            df: pd.DataFrame = None,
-            y: str = "Log_MP_RATIO",
-            n_folds: int = 3,
-            n_groups: int = 5,
+        self,
+        df: pd.DataFrame = None,
+        y: str = "Log_MP_RATIO",
+        n_folds: int = 3,
+        n_groups: int = 5,
     ) -> tuple:
         """
         Create cross-validation folds.
@@ -68,7 +68,7 @@ class CrossValidator:
             y_list.append(df.loc[df["Fold"] == i][y].copy())
         return X_list, y_list, df, y, n_folds
 
-    def cross_value_score(self, model: Model, df: pd.DataFrame = None) -> float:
+    def cross_value_score(self, model, df: pd.DataFrame = None) -> float:
         """
         Compute cross-validation score for the given model.
 
@@ -86,7 +86,7 @@ class CrossValidator:
 
         mean_cv_score: list = []
         for i in range(len(X_list)):
-            Model_scorer = clone(model)
+            model_scorer = clone(model)
 
             X_train = X_list[:-1]
             X_test = X_list[-1]
@@ -97,8 +97,8 @@ class CrossValidator:
             X_train = pd.concat(X_train)
             y_train = pd.concat(y_train)
 
-            Model_scorer.fit(X_train, y_train)
-            mean_cv_score.append(Model_scorer.score(X_test, y_test))
+            model_scorer.fit(X_train, y_train)
+            mean_cv_score.append(model_scorer.score(X_test, y_test))
 
             X_list.insert(0, X_list.pop())
             y_list.insert(0, y_list.pop())
@@ -139,8 +139,13 @@ class CrossValidator:
 
         return R2, CV, custom_cv, Q2
 
-    def get_predictions(self, model: Model, x_train: pd.DataFrame, y_train: pd.DataFrame, x_test: pd.DataFrame,
-                        ) -> tuple:
+    def get_predictions(
+        self,
+        model,
+        x_train: pd.DataFrame,
+        y_train: pd.DataFrame,
+        x_test: pd.DataFrame,
+    ) -> tuple:
         """
         Get predictions using the provided model.
 

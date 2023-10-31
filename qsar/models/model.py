@@ -26,6 +26,19 @@ class Model(ABC):
         """
         pass
 
+    def set_hyperparameters(self, **kwargs):
+        """
+        Set the hyperparameters of the model.
+        Parameters
+        ----------
+        **kwargs : hyperparameters to be set.
+
+        Returns
+        -------
+        None
+        """
+        self.model.set_params(**kwargs)
+
     def fit(self, X_train, y_train):
         """
         Fit the model with the given data.
