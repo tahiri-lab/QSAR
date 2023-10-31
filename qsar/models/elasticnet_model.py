@@ -7,9 +7,9 @@ from qsar.utils import cross_validator, extractor
 
 
 class ElasticnetModel(Model):
-    def __init__(self):
+    def __init__(self, max_iter: int = 100000, random_state: int = 0):
         super().__init__()
-        self.model = ElasticNet()
+        self.model = ElasticNet(max_iter=max_iter, random_state=random_state)
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         alpha = trial.suggest_float('alpha', 1e-10, 1e10, log=True)

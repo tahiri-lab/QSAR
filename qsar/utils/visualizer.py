@@ -21,7 +21,7 @@ class Visualizer:
         """
         self.figsize = figsize
 
-    def plot_folds(self, df: pd.DataFrame, y: str, n_folds: int):
+    def display_cv_folds(self, df: pd.DataFrame, y: str, n_folds: int):
         """
         Plot the distribution of data across different folds.
 
@@ -41,12 +41,12 @@ class Visualizer:
         plt.tight_layout()
         plt.show()
 
-    def display_score(self, model: Model, R2: float, CV: float, custom_cv: float, Q2: float):
+    def display_model_performance(self, model_name: str, R2: float, CV: float, custom_cv: float, Q2: float):
         """
         Display the score of the model in a table format.
 
         Parameters:
-        - model (Model): The model to be evaluated.
+        - model_name (str): The model to be evaluated.
         - R2 (float): R squared score.
         - CV (float): Cross-validation score.
         - custom_cv (float): Custom cross-validation score.
@@ -70,7 +70,7 @@ class Visualizer:
         table.set_fontsize(10)
         table.auto_set_column_width(col=list(range(len(columns))))
         table.scale(1, 1.5)
-        ax.set_title(f"Scores for {type(model).__name__}", fontsize=16)
+        ax.set_title(f"Scores for {model_name}", fontsize=16)
 
         plt.show()
 

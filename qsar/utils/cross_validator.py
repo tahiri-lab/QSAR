@@ -105,7 +105,7 @@ class CrossValidator:
 
         return sum(mean_cv_score) / len(mean_cv_score)
 
-    def get_score_data(self, model, X_train, y_train, X_test, y_test):
+    def evaluate_model_performance(self, model, X_train, y_train, X_test, y_test):
         """
         Compute various scores for model evaluation.
 
@@ -139,17 +139,16 @@ class CrossValidator:
 
         return R2, CV, custom_cv, Q2
 
-    def get_predictions(self, model: Model, x_train: pd.DataFrame, x_test: pd.DataFrame,
-                        y_train: pd.DataFrame) -> tuple:
+    def get_predictions(self, model: Model, x_train: pd.DataFrame, y_train: pd.DataFrame, x_test: pd.DataFrame,
+                        ) -> tuple:
         """
         Get predictions using the provided model.
 
         Parameters:
         - model (Model): The model to be used for prediction.
         - x_train (pd.DataFrame): Training feature set.
-        - x_test (pd.DataFrame): Testing feature set.
         - y_train (pd.DataFrame): Training target set.
-
+        - x_test (pd.DataFrame): Testing feature set.
         Returns:
         - tuple: Predictions on the training set, Predictions on the testing set.
         """
