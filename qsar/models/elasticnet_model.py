@@ -3,7 +3,7 @@ from optuna import Trial
 from sklearn.linear_model import ElasticNet
 
 from qsar.models.model import Model
-from qsar.utils import utils, extractor
+from qsar.utils import cross_validator, extractor
 
 
 class ElasticnetModel(Model):
@@ -18,5 +18,5 @@ class ElasticnetModel(Model):
 
         self.model = ElasticNet(max_iter=100000, alpha=alpha, l1_ratio=l1_ratio, random_state=0)
 
-        estimator = utils.Utils(df)
+        estimator = utils.CrossValidator(df)
         return estimator.cross_value_score(self.model)

@@ -25,3 +25,30 @@ class Model(ABC):
         float cross value score of the model.
         """
         pass
+
+    def fit(self, X_train, y_train):
+        """
+        Fit the model with the given data.
+        Parameters
+        ----------
+        X_train : pd.DataFrame of the train data.
+        y_train : pd.DataFrame of the train data.
+
+        Returns
+        -------
+        None
+        """
+        self.model.fit(X_train, y_train)
+
+    def predict(self, X):
+        """
+        Predict the given data.
+        Parameters
+        ----------
+        X : pd.DataFrame of the data to be predicted.
+
+        Returns
+        -------
+        pd.DataFrame of the predicted data.
+        """
+        return self.model.predict(X)
