@@ -82,7 +82,7 @@ class CrossValidator:
         if df is None:
             df = self.df.copy()
 
-        X_list, y_list = self.create_cv_folds(df)
+        X_list, y_list, *_ = self.create_cv_folds(df)
 
         mean_cv_score: list = []
         for i in range(len(X_list)):
