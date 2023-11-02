@@ -13,19 +13,19 @@ class Model(ABC):
         Abstract class for all models.
         """
         self.model = None
+        self.params = None
 
     @abstractmethod
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimize the hyperparameters of the model.
-        Parameters
-        ----------
-        trial : optuna.Trial object to be used for the optimization.
-        df : pd.DataFrame to be used for the optimization.
+        Optimize the hyperparameters of the model using the given trial and data.
 
-        Returns
-        -------
-        float cross value score of the model.
+        Parameters:
+        - trial: Optuna trial for hyperparameter optimization.
+        - df: Data for cross-validation.
+
+        Returns:
+        - Cross-validation score.
         """
         pass
 
