@@ -7,10 +7,8 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class ElasticnetModel(Model):
-    DEFAULT_MAX_ITER = 100000
-    DEFAULT_RANDOM_STATE = 0
-
-    def __init__(self, max_iter: int = DEFAULT_MAX_ITER, random_state: int = DEFAULT_RANDOM_STATE):
+    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+                 params=None):
         """
            Initialize the ElasticNet model.
 
@@ -20,7 +18,7 @@ class ElasticnetModel(Model):
         """
         super().__init__()
         self.model = ElasticNet(max_iter=max_iter, random_state=random_state)
-        self.params = dict()
+        self.params = params
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
@@ -34,7 +32,7 @@ class ElasticnetModel(Model):
         - Cross-validation score.
         """
         self.params = {
-            "alpha": trial.suggest_float("alpha", 1e-5, 1e5, log=True),
+            "alpha": trial.suggest_float("alpha", 1e-10, 1e10, log=True),
             "l1_ratio": trial.suggest_float("l1_ratio", 1e-10, 1, log=True),
         }
 

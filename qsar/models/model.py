@@ -5,6 +5,9 @@ from optuna import Trial
 
 
 class Model(ABC):
+    DEFAULT_MAX_ITER = 100000
+    DEFAULT_RANDOM_STATE = 0
+
     def __init__(self):
         """
         Abstract class for all models.
