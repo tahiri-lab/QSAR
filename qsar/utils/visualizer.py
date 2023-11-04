@@ -4,8 +4,6 @@ from typing import Tuple
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from qsar.models.model import Model
-
 
 class Visualizer:
     """
@@ -44,7 +42,7 @@ class Visualizer:
         plt.show()
 
     def display_model_performance(
-        self, model_name: str, R2: float, CV: float, custom_cv: float, Q2: float
+            self, model_name: str, R2: float, CV: float, custom_cv: float, Q2: float
     ):
         """
         Display the score of the model in a table format.
@@ -81,12 +79,12 @@ class Visualizer:
         plt.show()
 
     def display_graph(
-        self,
-        model_name: str,
-        y_train: pd.DataFrame,
-        y_test: pd.DataFrame,
-        y_pred_train: pd.DataFrame,
-        y_pred_test: pd.DataFrame,
+            self,
+            model_name: str,
+            y_train: pd.DataFrame,
+            y_test: pd.DataFrame,
+            y_pred_train: pd.DataFrame,
+            y_pred_test: pd.DataFrame,
     ):
         """
         Display a scatter plot of true vs. predicted values for training and test sets.
@@ -101,14 +99,16 @@ class Visualizer:
         fig, ax = plt.subplots(figsize=self.figsize)
         ax.scatter(y_train, y_pred_train, c="blue", label="Train", alpha=0.7)
         ax.scatter(y_test, y_pred_test, c="orange", label="Test", alpha=0.7)
+        y_train_min = float(y_train.min().iloc[0])
+        y_train_max = float(y_train.max().iloc[0])
 
         ax.plot(
-            [min(y_train) - 1, max(y_train) + 1],
-            [min(y_train) - 1, max(y_train) + 1],
+            [y_train_min - 1, y_train_max + 1],
+            [y_train_min - 1, y_train_max + 1],
             c="black",
         )
-        ax.set_xlim((min(y_train) - 2, max(y_train) + 2))
-        ax.set_ylim((min(y_train) - 2, max(y_train) + 2))
+        ax.set_xlim(y_train_min - 2, y_train_max + 2)
+        ax.set_ylim(y_train_min - 2, y_train_max + 2)
         ax.set_title(model_name)
         ax.set_ylabel("True target", fontsize=14)
         ax.set_xlabel("Predicted target", fontsize=14)
