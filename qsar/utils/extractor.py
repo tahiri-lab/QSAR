@@ -69,6 +69,6 @@ class Extractor:
         x_dfs = dict()
         y_dfs = dict()
         for name, df in self.dfs.items():
-            y_dfs[name] = df[y_col]
-            x_dfs[name] = df.drop(columns=y_col)
+            y_dfs[name] = df[[y_col]]
+            x_dfs[name] = df.drop(columns=[y_col])
         return x_dfs, y_dfs
