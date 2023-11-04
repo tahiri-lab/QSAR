@@ -26,11 +26,11 @@ class CrossValidator:
         self.df = df
 
     def create_cv_folds(
-        self,
-        df: pd.DataFrame = None,
-        y: str = "Log_MP_RATIO",
-        n_folds: int = 3,
-        n_groups: int = 5,
+            self,
+            df: pd.DataFrame = None,
+            y: str = "Log_MP_RATIO",
+            n_folds: int = 3,
+            n_groups: int = 5,
     ) -> tuple:
         """
         Create cross-validation folds.
@@ -139,18 +139,18 @@ class CrossValidator:
 
         return R2, CV, custom_cv, Q2
 
+    @staticmethod
     def get_predictions(
-        self,
-        model,
-        x_train: pd.DataFrame,
-        y_train: pd.DataFrame,
-        x_test: pd.DataFrame,
+            model,
+            x_train: pd.DataFrame,
+            y_train: pd.DataFrame,
+            x_test: pd.DataFrame,
     ) -> tuple:
         """
         Get predictions using the provided model.
 
         Parameters:
-        - model (Model): The model to be used for prediction.
+        - model: The model to be used for prediction.
         - x_train (pd.DataFrame): Training feature set.
         - y_train (pd.DataFrame): Training target set.
         - x_test (pd.DataFrame): Testing feature set.

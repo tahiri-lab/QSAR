@@ -17,7 +17,7 @@ class XGBoostModel(Model):
            - random_state: Seed for reproducibility.
         """
         super().__init__()
-        self.model = XGBRegressor(max_iter=max_iter, random_state=random_state)
+        self.model = XGBRegressor(random_state=random_state)
         self.params = params
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
