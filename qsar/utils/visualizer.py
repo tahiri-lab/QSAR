@@ -114,3 +114,11 @@ class Visualizer:
         ax.set_xlabel("Predicted target", fontsize=14)
         plt.legend(loc="upper right")
         plt.show()
+
+    @staticmethod
+    def display_atom_count_distribution(atom_counts):
+        plt.hist(atom_counts, bins=30)
+        plt.xlabel('Number of Atoms')
+        plt.ylabel('Frequency')
+        plt.title('Distribution of Atom Counts in Dataset')
+        plt.show()
