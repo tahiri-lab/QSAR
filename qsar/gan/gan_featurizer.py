@@ -70,7 +70,7 @@ class QsarGanFeaturizer(MolGanFeaturizer):
             log_every_n: Logging messages reported every `log_every_n` samples.
             **kwargs: Additional keyword arguments.
         Returns:
-
+            Numpy array containing features.
         """
         filtered_smiles = self._filter_smiles(smiles)
         features = self.featurize(filtered_smiles, log_every_n=log_every_n, **kwargs)
