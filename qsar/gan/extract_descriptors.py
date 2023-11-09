@@ -3,7 +3,7 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors
 
 
-class ExtractDescriptors:
+class DescriptorsExtractor:
     @staticmethod
     def extract_descriptors(generated_smiles: list) -> pd.DataFrame:
         mols = [Chem.MolFromSmiles(smi) for smi in generated_smiles]
