@@ -1,6 +1,9 @@
+from typing import Tuple, Any
+
 import numpy as np
 import pandas as pd
 from deepchem.feat import MolGanFeaturizer, GraphMatrix
+from pandas import Series, DataFrame
 from rdkit import Chem
 
 
@@ -21,7 +24,7 @@ class QsarGanFeaturizer(MolGanFeaturizer):
         mol = Chem.MolFromSmiles(smiles_val)
         return mol.GetNumAtoms() if mol is not None else 0
 
-    def determine_atom_count(self, smiles: pd.DataFrame, quantile: float = 0.95) -> int:
+    def determine_atom_count(self, smiles: pd.DataFrame, quantile: float = 0.95) -> tuple[int, DataFrame]:
         """
         Determine the maximum number of atoms in a SMILES string.
         Args:
@@ -33,7 +36,7 @@ class QsarGanFeaturizer(MolGanFeaturizer):
         """
         smiles['atom_count'] = smiles['smiles'].apply(self._get_atom_count)
         self.max_atom_count = int(smiles['atom_count'].quantile(quantile))
-        return self.max_atom_count
+        return self.max_atom_count, smiles['atom_count']
 
     def _filter_smiles(self, smiles: pd.DataFrame, num_atoms: int = None) -> list:
         """
