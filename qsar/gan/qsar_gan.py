@@ -43,7 +43,7 @@ class QsarGan(BasicMolGANModel):
         self.embedding_dim = embedding_dim
         self.dropout_rate = dropout_rate
 
-        self.gan_featurizer = QsarGanFeaturizer(max_atom_count=self.vertices)
+        self.featurizer = QsarGanFeaturizer(max_atom_count=self.vertices)
         super(BasicMolGANModel, self).__init__(**kwargs)
 
     def _iterbatches(self, epochs, features):
@@ -54,7 +54,7 @@ class QsarGan(BasicMolGANModel):
                 node_tensor = one_hot(batch[1], self.nodes)
                 yield {self.data_inputs[0]: adjacency_tensor, self.data_inputs[1]: node_tensor}
 
-    def fit_predict(self, smiles, epochs=32, generator_steps=0.2, checkpoint_interval=5000, number_to_generate=1000):
+    def fit_predict(self, smiles, epochs=32, generator_steps=0.2, checkpoint_interval=5000, number_to_generate=10000):
         """
         Fit the model and return the generated molecules.
 
@@ -75,13 +75,13 @@ class QsarGan(BasicMolGANModel):
         Generated molecules
         """
 
-        self.vertices = self.gan_featurizer.determine_atom_count(smiles)
-        features = self.gan_featurizer.get_features(smiles)
+        self.vertices = self.featurizer.determine_atom_count(smiles)
+        features = self.featurizer.get_features(smiles)
 
         self.fit_gan(self._iterbatches(epochs, features), generator_steps=generator_steps,
                      checkpoint_interval=checkpoint_interval)
 
         generated_data = self.predict_gan_generator(number_to_generate)
 
-        generated_data = self.gan_featurizer.defeaturize(generated_data)
-        return self.gan_featurizer.get_unique_smiles(generated_data)
+        generated_data = self.featurizer.defeaturize(generated_data)
+        return self.featurizer.get_unique_smiles(generated_data)
