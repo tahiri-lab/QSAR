@@ -29,7 +29,7 @@ setup(
         "scikit-learn~=1.3.1",
         "seaborn~=0.12.2",
         "matplotlib~=3.8.0",
-        "numpy~=1.26.0",
+        "numpy~=1.25.0",
         "statsmodels~=0.14.0",
         "networkx~=3.1",
         "pydot~=1.4.2",
@@ -46,7 +46,8 @@ setup(
         "ipython~=8.15.0",
         "scipy~=1.11.2",
         "dill~=0.3.7",
-        "pymatgen~=2023.10.11"
+        "pymatgen~=2023.10.11",
+        "deepchem~=2.7.1"
     ],
     python_requires='>=3.9.0',
 )

@@ -1,8 +1,11 @@
 import math
-from typing import Tuple
+from typing import Tuple, List
 
 import pandas as pd
 from matplotlib import pyplot as plt
+from rdkit import Chem
+
+from rdkit.Chem import Draw
 
 
 class Visualizer:
@@ -114,3 +117,25 @@ class Visualizer:
         ax.set_xlabel("Predicted target", fontsize=14)
         plt.legend(loc="upper right")
         plt.show()
+
+    @staticmethod
+    def display_atom_count_distribution(atom_counts):
+        plt.hist(atom_counts, bins=30)
+        plt.xlabel('Number of Atoms')
+        plt.ylabel('Frequency')
+        plt.title('Distribution of Atom Counts in Dataset')
+        plt.show()
+
+    @staticmethod
+    def draw_generated_molecules(molecules: List[Chem.Mol]):
+        """
+        Draw the generated molecules.
+        Args:
+            molecules: List of molecules to be visualized.
+
+        Returns:
+
+        """
+        img = Draw.MolsToGridImage(molecules[0:100], molsPerRow=5, subImgSize=(250, 250), maxMols=100, legends=None,
+                                   returnPNG=False)
+        img.show()
