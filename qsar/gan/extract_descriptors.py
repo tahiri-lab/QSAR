@@ -5,8 +5,7 @@ from rdkit.Chem import Descriptors
 
 class DescriptorsExtractor:
     @staticmethod
-    def extract_descriptors(generated_smiles: list) -> pd.DataFrame:
-        mols = [Chem.MolFromSmiles(smi) for smi in generated_smiles]
+    def extract_descriptors(mols: list) -> pd.DataFrame:
         all_discriptors = [(name, func) for name, func in Descriptors.descList]
         features_from_smiles = [[]] * len(mols)
         descriptor_names = [name for name, _ in Descriptors.descList]
