@@ -11,7 +11,7 @@ from rdkit.Chem import Mol
 
 class QsarGanFeaturizer(MolGanFeaturizer):
     def __init__(self, **kwargs):
-        self.max_atom_count = 36
+        self.max_atom_count = 9
         super(QsarGanFeaturizer, self).__init__(**kwargs)
 
     @staticmethod
@@ -21,8 +21,7 @@ class QsarGanFeaturizer(MolGanFeaturizer):
 
     def determine_atom_count(self, smiles: pd.DataFrame, quantile: float = 0.95) -> tuple[int, DataFrame]:
         atoms_count = smiles['smiles'].apply(self._get_atom_count)
-        self.max_atom_count = int(atoms_count.quantile(quantile))
-        return self.max_atom_count, atoms_count
+        return int(atoms_count.quantile(quantile)), atoms_count
 
     def _filter_smiles(self, smiles: pd.Series, num_atoms: int = None) -> np.ndarray:
         if num_atoms is None:
