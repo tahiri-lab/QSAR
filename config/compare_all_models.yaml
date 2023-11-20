@@ -1,0 +1,17 @@
+datasets:
+  - full_train: "../data/full/train/full_train_unfiltered.csv"
+  - full_test: "../data/full/test/full_test_unfiltered.csv"
+
+preprocess:
+  - name: "low_variance"
+  - name: "high_correlation"
+
+models:
+  - name: "ElasticNet"
+  - name: "Lasso"
+  - name: "Ridge"
+  - name: "RandomForestRegressor"
+  - name: "CatBoostRegressor"
+  - name: "XGBRegressor"
+
+target: "Log_MP_RATIO"
