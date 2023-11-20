@@ -41,5 +41,5 @@ setup(
         "xgboost~=2.0.2",
         "tensorflow~=2.12.0",
     ],
-    python_requires='==3.9.*',
+    python_requires='==3.10.*',
 )
