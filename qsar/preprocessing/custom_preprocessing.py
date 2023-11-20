@@ -36,8 +36,10 @@ class HighCorrelationRemover(BaseEstimator, TransformerMixin):
 
 
 class PreprocessingPipeline:
-    def __init__(self, y="Log_MP_RATIO", variance_threshold=0, cols_to_ignore=[], verbose=False, threshold=0.9):
-        self.y = y
+    def __init__(self, target="Log_MP_RATIO", variance_threshold=0, cols_to_ignore=None, verbose=False, threshold=0.9):
+        if cols_to_ignore is None:
+            cols_to_ignore = []
+        self.target = target
         self.variance_threshold = variance_threshold
         self.cols_to_ignore = cols_to_ignore
         self.verbose = verbose
@@ -46,7 +48,7 @@ class PreprocessingPipeline:
     def get_pipeline(self):
         pipeline = Pipeline([
             ('low_variance_remover',
-             LowVarianceRemover(y=self.y, variance_threshold=self.variance_threshold,
+             LowVarianceRemover(y=self.target, variance_threshold=self.variance_threshold,
                                 cols_to_ignore=self.cols_to_ignore, verbose=self.verbose)),
             ('high_correlation_remover',
              HighCorrelationRemover(df_correlation=None, df_corr_y=None, threshold=self.threshold,
