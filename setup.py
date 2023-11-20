@@ -40,6 +40,8 @@ setup(
         "tqdm~=4.66.1",
         "xgboost~=2.0.2",
         "tensorflow~=2.12.0",
+        "neptune~=1.8.3",
+        "PyYAML~=6.0.1",
     ],
     python_requires='==3.9.*',
 )
