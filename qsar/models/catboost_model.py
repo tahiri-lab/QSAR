@@ -32,8 +32,8 @@ class CatboostModel(Model):
         - Cross-validation score.
         """
         self.params = {
-            "objective": trial.suggest_categorical("objective", ["Logloss", "CrossEntropy"]),
-            'learning_rate': trial.suggest_loguniform('learning_rate', 0.001, 0.3),
+            "objective": trial.suggest_categorical("objective", ["RMSE", "MAE", "Poisson", "Quantile", "MAPE"]),
+            'learning_rate': trial.suggest_float('learning_rate', 0.001, 0.3, log=True),
             "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1),
             "max_depth": trial.suggest_int("max_depth", 1, 15),
             "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]),
