@@ -15,24 +15,26 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#-about-the-project">About the project</a>
+      <a href="#about-the-project">About the project</a>
     </li>
     <li>
-      <a href="#%EF%B8%8F-installation">Installation</a>
+      <a href="#installation">Installation</a>
     </li>
      <li>
-      <a href="#-settings">Settings</a>
+      <a href="#use-cases">Use cases</a>
     </li>
     <li>
-      <a href="#-contact">Contact</a>
+      <a href="#contact">Contact</a>
     </li>
   </ol>
 </details>
 
+<a id="about-the-project"></a>
 # 📝 About the project
 
 `QSAR` is a Python package that offers robust predictive modeling using QSAR for evaluating the transfer of environmental contaminants in breast milk. Developed by the dedicated team led by Professor [Nadia Tahiri](https://tahirinadia.github.io/) at the University of Sherbrooke in Quebec, Canada. This open-source integrates multiple predictive models, provides synthetic data generation via GANs, and is tailored for researchers and health professionals.
 
+<a id="installation"></a>
 # ⚒️ Installation
 [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html) is used to handle the environment dependencies.
 
@@ -45,7 +47,8 @@ conda install --file requirements.txt
 
 ⚠️ We currently only support Python 3.10 due to some dependencies that are not yet compatible with Python 3.11+. We will update the package as soon as the dependencies are updated.
 
-# Use cases
+<a id="use-cases"></a>
+# 🚀 Use cases
 The `QSAR` package can be encapsulated in other applications or used as a standalone package. 
 You can refer to the tutorials on how to use the package functionalities, or use the package as a standalone application by running the following command:
 ```bash
@@ -55,5 +58,8 @@ where ```<config_file>``` is the path to the `YAML` configuration file and ```<o
 
 You can also refer to the [documentation](https://tahiri-lab.github.io/QSAR/) for more details.
 
+<a id="contact"></a>
 # 📧 Contact
 Please email us at: <Nadia.Tahiri@USherbrooke.ca> for any questions or feedback.
+
+[Go to Top](#about-the-project)
