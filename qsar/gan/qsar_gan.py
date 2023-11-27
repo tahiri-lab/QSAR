@@ -6,6 +6,12 @@ import deepchem as dc
 
 from qsar.gan.gan_featurizer import QsarGanFeaturizer
 
+"""
+This script is used to train a Generative Adversarial Network (GAN) model for generating molecules.
+It uses the DeepChem and TensorFlow libraries for the GAN model and the QsarGanFeaturizer for featurizing the molecules.
+The QsarGan class is responsible for the training and prediction process.
+"""
+
 
 class QsarGan:
     def __init__(self,
@@ -16,26 +22,6 @@ class QsarGan:
                  embedding_dim: int = 10,
                  dropout_rate: float = 0.0,
                  **kwargs):
-        """
-        Initialize the model
-
-        Parameters
-        ----------
-        learning_rate: ExponentialDecay
-            Learning rate scheduler
-        featurizer: QsarGanFeaturizer
-            Featurizer used to convert SMILES to features and extract descriptors
-        edges: int, default 5
-            Number of bond types includes BondType.Zero
-        nodes: int, default 5
-            Number of atom types in node features matrix
-        embedding_dim: int, default 10
-            Size of noise input array
-        dropout_rate: float, default = 0.
-            Rate of dropout used across whole model
-        name: str, default ''
-            Name of the model
-        """
 
         self.featurizer = featurizer
         self.gan = BasicMolGANModel(
@@ -48,6 +34,14 @@ class QsarGan:
             **kwargs)
 
     def _iterbatches(self, epochs, features):
+        """
+        Yields batches of adjacency and node tensors for training the GAN model.
+
+        :param epochs: the number of epochs for training the GAN model
+        :type epochs: int
+        :param features: the features used for training the GAN model
+        :type features: np.ndarray
+        """
         dataset = dc.data.NumpyDataset([x.adjacency_matrix for x in features], [x.node_features for x in features])
         for i in range(epochs):
             for batch in dataset.iterbatches(batch_size=self.gan.batch_size, pad_batches=True):
@@ -58,23 +52,20 @@ class QsarGan:
     def fit_predict(self, features: np.ndarray, epochs=32, generator_steps=0.2, checkpoint_interval=5000,
                     number_to_generate=10000) -> list:
         """
-        Fit the model and return the generated molecules.
+        Trains the GAN model and generates new molecules.
 
-        Parameters
-        ----------
-        features: np.ndarray
-            Array of features (Array of GraphMatrix).
-        epochs: int, default 32
-            Number of epochs to train the model
-        generator_steps: float, default 0.2
-            Number of generator steps per discriminator step
-        checkpoint_interval: int, default 5000
-            Number of steps between saving model checkpoints
-        number_to_generate: int, default 1000
-            Number of molecules to generate
-        Returns
-        -------
-        Generated molecules
+        :param features: the features used for training the GAN model
+        :type features: np.ndarray
+        :param epochs: the number of epochs for training the GAN model, defaults to 32
+        :type epochs: int, optional
+        :param generator_steps: the number of generator steps in the GAN model, defaults to 0.2
+        :type generator_steps: float, optional
+        :param checkpoint_interval: the interval for saving checkpoints in the GAN model, defaults to 5000
+        :type checkpoint_interval: int, optional
+        :param number_to_generate: the number of molecules to generate, defaults to 10000
+        :type number_to_generate: int, optional
+        :return: a list of unique SMILES strings representing the generated molecules
+        :rtype: list
         """
         self.gan.fit_gan(self._iterbatches(epochs, features), generator_steps=generator_steps,
                          checkpoint_interval=checkpoint_interval)

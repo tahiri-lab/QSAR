@@ -7,13 +7,21 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class RandomForestModel(Model):
+    """
+    A class used to represent a RandomForestModel, inheriting from the Model class. This class specifically handles the
+    RandomForest Regressor from the sklearn library.
+    """
     def __init__(self, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-           Initialize the ElasticNet model.
+        Initialize the RandomForestModel with an optional random state and model parameters.
 
-           Parameters:
-           - random_state: Seed for reproducibility.
+        :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
+        :type max_iter: int, optional
+        :param random_state: the random state for the model, defaults to Model.DEFAULT_RANDOM_STATE
+        :type random_state: int, optional
+        :param params: the parameters for the model, defaults to None
+        :type params: dict, optional
         """
         super().__init__()
         self.model = RandomForestRegressor(random_state=random_state)
@@ -21,14 +29,14 @@ class RandomForestModel(Model):
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimize the hyperparameters of the ElasticNet model using the given trial and data.
+        Optimizes the hyperparameters of the RandomForest Regressor model.
 
-        Parameters:
-        - trial: Optuna trial for hyperparameter optimization.
-        - df: Data for cross-validation.
-
-        Returns:
-        - Cross-validation score.
+        :param trial: the trial for hyperparameter optimization
+        :type trial: Trial
+        :param df: the dataframe used for training the model
+        :type df: pd.DataFrame
+        :return: the cross validation score of the model
+        :rtype: float
         """
         self.params = {
             'n_estimators': trial.suggest_int('n_estimators', 50, 1000),

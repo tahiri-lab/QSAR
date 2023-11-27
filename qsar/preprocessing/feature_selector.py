@@ -22,26 +22,33 @@ import matplotlib.pyplot as plt
 
 class FeatureSelector:
     """
-    A class made implementing methods for feature selection
-    The recommended order of use is: Normalization --> Feature selection
+    Implements methods for feature selection within QSAR modeling.
 
-    :param df: A datafram with only continuous data describing the observations and features
-    :type df: pd.Dataframe
+    The recommended order of use is normalization followed by feature selection.
+
+    :param df: DataFrame with continuous data describing the observations and features.
+    :type df: pd.DataFrame
+    :param y: Name of the column for the dependent variable. Defaults to 'Log_MP_RATIO'.
+    :type y: str, optional
+    :param cols_to_ignore: List of column names to be ignored during processing.
+    :type cols_to_ignore: list, optional
     """
 
     def __init__(
-        self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore: list = []
+        self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore=None
     ):
         """
-        Init function of the FeatureSelector class
+        Initializes the FeatureSelector class.
 
-        :param df: A dataframe with only continuous data describing the observations and features
-        :type df: pd.Dataframe
-        :param y: A string that corresponds to the name of the column of the dependent variable
-        :type y: str
-        :param cols_to_ignore: A list of string that corresponds to columns name to ignore
-        :type: list
+        :param df: DataFrame with only continuous data describing the observations and features.
+        :type df: pd.DataFrame
+        :param y: Name of the column of the dependent variable. Defaults to 'Log_MP_RATIO'.
+        :type y: str, optional
+        :param cols_to_ignore: List of column names to ignore. Defaults to an empty list.
+        :type cols_to_ignore: list, optional
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         self.df: pd.DataFrame = df
         self.y: str = y
         self.cols_to_ignore: list = cols_to_ignore
@@ -54,22 +61,16 @@ class FeatureSelector:
     ) -> pd.DataFrame:
         # It seems data should be normalized since not every data has a gaussian distribution
         """
-        Normalize the data of in the CSV
-        Even though on linear regression it isn't necessarily needed but it can help for data interpretation
+        Normalizes the data within the DataFrame.
 
-        Parameters
-        ----------
-        y: str
-            The depedent variable (it will be ignored in the scaling of features)
-        verbose (default=False): bool
-            If set to True displays some text to help visualize the changes
-        inplace (default=False): bool
-            If set to True replaces the attribute df of the FeatureSelector object with the normalized dataframe
-
-        Returns
-        ----------
-        pd.DataFrame
-            The same dataframe as input but with normalized values
+        :param y: The dependent variable (ignored in feature scaling). Defaults to 'Log_MP_RATIO'.
+        :type y: str, optional
+        :param verbose: If True, displays text to help visualize changes. Defaults to False.
+        :type verbose: bool, optional
+        :param inplace: If True, replaces the internal DataFrame with the normalized one. Defaults to False.
+        :type inplace: bool, optional
+        :return: The normalized DataFrame.
+        :rtype: pd.DataFrame
         """
         if verbose:
             print("===== Before normalization ===== ")
@@ -103,30 +104,22 @@ class FeatureSelector:
         inplace: bool = False,
     ) -> tuple[pd.DataFrame, list]:
         """
-        Remove features with a variance level below the threshold
+        Removes features from the DataFrame with variance below the specified threshold.
 
-        Parameters
-        ----------
-        df: pd.DataFrame
-            A dataframe with only continuous data describing the observations and features
-        y (default = ""): str
-            The depedent variable (it will be ignored in the removal of features)
-        variance_threshold: int
-            The threshold at which features below should deleted
-        cols_to_ignore (default = []): list
-            Cols where the function should not be executed
-        verbose (default=False): bool
-            If set to True displays some text to help visualize the changes
-        inplace (default=False): bool
-            If set to True replaces the attribute df of the FeatureSelector object with the removed
-            low variance feature dataframe
-
-        Returns
-        ----------
-        pd.Dataframe
-            The same dataframe as input but the features with low variance are removed
-        list
-            A list of all the deleted columns
+        :param df: DataFrame with continuous data describing observations and features.
+        :type df: pd.DataFrame
+        :param y: The dependent variable which will be ignored in the feature removal process. Defaults to an empty string.
+        :type y: str, optional
+        :param variance_threshold: The threshold for variance below which features will be removed.
+        :type variance_threshold: float
+        :param cols_to_ignore: List of columns to be ignored during processing. Defaults to an empty list.
+        :type cols_to_ignore: list, optional
+        :param verbose: If True, displays descriptive text to help visualize changes. Defaults to False.
+        :type verbose: bool, optional
+        :param inplace: If True, updates the attribute `df` of the FeatureSelector object with the resultant DataFrame. Defaults to False.
+        :type inplace: bool, optional
+        :return: A tuple containing the DataFrame with low variance features removed and a list of the removed column names.
+        :rtype: Tuple[pd.DataFrame, list]
         """
         if not y:
             y = self.y
@@ -186,23 +179,18 @@ class FeatureSelector:
         method: str = "kendall",
     ) -> pd.DataFrame:
         """
-        Calculates a correlation score of all the features depending on the y variable
+        Calculates a correlation score for each feature in relation to the specified dependent variable.
 
-        Parameters
-        ----------
-        df: pd.DataFrame
-            A dataframe with only continuous data describing the observations and features
-        y (default = ""): str
-            The dependent variable we want to compare for the correlation
-        cols_to_ignore (default = []): list
-            Cols where the function should not be executed
-        method (default = "kendall")
-            Method to use to calculate correlation
-
-        Returns
-        ----------
-        pd.Series
-            A Series object with the score of correlation for each feature on the y variable
+        :param df: DataFrame with continuous data describing observations and features.
+        :type df: pd.DataFrame
+        :param y: The dependent variable to compare for correlation. Defaults to an empty string.
+        :type y: str, optional
+        :param cols_to_ignore: List of columns where the function should not be executed. Defaults to an empty list.
+        :type cols_to_ignore: list, optional
+        :param method: Method used to calculate correlation. Options include "pearson", "kendall", or "spearman". Defaults to "kendall".
+        :type method: str, optional
+        :return: A Series object with the correlation score for each feature relative to the y variable.
+        :rtype: pd.Series
         """
         if df is None:
             df = self.df.copy()
@@ -222,29 +210,26 @@ class FeatureSelector:
         self,
         df: pd.DataFrame = None,
         y: str = "",
-        cols_to_ignore: list = [],
+        cols_to_ignore=None,
         method: str = "kendall",
     ) -> pd.DataFrame:
         # https://datascience.stackexchange.com/a/64261
         """
-        Calculates a correlation score of all the features
+        Calculates a correlation score for all features within a DataFrame.
 
-        Parameters
-        ----------
-        df (default = None): pd.DataFrame
-            A dataframe with only continuous data describing the observations and features
-        y (default = ''): str
-            Dependent variable to ignore in the colinearity test
-        cols_to_ignore (default = []): list
-            Columns to ignore if needed
-        method (default = "kendall"): str
-            Method to use to calculate the correlation between the features ("pearson", "kendall" or "spearman")
-
-        Returns
-        ----------
-        pd.DataFrame
-            A dataframe with the score of correlation for each feature on the y variable
+        :param df: DataFrame with only continuous data describing the observations and features. If None, uses the internal DataFrame. Defaults to None.
+        :type df: pd.DataFrame, optional
+        :param y: Name of the column for the dependent variable to ignore in the collinearity test. Defaults to an empty string, indicating no dependent variable.
+        :type y: str, optional
+        :param cols_to_ignore: List of column names to ignore during correlation computation. Defaults to an empty list.
+        :type cols_to_ignore: list, optional
+        :param method: Method used to calculate the correlation between the features. Options are "pearson", "kendall", or "spearman". Defaults to "kendall".
+        :type method: str, optional
+        :return: A DataFrame containing the correlation coefficients of the features.
+        :rtype: pd.DataFrame
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         if df is None:
             df = self.df.copy()
 
@@ -272,25 +257,24 @@ class FeatureSelector:
     ) -> pd.DataFrame:
         # used: https://stackoverflow.com/a/61938339
         """
-        Removes all the features that have correlation above the threshold
+        Removes all the features from the DataFrame that have a correlation coefficient above the specified threshold.
 
-        Parameters
-        ----------
-        df_correlation (default = None): pd.DataFrame
-            A dataframe representing the correlation matrix
-        df_corr_y (default = None): pd.Dataframe
-            A dataframe of correlation correlating all the features to the dependant variable
-        df (default = None): pd.DataFrame
-            A dataframe with only continuous data describing the observations and features
-            If the default value is given it will use the dataframe contained in the FeatureSelector object
-        threshold (default = 0.9): float
-            The treshold where features correlated beyond should be dropped
-        verbose (default = False): bool
-            If set to True displays some informations
-        inplace (default = False): bool
-            If set to True replaces the attribute df of the FeatureSelector object with the normalized dataframe
-        graph (default = False): bool
-            If true draws a heatmap of all the dropped features and their respective correlation to each other
+        :param df_correlation: A DataFrame representing the correlation matrix. Defaults to None, which will use the internal DataFrame's correlation matrix.
+        :type df_correlation: pd.DataFrame, optional
+        :param df_corr_y: A DataFrame of correlation values correlating all features to the dependent variable. Defaults to None, which will calculate it from the internal DataFrame.
+        :type df_corr_y: pd.DataFrame, optional
+        :param df: A DataFrame with only continuous data describing the observations and features. Defaults to None, which will use the internal DataFrame.
+        :type df: pd.DataFrame, optional
+        :param threshold: The threshold where features correlated beyond should be dropped. Defaults to 0.9.
+        :type threshold: float, optional
+        :param verbose: If True, displays additional information during processing. Defaults to False.
+        :type verbose: bool, optional
+        :param inplace: If True, replaces the internal DataFrame with the result. Defaults to False.
+        :type inplace: bool, optional
+        :param graph: If True, draws a heatmap of all dropped features and their respective correlation to each other. Defaults to False.
+        :type graph: bool, optional
+        :return: A DataFrame with highly correlated features removed.
+        :rtype: pd.DataFrame
         """
         if df is None:
             df = self.df.copy()
@@ -408,11 +392,10 @@ class FeatureSelector:
     # TODO: if time remains add all the options to fully custom this function
     def transform(self: "FeatureSelector") -> pd.DataFrame:
         """
-        Removes low variance and highly correlated features
+        Removes low variance and highly correlated features from the DataFrame stored in the FeatureSelector object.
 
-        Returns
-        ----------
-        pd.Datarame
+        :return: A DataFrame with low variance and highly correlated features removed.
+        :rtype: pd.DataFrame
         """
         self.remove_low_variance(inplace=True)
         self.remove_highly_correlated(inplace=True)
@@ -424,22 +407,16 @@ def display_data_cluster(
 ) -> None:
     # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
     """
-    Displays the correlated features in a clusterized graph
+    Displays the correlated features in a clusterized heatmap graph.
 
-    Parameters
-    ----------
-    df_corr: pd.Dataframe
-        A correlation dataframe
-    n_clusters (default = 8): int
-        The number of clusters kmean does
-    n_init (default = 500): int
-        number of time the KMeans algorithm is run with different centroid
-    max_iter (default = 1000): int
-        maximum number of iterations for a single run
-
-    Returns
-    ---------
-    None
+    :param df_corr: Correlation DataFrame to be clustered.
+    :type df_corr: pd.DataFrame
+    :param n_clusters: Number of clusters to form. Defaults to 8.
+    :type n_clusters: int, optional
+    :param n_init: Number of time the k-means algorithm will run with different centroid seeds. Defaults to 500.
+    :type n_init: int, optional
+    :param max_iter: Maximum number of iterations of the k-means algorithm for a single run. Defaults to 1000.
+    :type max_iter: int, optional
     """
     feat_names = df_corr.columns
     corr_feat_mtx: np.ndarray = df_corr.to_numpy()
@@ -548,18 +525,12 @@ def display_data_cluster(
 
 def display_elbow(df: pd.DataFrame, max_num_clusters: int = 15) -> None:
     """
-    Displays the elbow curve for the given dataframe and its associated Within-Cluster Sum of Square
+    Displays the elbow curve for the given dataframe and its associated Within-Cluster Sum of Square (WCSS).
 
-    Parameters
-    ----------
-    df: pd.DataFrame
-        A correlation dataframe
-    max_num_clusters: int (default = 15)
-        The maximum number of clusters wanted
-
-    Returns
-    ---------
-    None
+    :param df: A correlation dataframe to determine the optimal number of clusters for k-means clustering.
+    :type df: pd.DataFrame
+    :param max_num_clusters: The maximum number of clusters to evaluate for the elbow curve. Defaults to 15.
+    :type max_num_clusters: int, optional
     """
     corr_feat_mtx: np.ndarray = df.to_numpy()
 

@@ -1,11 +1,23 @@
 import pandas as pd
-from rdkit import Chem
 from rdkit.Chem import Descriptors
 
 
 class DescriptorsExtractor:
+    """
+    Class for extracting descriptors from molecules.
+    """
+
     @staticmethod
     def extract_descriptors(mols: list) -> pd.DataFrame:
+        """
+        Extracts descriptors from a list of molecules.
+
+        :param mols: A list of RDKit molecule objects.
+        :type mols: list
+        :return: A DataFrame where each row corresponds to a molecule and each column to a descriptor.
+                 The descriptors are computed using the RDKit library.
+        :rtype: pd.DataFrame
+        """
         all_discriptors = [(name, func) for name, func in Descriptors.descList]
         features_from_smiles = [[]] * len(mols)
         descriptor_names = [name for name, _ in Descriptors.descList]
