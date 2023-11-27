@@ -17,19 +17,21 @@ class Visualizer:
         """
         Initialize the Visualizer with optional figure size.
 
-        Parameters:
-        - figsize (tuple): Tuple indicating figure width and height.
+        :param figsize: Tuple indicating figure width and height.
+        :type figsize: Tuple[int, int]
         """
         self.figsize = figsize
 
     def display_cv_folds(self, df: pd.DataFrame, y: str, n_folds: int):
         """
-        Plot the distribution of data across different folds.
+        Plot the distribution of data across different cross-validation folds.
 
-        Parameters:
-        - df (pd.DataFrame): The dataframe containing the data.
-        - y (str): The target column name.
-        - n_folds (int): Number of folds.
+        :param df: The DataFrame containing the data.
+        :type df: pd.DataFrame
+        :param y: The target column name.
+        :type y: str
+        :param n_folds: Number of folds.
+        :type n_folds: int
         """
         fig, axs = plt.subplots(
             1, n_folds, sharex=True, sharey=True, figsize=self.figsize
@@ -48,14 +50,18 @@ class Visualizer:
             self, model_name: str, R2: float, CV: float, custom_cv: float, Q2: float
     ):
         """
-        Display the score of the model in a table format.
+        Display the scores of the model in a table format.
 
-        Parameters:
-        - model_name (str): The model to be evaluated.
-        - R2 (float): R squared score.
-        - CV (float): Cross-validation score.
-        - custom_cv (float): Custom cross-validation score.
-        - Q2 (float): Q squared score.
+        :param model_name: The name of the model to be evaluated.
+        :type model_name: str
+        :param R2: R squared score.
+        :type R2: float
+        :param CV: Cross-validation score.
+        :type CV: float
+        :param custom_cv: Custom cross-validation score.
+        :type custom_cv: float
+        :param Q2: Q squared score.
+        :type Q2: float
         """
         # Create a new figure
         fig, ax = plt.subplots(figsize=self.figsize)
@@ -92,12 +98,16 @@ class Visualizer:
         """
         Display a scatter plot of true vs. predicted values for training and test sets.
 
-        Parameters:
-        - model (str): The model used for prediction.
-        - y_train (pd.DataFrame): True values for the training set.
-        - y_test (pd.DataFrame): True values for the test set.
-        - y_pred_train (pd.DataFrame): Predicted values for the training set.
-        - y_pred_test (pd.DataFrame): Predicted values for the test set.
+        :param model_name: The name of the model used for prediction.
+        :type model_name: str
+        :param y_train: True values for the training set.
+        :type y_train: pd.DataFrame
+        :param y_test: True values for the test set.
+        :type y_test: pd.DataFrame
+        :param y_pred_train: Predicted values for the training set.
+        :type y_pred_train: pd.DataFrame
+        :param y_pred_test: Predicted values for the test set.
+        :type y_pred_test: pd.DataFrame
         """
         fig, ax = plt.subplots(figsize=self.figsize)
         ax.scatter(y_train, y_pred_train, c="blue", label="Train", alpha=0.7)
@@ -120,6 +130,12 @@ class Visualizer:
 
     @staticmethod
     def display_atom_count_distribution(atom_counts):
+        """
+        Plot the distribution of atom counts in a dataset.
+
+        :param atom_counts: List or array of atom counts.
+        :type atom_counts: List[int] or similar
+        """
         plt.hist(atom_counts, bins=30)
         plt.xlabel('Number of Atoms')
         plt.ylabel('Frequency')
@@ -130,11 +146,9 @@ class Visualizer:
     def draw_generated_molecules(molecules: List[Chem.Mol]):
         """
         Draw the generated molecules.
-        Args:
-            molecules: List of molecules to be visualized.
 
-        Returns:
-
+        :param molecules: List of molecules to be visualized.
+        :type molecules: List[Chem.Mol]
         """
         img = Draw.MolsToGridImage(molecules[0:100], molsPerRow=5, subImgSize=(250, 250), maxMols=100, legends=None,
                                    returnPNG=False)
