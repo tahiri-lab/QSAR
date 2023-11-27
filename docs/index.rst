@@ -6,11 +6,23 @@
 Welcome to qsar's documentation!
 ================================
 
+QSAR Project aims to provide tools for developing, analyzing, and visualizing quantitative structure-activity
+relationship (QSAR) models. The project is currently under development.
+
+Contents:
+---------
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
+   introduction
+   installation
+   tutorial
+   preprocessing
+   gan
+   models
+   utils
+   visualization
 
 Indices and tables
 ==================
