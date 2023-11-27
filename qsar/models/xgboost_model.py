@@ -7,10 +7,14 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class XGBoostModel(Model):
+    """
+    A class used to represent a XGBoostModel, inheriting from the Model class. This class specifically handles the XGBoost Regressor from the xgboost library.
+    """
+
     def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-        A class used to represent a XGBoostModel.
+        Initialize the XGBoostModel with optional maximum iterations, random state, and model parameters.
 
         :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
         :type max_iter: int, optional
@@ -25,7 +29,7 @@ class XGBoostModel(Model):
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimizes the hyperparameters of the XGBoost Regressor model.
+        Optimizes the hyperparameters of the XGBoost Regressor model using a trial from Optuna.
 
         :param trial: the trial for hyperparameter optimization
         :type trial: Trial

@@ -8,16 +8,21 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class LassoModel(Model):
+    """
+    A class used to represent a LassoModel, inheriting from the Model class. This class specifically handles the Lasso
+    Regressor from the sklearn library.
+    """
+
     def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-        A class used to represent a LassoModel.
+        Initialize the LassoModel with optional maximum iterations, random state, and model parameters.
 
-        :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
+        :param max_iter: The maximum number of iterations for the model. Defaults to Model.DEFAULT_MAX_ITER.
         :type max_iter: int, optional
-        :param random_state: the random state for the model, defaults to Model.DEFAULT_RANDOM_STATE
+        :param random_state: The random state for the model. Defaults to Model.DEFAULT_RANDOM_STATE.
         :type random_state: int, optional
-        :param params: the parameters for the model, defaults to None
+        :param params: The parameters for the Lasso Regressor model. Defaults to None.
         :type params: dict, optional
         """
         super().__init__()
@@ -26,13 +31,13 @@ class LassoModel(Model):
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimizes the hyperparameters of the Lasso Regressor model.
+        Optimizes the hyperparameters of the Lasso Regressor model using a trial from Optuna.
 
-        :param trial: the trial for hyperparameter optimization
-        :type trial: Trial
-        :param df: the dataframe used for training the model
+        :param trial: The trial instance for hyperparameter optimization.
+        :type trial: optuna.Trial
+        :param df: The DataFrame used for training the model.
         :type df: pd.DataFrame
-        :return: the cross validation score of the model
+        :return: The cross-validation score of the model.
         :rtype: float
         """
         self.params = {
@@ -40,7 +45,7 @@ class LassoModel(Model):
             "tol": trial.suggest_float("tol", 1e-10, 1e-2, log=False),
             "selection": trial.suggest_categorical("selection", ["cyclic", "random"]),
         }
-        
+
         self.model.set_params(**self.params)
 
         estimator = CrossValidator(df)

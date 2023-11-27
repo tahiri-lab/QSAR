@@ -7,10 +7,14 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class RandomForestModel(Model):
+    """
+    A class used to represent a RandomForestModel, inheriting from the Model class. This class specifically handles the
+    RandomForest Regressor from the sklearn library.
+    """
     def __init__(self, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-        A class used to represent a RandomForestModel.
+        Initialize the RandomForestModel with an optional random state and model parameters.
 
         :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
         :type max_iter: int, optional

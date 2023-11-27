@@ -7,7 +7,9 @@ class HyperParameterOptimizer:
     """
     A class for optimizing hyperparameters of a given model using Optuna.
 
-    This optimizer handles the process of finding the best hyperparameters for a model, using the Optuna library for efficient optimization. It is designed to work with models that inherit from the 'Model' class and implement an 'optimize_hyperparameters' method.
+    This optimizer handles the process of finding the best hyperparameters for a model, using the Optuna library for
+    efficient optimization. It is designed to work with models that inherit from the 'Model' class and implement an
+    'optimize_hyperparameters' method.
 
     :ivar DEFAULT_TRIALS: Default number of trials for optimization (class attribute).
     :vartype DEFAULT_TRIALS: int

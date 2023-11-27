@@ -7,10 +7,15 @@ from qsar.utils.cross_validator import CrossValidator
 
 
 class RidgeModel(Model):
+    """
+    A class used to represent a RidgeModel, inheriting from the Model class. This class specifically handles the Ridge
+    Regressor from the sklearn library.
+    """
+
     def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-        A class used to represent a RidgeModel.
+        Initialize the RidgeModel with optional maximum iterations, random state, and model parameters.
 
         :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
         :type max_iter: int, optional
@@ -25,7 +30,7 @@ class RidgeModel(Model):
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimizes the hyperparameters of the Ridge Regressor model.
+        Optimizes the hyperparameters of the Ridge Regressor model using a trial from Optuna.
 
         :param trial: the trial for hyperparameter optimization
         :type trial: Trial

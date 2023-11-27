@@ -9,7 +9,8 @@ class Extractor:
     """
     Class for cross-validation related functionalities.
 
-    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to the CSV file.
+    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to
+    the CSV file.
     :type paths: Dict[str, str]
 
     :ivar dfs: Extracted DataFrames from the paths provided during initialization.

@@ -3,15 +3,12 @@ from abc import ABC, abstractmethod
 import pandas as pd
 from optuna import Trial
 
-"""
-This module contains the abstract base class Model which serves as a template for all QSAR models.
-It uses the Optuna library for hyperparameter optimization.
-"""
-
 
 class Model(ABC):
     """
-    An abstract base class used to represent a QSAR model.
+    An abstract base class used to represent a QSAR model. It serves as a template for all QSAR models and uses the
+    Optuna library for hyperparameter optimization. Child classes should implement the specific model logic and
+    hyperparameter optimization.
     """
     DEFAULT_MAX_ITER = 100000
     DEFAULT_RANDOM_STATE = 0
@@ -26,15 +23,15 @@ class Model(ABC):
     @abstractmethod
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        An abstract method that should be overridden in child classes to optimize the hyperparameters of the model.
+         An abstract method that should be overridden in child classes to optimize the hyperparameters of the model.
 
-        :param trial: the trial for hyperparameter optimization
-        :type trial: Trial
-        :param df: the dataframe used for training the model
-        :type df: pd.DataFrame
-        :return: the cross validation score of the model
-        :rtype: float
-        """
+         :param trial: The trial instance for hyperparameter optimization.
+         :type trial: optuna.Trial
+         :param df: The DataFrame used for training the model.
+         :type df: pd.DataFrame
+         :return: The cross-validation score of the model.
+         :rtype: float
+         """
         pass
 
     def set_hyperparameters(self, **kwargs):
