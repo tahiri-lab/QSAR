@@ -1,16 +1,13 @@
 from typing import Dict, Tuple
 import os
-
 import pandas as pd
 
 
 class Extractor:
-
     """
     Class for cross-validation related functionalities.
 
-    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to
-    the CSV file.
+    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to the CSV file.
     :type paths: Dict[str, str]
 
     :ivar dfs: Extracted DataFrames from the paths provided during initialization.
@@ -21,7 +18,8 @@ class Extractor:
         """
         Initialize the Extractor instance.
 
-        :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to the CSV file.
+        :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the
+         path to the CSV file.
         :type paths: Dict[str, str]
         """
         self.paths = paths
@@ -35,6 +33,7 @@ class Extractor:
         :type name: str
         :returns: The DataFrame associated with the given name.
         :rtype: pd.DataFrame
+
         :raises KeyError: If the name does not exist in the stored DataFrames.
         """
         if name not in self.dfs.keys():
@@ -45,10 +44,13 @@ class Extractor:
         """
         Extracts DataFrames from a dictionary of {name: path} pairs.
 
-        :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to the CSV file. If not provided, defaults to the paths provided at initialization.
+        :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the
+         path to the CSV file. If not provided, defaults to the paths provided at initialization.
         :type paths: Dict[str, str], optional
-        :returns: Dictionary of {str: pd.DataFrame} pairs where the key is the name of the dataframe and the value is the DataFrame itself.
+        :returns: Dictionary of {str: pd.DataFrame} pairs where the key is the name of the dataframe and the value is
+         the DataFrame itself.
         :rtype: Dict[str, pd.DataFrame]
+
         :raises FileNotFoundError: If a path in the dictionary does not exist.
         """
         self.dfs = dict()
@@ -59,14 +61,15 @@ class Extractor:
         return self.dfs
 
     def split_x_y(
-        self, y_col: str
+            self, y_col: str
     ) -> Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]:
         """
         Splits the DataFrames into X and y DataFrames based on the specified column.
 
         :param y_col: Name of the column to be used as the y values.
         :type y_col: str
-        :returns: A tuple containing two dictionaries. The first dictionary contains the X DataFrames and the second dictionary contains the y DataFrames, both keyed by the names of the original DataFrames.
+        :returns: A tuple containing two dictionaries. The first dictionary contains the X DataFrames and the second
+         dictionary contains the y DataFrames, both keyed by the names of the original DataFrames.
         :rtype: Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]
         """
         x_dfs = dict()

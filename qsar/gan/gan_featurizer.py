@@ -6,36 +6,14 @@ from deepchem.feat import MolGanFeaturizer, GraphMatrix
 from pandas import DataFrame
 from rdkit import Chem
 
-"""
-This script is used to featurize molecules for a Generative Adversarial Network (GAN) model.
-It uses the RDKit and DeepChem libraries to compute the features.
-The QsarGanFeaturizer class is responsible for the featurization process.
-"""
-
 
 class QsarGanFeaturizer(MolGanFeaturizer):
     """
-    A class used to featurize molecules for a GAN model.
+    Featurizes molecules for a Generative Adversarial Network (GAN) model using the RDKit and DeepChem libraries.
 
-    ...
-
-    Methods
-    -------
-    _get_atom_count(smiles_val: str) -> int
-        Returns the number of heavy atoms in a molecule represented by a SMILES string.
-
-    determine_atom_count(smiles: pd.DataFrame, quantile: float = 0.95) -> tuple[int, DataFrame]
-        Determines the atom count for a DataFrame of SMILES strings.
-
-    _filter_smiles(smiles: pd.Series, num_atoms: int = None) -> np.ndarray
-        Filters SMILES strings based on the number of atoms.
-
-    get_unique_smiles(nmols: np.ndarray) -> list
-        Returns a list of unique SMILES strings.
-
-    get_features(smiles: pd.DataFrame, log_every_n: int = 1000, **kwargs) -> np.ndarray
-        Returns the features for a DataFrame of SMILES strings.
+    The class is responsible for processing SMILES strings into a format suitable for GAN models in QSAR applications.
     """
+
     def __init__(self, **kwargs):
         """
         Initializes the QsarGanFeaturizer with a maximum atom count of 9.

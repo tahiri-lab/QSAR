@@ -1,23 +1,10 @@
 import pandas as pd
 from rdkit.Chem import Descriptors
 
-"""
-This script is used to extract descriptors from a list of molecules.
-It uses the RDKit library to compute the descriptors.
-The DescriptorsExtractor class is responsible for the extraction process.
-"""
-
 
 class DescriptorsExtractor:
     """
-    A class used to extract descriptors from a list of molecules.
-
-    ...
-
-    Methods
-    -------
-    extract_descriptors(mols: list) -> pd.DataFrame
-        Extracts descriptors from a list of molecules and returns them as a pandas DataFrame.
+    Class for extracting descriptors from molecules.
     """
 
     @staticmethod
