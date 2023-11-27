@@ -1,27 +1,22 @@
-import math
-
 import pandas as pd
-from matplotlib import pyplot as plt
 from sklearn import clone
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
-
-from qsar.models.model import Model
 
 
 class CrossValidator:
     """
     Class for cross-validation related functionalities.
 
-    Attributes:
-    - df (pd.DataFrame): DataFrame containing the data.
+    :ivar df: DataFrame containing the data.
+    :vartype df: pd.DataFrame
     """
 
     def __init__(self, df: pd.DataFrame):
         """
         Initialize a CrossValidator instance.
 
-        Parameters:
-        - df (pd.DataFrame): DataFrame containing the data.
+        :param df: DataFrame containing the data.
+        :type df: pd.DataFrame
         """
         self.df = df
 
@@ -35,14 +30,16 @@ class CrossValidator:
         """
         Create cross-validation folds.
 
-        Parameters:
-        - df (pd.DataFrame, optional): DataFrame to be used. Default is None.
-        - y (str, optional): Target column name. Default is 'Log_MP_RATIO'.
-        - n_folds (int, optional): Number of folds. Default is 3.
-        - n_groups (int, optional): Number of groups for stratified k-fold. Default is 5.
-
-        Returns:
-        - tuple: List of feature sets, list of targets, DataFrame with fold information, target column name, number of folds.
+        :param df: DataFrame to be used. If not provided, a default will be used.
+        :type df: pd.DataFrame, optional
+        :param y: Target column name. Defaults to 'Log_MP_RATIO'.
+        :type y: str, optional
+        :param n_folds: Number of folds. Defaults to 3.
+        :type n_folds: int, optional
+        :param n_groups: Number of groups for stratified k-fold. Defaults to 5.
+        :type n_groups: int, optional
+        :returns: A tuple containing a list of feature sets, a list of targets, a DataFrame with fold information, the target column name, and the number of folds.
+        :rtype: tuple
         """
         if df is None:
             df = self.df.copy()
@@ -72,12 +69,12 @@ class CrossValidator:
         """
         Compute cross-validation score for the given model.
 
-        Parameters:
-        - model (Model): The model to be evaluated.
-        - df (pd.DataFrame, optional): DataFrame to be used. Default is None.
-
-        Returns:
-        - float: Mean cross-validation score.
+        :param model: The model to be evaluated.
+        :type model: Model
+        :param df: DataFrame to be used, if not provided, default is used.
+        :type df: pd.DataFrame, optional
+        :returns: Mean cross-validation score.
+        :rtype: float
         """
         if df is None:
             df = self.df.copy()
@@ -109,15 +106,18 @@ class CrossValidator:
         """
         Compute various scores for model evaluation.
 
-        Parameters:
-        - model (Model): The model to be evaluated.
-        - X_train (pd.DataFrame): Training feature set.
-        - y_train (pd.DataFrame): Training target set.
-        - X_test (pd.DataFrame): Testing feature set.
-        - y_test (pd.DataFrame): Testing target set.
-
-        Returns:
-        - tuple: R squared score, CV score, custom CV score, Q squared score.
+        :param model: The model to be evaluated.
+        :type model: Model
+        :param X_train: Training feature set.
+        :type X_train: pd.DataFrame
+        :param y_train: Training target set.
+        :type y_train: pd.DataFrame
+        :param X_test: Testing feature set.
+        :type X_test: pd.DataFrame
+        :param y_test: Testing target set.
+        :type y_test: pd.DataFrame
+        :returns: A tuple containing the R squared score, CV score, custom CV score, and Q squared score.
+        :rtype: tuple
         """
         # Copying all values and models to not change the original one
         X_train = X_train.copy()
@@ -149,13 +149,16 @@ class CrossValidator:
         """
         Get predictions using the provided model.
 
-        Parameters:
-        - model: The model to be used for prediction.
-        - x_train (pd.DataFrame): Training feature set.
-        - y_train (pd.DataFrame): Training target set.
-        - x_test (pd.DataFrame): Testing feature set.
-        Returns:
-        - tuple: Predictions on the training set, Predictions on the testing set.
+        :param model: The model to be used for prediction.
+        :type model: object or model instance
+        :param x_train: Training feature set.
+        :type x_train: pd.DataFrame
+        :param y_train: Training target set.
+        :type y_train: pd.DataFrame
+        :param x_test: Testing feature set.
+        :type x_test: pd.DataFrame
+        :returns: A tuple containing predictions on the training set and predictions on the testing set.
+        :rtype: tuple
         """
         model_scorer = clone(model)
         model_scorer.fit(x_train, y_train)
