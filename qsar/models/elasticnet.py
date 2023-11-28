@@ -2,7 +2,7 @@ import pandas as pd
 from optuna import Trial
 from sklearn.linear_model import ElasticNet
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import Model
 from qsar.utils.cross_validator import CrossValidator
 
 

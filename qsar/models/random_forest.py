@@ -2,7 +2,7 @@ import pandas as pd
 from optuna import Trial
 from sklearn.ensemble import RandomForestRegressor
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import Model
 from qsar.utils.cross_validator import CrossValidator
 
 

@@ -1,12 +1,12 @@
 import pandas as pd
 from optuna import Trial
-from xgboost import XGBRegressor
+from catboost import CatBoostRegressor
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import Model
 from qsar.utils.cross_validator import CrossValidator
 
 
-class XGBoostModel(Model):
+class CatboostModel(Model):
     def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
                  params=None):
         """
@@ -17,7 +17,7 @@ class XGBoostModel(Model):
            - random_state: Seed for reproducibility.
         """
         super().__init__()
-        self.model = XGBRegressor(random_state=random_state)
+        self.model = CatBoostRegressor(random_state=random_state)
         self.params = params
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
@@ -32,15 +32,12 @@ class XGBoostModel(Model):
         - Cross-validation score.
         """
         self.params = {
-            'max_depth': trial.suggest_int('max_depth', 1, 10),
-            'learning_rate': trial.suggest_float('learning_rate', 0.01, 1.0),
-            'n_estimators': trial.suggest_int('n_estimators', 50, 1000),
-            'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
-            'gamma': trial.suggest_float('gamma', 0.01, 1.0),
-            'subsample': trial.suggest_float('subsample', 0.01, 1.0),
-            'colsample_bytree': trial.suggest_float('colsample_bytree', 0.01, 1.0),
-            'reg_alpha': trial.suggest_float('reg_alpha', 0.01, 1.0),
-            'reg_lambda': trial.suggest_float('reg_lambda', 0.01, 1.0),
+            "objective": trial.suggest_categorical("objective", ["RMSE", "MAE", "Poisson", "Quantile", "MAPE"]),
+            'learning_rate': trial.suggest_float('learning_rate', 0.001, 0.3, log=True),
+            "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1),
+            "max_depth": trial.suggest_int("max_depth", 1, 15),
+            "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]),
+            "bootstrap_type": trial.suggest_categorical("bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]),
         }
 
         self.model.set_params(**self.params)
