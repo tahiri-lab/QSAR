@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from sklearn import clone
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import Model
 
 
 class CrossValidator:
