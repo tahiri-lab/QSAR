@@ -4,7 +4,7 @@ import pandas as pd
 from optuna import Trial
 
 
-class Model(ABC):
+class BaselineModel(ABC):
     DEFAULT_MAX_ITER = 100000
     DEFAULT_RANDOM_STATE = 0
 

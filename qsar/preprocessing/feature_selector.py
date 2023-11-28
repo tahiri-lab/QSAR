@@ -10,13 +10,10 @@ from scipy.spatial import distance
 from scipy.cluster import hierarchy
 
 from sklearn import preprocessing, feature_selection
-from sklearn.cluster import KMeans
 
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
 
-from matplotlib import patches
-import matplotlib.pyplot as plt
 from tensorboard.notebook import display
 
 
@@ -29,7 +26,7 @@ class FeatureSelector:
     :type df: pd.Dataframe
     """
 
-    def __init__(self, df: pd.DataFrame, target: str = "Log_MP_RATIO", cols_to_ignore: list = []):
+    def __init__(self, df: pd.DataFrame, target: str = "Log_MP_RATIO", cols_to_ignore=None):
         """
         Init function of the FeatureSelector class
 
@@ -40,6 +37,8 @@ class FeatureSelector:
         :param cols_to_ignore: A list of string that corresponds to columns name to ignore
         :type: list
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         self.df: pd.DataFrame = df
         self.y: str = target
         self.cols_to_ignore: list = cols_to_ignore
@@ -84,7 +83,7 @@ class FeatureSelector:
 
     # TODO: check avec Nadia "0.01 would mean dropping the column where 99% of the values are similar."
     def remove_low_variance(self: "FeatureSelector", y: str = "", variance_threshold: float = 0,
-                            cols_to_ignore: list = [], verbose: bool = False,
+                            cols_to_ignore=None, verbose: bool = False,
                             inplace: bool = False) -> tuple[pd.DataFrame, list]:
         """
         Remove features with a variance level below the threshold
@@ -111,7 +110,13 @@ class FeatureSelector:
             The same dataframe as input but the features with low variance are removed
         list
             A list of all the deleted columns
+
+        Args:
+            cols_to_ignore:
+            cols_to_ignore:
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         if not y:
             y = self.y
 
@@ -155,7 +160,7 @@ class FeatureSelector:
         return cleaned_df, deleted_features
 
     def get_correlation_to_y(self: "FeatureSelector", df: pd.DataFrame = None, y: str = "",
-                             cols_to_ignore: list = [], method: str = "kendall") -> pd.DataFrame:
+                             cols_to_ignore=None, method: str = "kendall") -> pd.DataFrame:
         """
         Calculates a correlation score of all the features depending on the y variable
 
@@ -175,6 +180,8 @@ class FeatureSelector:
         pd.Series
             A Series object with the score of correlation for each feature on the y variable
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         if df is None:
             df = self.df.copy()
 
@@ -187,10 +194,10 @@ class FeatureSelector:
         df_corr_y = df.drop(columns=cols_to_ignore)
 
         df_corr_y = df_corr_y.corrwith(df_corr_y[y], method=method)
-        return df_corr_y
+        return pd.DataFrame(df_corr_y).T
 
     def get_correlation(self, df: pd.DataFrame = None, y: str = "",
-                        cols_to_ignore: list = [], method: str = "kendall") -> pd.DataFrame:
+                        cols_to_ignore=None, method: str = "kendall") -> pd.DataFrame:
         # https://datascience.stackexchange.com/a/64261
         """
         Calculates a correlation score of all the features
@@ -211,6 +218,8 @@ class FeatureSelector:
         pd.DataFrame
             A dataframe with the score of correlation for each feature on the y variable
         """
+        if cols_to_ignore is None:
+            cols_to_ignore = []
         if df is None:
             df = self.df.copy()
 
@@ -300,7 +309,7 @@ class FeatureSelector:
                     feature_to_drop: str = ""
 
                     # Select the feature to drop, the lowest correlation to y is selected
-                    feature_to_drop = col.values[0] if col_feature < row_feature else row.values[0]
+                    feature_to_drop = col.values[0] if (col_feature < row_feature).all() else row.values[0]
                     if feature_to_drop not in drop_cols:
                         drop_cols.append(feature_to_drop)
                         if verbose:
@@ -361,128 +370,3 @@ class FeatureSelector:
         self.remove_low_variance(inplace=True)
         self.remove_highly_correlated(inplace=True)
         return self.df
-
-
-def display_data_cluster(df_corr: pd.DataFrame, n_clusters: int = 8,
-                         n_init: str = 500, max_iter: int = 1000) -> None:
-    # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
-    """
-    Displays the correlated features in a clusterized graph
-
-    Parameters
-    ----------
-    df_corr: pd.Dataframe
-        A correlation dataframe
-    n_clusters (default = 8): int
-        The number of clusters kmean does
-    n_init (default = 500): int
-        number of time the KMeans algorithm is run with different centroid
-    max_iter (default = 1000): int
-        maximum number of iterations for a single run
-
-    Returns
-    ---------
-    None
-    """
-    feat_names = df_corr.columns
-    corr_feat_mtx: np.ndarray = df_corr.to_numpy()
-
-    kmeans = KMeans(n_clusters=n_clusters, init="k-means++", max_iter=1000, n_init=500, random_state=0)
-    corr_feat_labels = kmeans.fit_predict(corr_feat_mtx)
-
-    print(len(corr_feat_labels))
-
-    # Preparing a dataframe to collect some cluster stats
-    # Contains the clusters and what features they group together
-    corr_feat_clust_df = pd.DataFrame(np.c_[feat_names, corr_feat_labels])
-    corr_feat_clust_df.columns = ["feature", "cluster"]
-    corr_feat_clust_df["feat_list"] = corr_feat_clust_df.groupby(["cluster"]).transform(lambda x: ", ".join(x))
-    corr_feat_clust_df = corr_feat_clust_df.groupby(["cluster", "feat_list"]).size().reset_index(name="feat_count")
-
-    # Transforming our data with the KMean model
-    # Contains the feature their distance inside the cluster and their distance normalized
-    corr_node_dist = kmeans.transform(df_corr)
-    corr_clust_dist = np.c_[feat_names, np.round(corr_node_dist.min(axis=1), 3),
-    np.round(corr_node_dist.min(axis=1) / np.max(corr_node_dist.min(axis=1)), 3),
-    corr_feat_labels]
-    corr_clust_dist_df = pd.DataFrame(corr_clust_dist)
-    corr_clust_dist_df.columns = ["feature", "dist_corr", "dist_corr_norm", "cluster_corr"]
-
-    # Method to group together in correlation matrix features with same labels
-    def clustering_corr_matrix(corr_matrix: pd.DataFrame, clustered_features: list):
-        npm: np.ndarray = corr_matrix.to_numpy()
-        # Creates an numpy array filled with zeros
-        npm_zero: np.ndarray = np.zeros(shape=(len(npm), len(npm)))
-        n: int = 0
-        for i in clustered_features:
-            m: int = 0
-            for j in clustered_features:
-                npm_zero[n, m] = npm[i - 1, j - 1]
-                m += 1
-            n += 1
-        return npm_zero
-
-    # Preprocessing the correlation matrix before starting the clustering based on labels
-    def processing_clustered_corr_matrix(feat_labels: np.ndarray, corr_matrix: pd.DataFrame):
-        lst_lab = list(feat_labels)
-        lst_feat = corr_matrix.columns
-
-        lab_feat_map = {i: lst_lab[i] for i in range(len(lst_lab))}
-        lab_feat_map_sorted = {k: v for k, v in sorted(lab_feat_map.items(), key=lambda item: item[1])}
-
-        clustered_features = list(map(int, lab_feat_map_sorted.keys()))
-        print(len(clustered_features))
-        return clustering_corr_matrix(corr_matrix, clustered_features)
-
-    def plot_clustered_matrix(clust_mtx: np.ndarray, feat_clust_list: np.ndarray) -> None:
-        plt.figure()
-
-        fig, ax = plt.subplots(1)
-        im = ax.imshow(clust_mtx, interpolation="nearest")
-
-        corner: int = 0
-        for s in feat_clust_list:
-            rect = patches.Rectangle((float(corner), float(corner)), float(s), float(s), angle=0.0, linewidth=2,
-                                     edgecolor='r', facecolor="none")
-            ax.add_patch(rect)
-            corner += s
-            ax.add_patch(rect)
-
-        fig.colorbar(im)
-        plt.title("Clustered feature by correlation")
-        plt.show()
-
-    clust_mtx = processing_clustered_corr_matrix(corr_feat_labels, df_corr)
-    plot_clustered_matrix(clust_mtx, corr_feat_clust_df["feat_count"].to_numpy())
-
-
-def display_elbow(df: pd.DataFrame, max_num_clusters: int = 15) -> None:
-    """
-    Displays the elbow curve for the given dataframe and its associated Within-Cluster Sum of Square
-
-    Parameters
-    ----------
-    df: pd.DataFrame
-        A correlation dataframe
-    max_num_clusters (default = 15): int
-        The maximum number of clusters wanted
-
-    Returns
-    ---------
-    None
-    """
-    corr_feat_mtx: np.ndarray = df.to_numpy()
-
-    wcss: list = []
-    max_num_clusters = max_num_clusters
-
-    for i in range(1, max_num_clusters):
-        kmeans = KMeans(n_clusters=i, init="k-means++", max_iter=300, n_init=10, random_state=0)
-        kmeans.fit(corr_feat_mtx)
-        wcss.append(kmeans.inertia_)
-
-    plt.plot(range(1, max_num_clusters), wcss)
-    plt.title("Elbow method")
-    plt.xlabel("Number of clusters")
-    plt.ylabel("WCSS")
-    plt.show()

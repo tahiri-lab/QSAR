@@ -30,8 +30,8 @@ class HighCorrelationRemover(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        fs = FeatureSelector(X)
-        return fs.remove_highly_correlated(self.df_correlation, self.df_corr_y, X, self.threshold, self.verbose,
+        fs = FeatureSelector(X[0])
+        return fs.remove_highly_correlated(self.df_correlation, self.df_corr_y, X[0], self.threshold, self.verbose,
                                            inplace=True)
 
 

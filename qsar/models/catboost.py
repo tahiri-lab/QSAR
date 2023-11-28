@@ -2,12 +2,12 @@ import pandas as pd
 from optuna import Trial
 from catboost import CatBoostRegressor
 
-from qsar.models.baseline_model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class CatboostModel(Model):
-    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+class CatboostModel(BaselineModel):
+    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
            Initialize the XGBoost model.

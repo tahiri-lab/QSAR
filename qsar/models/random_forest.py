@@ -2,12 +2,12 @@ import pandas as pd
 from optuna import Trial
 from sklearn.ensemble import RandomForestRegressor
 
-from qsar.models.baseline_model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class RandomForestModel(Model):
-    def __init__(self, random_state: int = Model.DEFAULT_RANDOM_STATE,
+class RandomForestModel(BaselineModel):
+    def __init__(self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
            Initialize the ElasticNet model.

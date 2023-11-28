@@ -1,14 +1,14 @@
 import pandas as pd
 from optuna import Trial
 
-from qsar.models.baseline_model import Model
+from qsar.models.baseline_model import BaselineModel
 from sklearn.linear_model import Lasso
 
 from qsar.utils.cross_validator import CrossValidator
 
 
-class LassoModel(Model):
-    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+class LassoModel(BaselineModel):
+    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
            Initialize the Lasso model.

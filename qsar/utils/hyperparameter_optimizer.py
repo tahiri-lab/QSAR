@@ -1,12 +1,12 @@
 import optuna
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 
 
 class HyperParameterOptimizer:
     DEFAULT_TRIALS = 1000
 
-    def __init__(self, model: Model, data, trials=DEFAULT_TRIALS, direction='maximize'):
+    def __init__(self, model: BaselineModel, data, trials=DEFAULT_TRIALS, direction='maximize'):
         """
         Initialize the HyperParameterOptimizer.
 
