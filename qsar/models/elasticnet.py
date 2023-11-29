@@ -2,11 +2,11 @@ import pandas as pd
 from optuna import Trial
 from sklearn.linear_model import ElasticNet
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class ElasticnetModel(Model):
+class ElasticnetModel(BaselineModel):
     """
     A class used to represent an ElasticNet model, inheriting from the Model class. This class specifically deals with
     the ElasticNet Regressor from the sklearn library.

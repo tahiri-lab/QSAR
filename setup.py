@@ -41,6 +41,7 @@ setup(
         "xgboost~=2.0.2",
         "tensorflow~=2.12.0",
         "sphinx-rtd-theme~=1.3.0",
+        "PyYAML~=6.0.1",
     ],
     python_requires='==3.10.*',
 )

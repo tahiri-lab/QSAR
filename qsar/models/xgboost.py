@@ -2,16 +2,15 @@ import pandas as pd
 from optuna import Trial
 from xgboost import XGBRegressor
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class XGBoostModel(Model):
+class XgboostModel(BaselineModel):
     """
     A class used to represent a XGBoostModel, inheriting from the Model class. This class specifically handles the XGBoost Regressor from the xgboost library.
     """
-
-    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
         Initialize the XGBoostModel with optional maximum iterations, random state, and model parameters.

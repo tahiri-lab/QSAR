@@ -2,11 +2,11 @@ import pandas as pd
 from optuna import Trial
 from catboost import CatBoostRegressor
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class CatboostModel(Model):
+class CatboostModel(BaselineModel):
     """
     A class used to represent a CatboostModel which inherits from the Model class. This class is specific for handling
     CatBoost Regressor models.

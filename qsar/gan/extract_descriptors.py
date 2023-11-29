@@ -25,5 +25,5 @@ class DescriptorsExtractor:
             features_from_smiles[idx] = []
             for name, func in all_discriptors:
                 features_from_smiles[idx].append(func(molecule))
-
-        return pd.DataFrame(features_from_smiles, columns=descriptor_names, index=mols)
+        smiles = [Chem.MolToSmiles(mol) for mol in mols]
+        return pd.DataFrame(features_from_smiles, columns=descriptor_names, index=smiles)

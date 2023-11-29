@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn import clone
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 
+from qsar.models.baseline_model import BaselineModel
+
 
 class CrossValidator:
     """

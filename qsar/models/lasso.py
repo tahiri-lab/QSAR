@@ -1,13 +1,13 @@
 import pandas as pd
 from optuna import Trial
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 from sklearn.linear_model import Lasso
 
 from qsar.utils.cross_validator import CrossValidator
 
 
-class LassoModel(Model):
+class LassoModel(BaselineModel):
     """
     A class used to represent a LassoModel, inheriting from the Model class. This class specifically handles the Lasso
     Regressor from the sklearn library.

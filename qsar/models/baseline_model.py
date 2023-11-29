@@ -4,7 +4,7 @@ import pandas as pd
 from optuna import Trial
 
 
-class Model(ABC):
+class BaselineModel(ABC):
     """
     An abstract base class used to represent a QSAR model. It serves as a template for all QSAR models and uses the
     Optuna library for hyperparameter optimization. Child classes should implement the specific model logic and

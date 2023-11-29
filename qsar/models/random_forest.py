@@ -1,21 +1,20 @@
 import pandas as pd
 from optuna import Trial
-from sklearn.linear_model import Ridge
+from sklearn.ensemble import RandomForestRegressor
 
-from qsar.models.model import Model
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
-class RidgeModel(Model):
+class RandomForestModel(BaselineModel):
     """
-    A class used to represent a RidgeModel, inheriting from the Model class. This class specifically handles the Ridge
-    Regressor from the sklearn library.
+    A class used to represent a RandomForestModel, inheriting from the Model class. This class specifically handles the
+    RandomForest Regressor from the sklearn library.
     """
-
-    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+    def __init__(self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
-        Initialize the RidgeModel with optional maximum iterations, random state, and model parameters.
+        Initialize the RandomForestModel with an optional random state and model parameters.
 
         :param max_iter: the maximum number of iterations for the model, defaults to Model.DEFAULT_MAX_ITER
         :type max_iter: int, optional
@@ -25,12 +24,12 @@ class RidgeModel(Model):
         :type params: dict, optional
         """
         super().__init__()
-        self.model = Ridge(max_iter=max_iter, random_state=random_state)
+        self.model = RandomForestRegressor(random_state=random_state)
         self.params = params
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
-        Optimizes the hyperparameters of the Ridge Regressor model using a trial from Optuna.
+        Optimizes the hyperparameters of the RandomForest Regressor model.
 
         :param trial: the trial for hyperparameter optimization
         :type trial: Trial
@@ -40,9 +39,10 @@ class RidgeModel(Model):
         :rtype: float
         """
         self.params = {
-            "alpha": trial.suggest_float('alpha', 1e-10, 1e10, log=True),
-            "solver": trial.suggest_categorical('solver',
-                                                ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga"]),
+            'n_estimators': trial.suggest_int('n_estimators', 50, 1000),
+            'max_depth': trial.suggest_int('max_depth', 4, 50),
+            'min_samples_split': trial.suggest_int('min_samples_split', 2, 150),
+            'min_samples_leaf': trial.suggest_int('min_samples_leaf', 1, 60),
         }
 
         self.model.set_params(**self.params)
