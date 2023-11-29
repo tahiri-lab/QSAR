@@ -21,7 +21,13 @@
       <a href="#installation">Installation</a>
     </li>
      <li>
-      <a href="#use-cases">Use cases</a>
+       <a href="#use-cases">Use cases</a>
+    </li>
+    <li>
+      <a href="#tutorials">Tutorials</a>
+    </li>
+    <li>
+      <a href="#documentation">Documentation</a>
     </li>
     <li>
       <a href="#contact">Contact</a>
@@ -30,36 +36,88 @@
 </details>
 
 <a id="about-the-project"></a>
+
 # 📝 About the project
 
-`QSAR` is a Python package that offers robust predictive modeling using QSAR for evaluating the transfer of environmental contaminants in breast milk. Developed by the dedicated team led by Professor [Nadia Tahiri](https://tahirinadia.github.io/) at the University of Sherbrooke in Quebec, Canada. This open-source integrates multiple predictive models, provides synthetic data generation via GANs, and is tailored for researchers and health professionals.
+`QSAR` is a Python package that offers robust predictive modeling using QSAR for evaluating the transfer of
+environmental contaminants in breast milk. Developed by the dedicated team led by
+Professor [Nadia Tahiri](https://tahirinadia.github.io/) at the University of Sherbrooke in Quebec, Canada. This
+open-source integrates multiple predictive models, provides synthetic data generation via GANs, and is tailored for
+researchers and health professionals.
 
 <a id="installation"></a>
+
 # ⚒️ Installation
-[Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html) is used to handle the environment dependencies.
+
+[Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html) is used to handle the environment
+dependencies.
 
 Once ```miniconda``` is installed, the environment can be created and activated with the following commands:
+
 ```bash
-conda create --name <env_name> python=3.10
-conda activate <env_name>
-conda install --file requirements.txt
+conda env create -f environment.yaml
+conda activate qsar_env
 ```
 
-⚠️ We currently only support Python 3.10 due to some dependencies that are not yet compatible with Python 3.11+. We will update the package as soon as the dependencies are updated.
+⚠️ We currently only support Python 3.10 due to some dependencies that are not yet compatible with Python 3.11+. We will
+update the package as soon as the dependencies are updated.
 
 <a id="use-cases"></a>
+
 # 🚀 Use cases
-The `QSAR` package can be encapsulated in other applications or used as a standalone package. 
-You can refer to the tutorials on how to use the package functionalities, or use the package as a standalone application by running the following command:
+
+The `QSAR` package can be encapsulated in other applications or used as a standalone package.
+You can refer to the tutorials on how to use the package functionalities, or use the package as a standalone application
+by running the following command:
+
 ```bash
 python main.py --config <config_file> --output <output_dir>
 ```
-where ```<config_file>``` is the path to the `YAML` configuration file and ```<output_dir>``` is the path to the output directory.
+
+where ```<config_file>``` is the path to the `YAML` configuration file and ```<output_dir>``` is the path to the output
+directory.
+
+Both arguments are optional. If not provided, the default values are ```config/compare_all_models.yaml```
+and ```results/```, respectively.
+
+To do a quick test, you can run the package with only one model by running the following command:
+
+```bash
+python main.py --config ridge.yaml --output results/
+```
+
+We can also generate synthetic data using GANs by including the ```gan``` flag in the configuration file.
+You can explore examples of the different options provided by the package in the ```config/``` folders.
+
+<a id="tutorials"></a>
+
+# 📚 Tutorials
+
+We provide several tutorials to help you get started with the package. You can find them in the ```tutorials/``` folder.
+You can explore the ```tutorials/models/```, ```tutorials/gan/```, and ```tutorials/preprocessing/``` folders to learn
+more about the different functionalities of the package.
+
+<a id="documentation"></a>
+
+# 📖 Documentation
 
 You can also refer to the [documentation](https://tahiri-lab.github.io/QSAR/) for more details.
 
+We generated the documentation using [Sphinx](https://www.sphinx-doc.org/en/master/). To generate the documentation
+locally, you can run the following command:
+
+```bash
+cd docs/
+make html
+```
+
+The documentation will be generated in the ```docs/build/html/``` folder. You can open the ```index.html``` file in your
+browser to view the documentation.
+
 <a id="contact"></a>
+
 # 📧 Contact
+
 Please email us at: <Nadia.Tahiri@USherbrooke.ca> for any questions or feedback.
 
 [Go to Top](#about-the-project)
