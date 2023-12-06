@@ -1,5 +1,5 @@
 <div align="center">
-<h1>QSAR</h1>
+<h1>qsarKit</h1>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Contributions](https://img.shields.io/badge/contributions-welcome-blue.svg)](https://pysd.readthedocs.io/en/latest/development/development_index.html)
@@ -39,7 +39,7 @@
 
 # 📝 About the project
 
-`QSAR` is a Python package that offers robust predictive modeling using QSAR for evaluating the transfer of
+`qsarKit` is a Python package that offers robust predictive modeling using QSAR for evaluating the transfer of
 environmental contaminants in breast milk. Developed by the dedicated team led by
 Professor [Nadia Tahiri](https://tahirinadia.github.io/) at the University of Sherbrooke in Quebec, Canada. This
 open-source integrates multiple predictive models, provides synthetic data generation via GANs, and is tailored for
@@ -66,28 +66,28 @@ update the package as soon as the dependencies are updated.
 
 # 🚀 Use cases
 
-The `QSAR` package can be encapsulated in other applications or used as a standalone package.
-You can refer to the tutorials on how to use the package functionalities, or use the package as a standalone application
-by running the following command:
-
-```bash
-python main.py --config <config_file> --output <output_dir>
-```
-
-where ```<config_file>``` is the path to the `YAML` configuration file and ```<output_dir>``` is the path to the output
-directory.
-
-Both arguments are optional. If not provided, the default values are ```config/compare_all_models.yaml```
-and ```results/```, respectively.
-
-To do a quick test, you can run the package with only one model by running the following command:
+The `qsarKit` package can be encapsulated in other applications or used as a standalone package.
+You can refer to the tutorials on how to use the package functionalities, or use the package as a standalone application.
+To perform a quick test, you can run the package with only one model by executing the following command:
 
 ```bash
 python main.py --config ridge.yaml --output results/
 ```
 
+For a more generic way of running the package as a standalone application, you can execute the following command by
+specifying the ```<config_file>``` (path to the `YAML` configuration file) and ```<output_dir>``` (path to the output
+directory).
+
+```bash
+python main.py --config <config_file> --output <output_dir>
+```
+
+Both arguments are optional. If not provided, the default values are ```config/compare_all_models.yaml```
+and ```results/```, respectively.
+
 We can also generate synthetic data using GANs by including the ```gan``` flag in the configuration file.
 You can explore examples of the different options provided by the package in the ```config/``` folders.
+And you can refer to the ```gan``` tutorial.
 
 <a id="tutorials"></a>
 
