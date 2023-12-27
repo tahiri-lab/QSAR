@@ -4,6 +4,12 @@ datasets:
 
 target: "Log_MP_RATIO"
 
+gan:
+    -   size: 1000
+    -   atom_count: 9
+    -   smiles_column: "SMILES"
+    -   descriptors: "default"
+
 preprocess:
     -   name: "low_variance"
     -   name: "high_correlation"

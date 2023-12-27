@@ -1,8 +1,8 @@
-name: qsar_env
+name: qsar_env2
 channels:
   - defaults
 dependencies:
   - python=3.10
   - pip
   - pip:
-    - -r file:requirements.txt
+    - -r requirements.txt
