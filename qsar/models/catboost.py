@@ -12,7 +12,7 @@ class CatboostModel(BaselineModel):
     CatBoost Regressor models.
     """
 
-    def __init__(self, max_iter: int = Model.DEFAULT_MAX_ITER, random_state: int = Model.DEFAULT_RANDOM_STATE,
+    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
                  params=None):
         """
         Initialize the CatboostModel with optional maximum iterations, random state, and model parameters.
