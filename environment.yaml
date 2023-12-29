@@ -1,4 +1,4 @@
-name: qsar_env2
+name: qsar_env
 channels:
   - defaults
 dependencies:
