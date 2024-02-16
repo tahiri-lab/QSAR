@@ -1,7 +1,7 @@
 ElasticNet Model
 ----------------
 
-.. automodule:: qsar.models.elasticnet_model
+.. automodule:: qsar.models.elasticnet
    :members:
    :undoc-members:
    :show-inheritance:

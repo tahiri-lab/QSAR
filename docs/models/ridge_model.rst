@@ -1,7 +1,7 @@
 Ridge Model
 -----------
 
-.. automodule:: qsar.models.ridge_model
+.. automodule:: qsar.models.ridge
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,7 +1,7 @@
 XGBoost Model
 -------------
 
-.. automodule:: qsar.models.xgboost_model
+.. automodule:: qsar.models.xgboost
    :members:
    :undoc-members:
    :show-inheritance:
