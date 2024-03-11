@@ -43,6 +43,12 @@ setup(
         "ipython~=8.21.0",
         "sphinx-rtd-theme~=2.0.0",
         "PyYAML~=6.0.1",
+        "flake8~=7.0.0",
+        "pytest~=8.0.0",
+        "pytest-cov~=4.1.0",
+        "pylint~=3.1.0",
+        "black~=24.2.0",
+        "isort~=5.13.2",
     ],
     python_requires='==3.10.*',
 )

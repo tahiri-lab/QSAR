@@ -8,10 +8,16 @@ from qsar.utils.cross_validator import CrossValidator
 
 class XgboostModel(BaselineModel):
     """
-    A class used to represent a XGBoostModel, inheriting from the Model class. This class specifically handles the XGBoost Regressor from the xgboost library.
+    A class used to represent a XGBoostModel, inheriting from the Model class. This class specifically handles the
+    XGBoost Regressor from the xgboost library.
     """
-    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-                 params=None):
+
+    def __init__(
+        self,
+        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+        params=None,
+    ):
         """
         Initialize the XGBoostModel with optional maximum iterations, random state, and model parameters.
 
@@ -23,7 +29,7 @@ class XgboostModel(BaselineModel):
         :type params: dict, optional
         """
         super().__init__()
-        self.model = XGBRegressor(random_state=random_state)
+        self.model = XGBRegressor(max_iter=max_iter, random_state=random_state)
         self.params = params
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
@@ -38,15 +44,15 @@ class XgboostModel(BaselineModel):
         :rtype: float
         """
         self.params = {
-            'max_depth': trial.suggest_int('max_depth', 1, 10),
-            'learning_rate': trial.suggest_float('learning_rate', 0.01, 1.0),
-            'n_estimators': trial.suggest_int('n_estimators', 50, 1000),
-            'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
-            'gamma': trial.suggest_float('gamma', 0.01, 1.0),
-            'subsample': trial.suggest_float('subsample', 0.01, 1.0),
-            'colsample_bytree': trial.suggest_float('colsample_bytree', 0.01, 1.0),
-            'reg_alpha': trial.suggest_float('reg_alpha', 0.01, 1.0),
-            'reg_lambda': trial.suggest_float('reg_lambda', 0.01, 1.0),
+            "max_depth": trial.suggest_int("max_depth", 1, 10),
+            "learning_rate": trial.suggest_float("learning_rate", 0.01, 1.0),
+            "n_estimators": trial.suggest_int("n_estimators", 50, 1000),
+            "min_child_weight": trial.suggest_int("min_child_weight", 1, 10),
+            "gamma": trial.suggest_float("gamma", 0.01, 1.0),
+            "subsample": trial.suggest_float("subsample", 0.01, 1.0),
+            "colsample_bytree": trial.suggest_float("colsample_bytree", 0.01, 1.0),
+            "reg_alpha": trial.suggest_float("reg_alpha", 0.01, 1.0),
+            "reg_lambda": trial.suggest_float("reg_lambda", 0.01, 1.0),
         }
 
         self.model.set_params(**self.params)

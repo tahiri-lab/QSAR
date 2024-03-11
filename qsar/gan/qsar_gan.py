@@ -1,27 +1,33 @@
-import numpy as np
-from deepchem.models.molgan import BasicMolGANModel
-from deepchem.models.optimizers import ExponentialDecay
-from tensorflow import one_hot
-import deepchem as dc
-
-from qsar.gan.gan_featurizer import QsarGanFeaturizer
-
 """
 This script is used to train a Generative Adversarial Network (GAN) model for generating molecules.
 It uses the DeepChem and TensorFlow libraries for the GAN model and the QsarGanFeaturizer for featurizing the molecules.
 The QsarGan class is responsible for the training and prediction process.
 """
 
+import deepchem as dc
+import numpy as np
+from deepchem.models.molgan import BasicMolGANModel
+from deepchem.models.optimizers import ExponentialDecay
+from tensorflow import one_hot
+
+from qsar.gan.gan_featurizer import QsarGanFeaturizer
+
 
 class QsarGan:
-    def __init__(self,
-                 learning_rate: ExponentialDecay,
-                 featurizer: QsarGanFeaturizer,
-                 edges: int = 5,
-                 nodes: int = 5,
-                 embedding_dim: int = 10,
-                 dropout_rate: float = 0.0,
-                 **kwargs):
+    """
+    A class that trains a Generative Adversarial Network (GAN) model for generating SMILES of synthetic molecules.
+    """
+
+    def __init__(
+        self,
+        learning_rate: ExponentialDecay,
+        featurizer: QsarGanFeaturizer,
+        edges: int = 5,
+        nodes: int = 5,
+        embedding_dim: int = 10,
+        dropout_rate: float = 0.0,
+        **kwargs
+    ):
 
         self.featurizer = featurizer
         self.gan = BasicMolGANModel(
@@ -31,7 +37,8 @@ class QsarGan:
             nodes=nodes,
             embedding_dim=embedding_dim,
             dropout_rate=dropout_rate,
-            **kwargs)
+            **kwargs
+        )
 
     def _iterbatches(self, epochs, features):
         """
@@ -42,15 +49,28 @@ class QsarGan:
         :param features: the features used for training the GAN model
         :type features: np.ndarray
         """
-        dataset = dc.data.NumpyDataset([x.adjacency_matrix for x in features], [x.node_features for x in features])
-        for i in range(epochs):
-            for batch in dataset.iterbatches(batch_size=self.gan.batch_size, pad_batches=True):
+        dataset = dc.data.NumpyDataset(
+            [x.adjacency_matrix for x in features], [x.node_features for x in features]
+        )
+        for _ in range(epochs):
+            for batch in dataset.iterbatches(
+                batch_size=self.gan.batch_size, pad_batches=True
+            ):
                 adjacency_tensor = one_hot(batch[0], self.gan.edges)
                 node_tensor = one_hot(batch[1], self.gan.nodes)
-                yield {self.gan.data_inputs[0]: adjacency_tensor, self.gan.data_inputs[1]: node_tensor}
+                yield {
+                    self.gan.data_inputs[0]: adjacency_tensor,
+                    self.gan.data_inputs[1]: node_tensor,
+                }
 
-    def fit_predict(self, features: np.ndarray, epochs=32, generator_steps=0.2, checkpoint_interval=5000,
-                    number_to_generate=10000) -> list:
+    def fit_predict(
+        self,
+        features: np.ndarray,
+        epochs=32,
+        generator_steps=0.2,
+        checkpoint_interval=5000,
+        number_to_generate=10000,
+    ) -> list:
         """
         Trains the GAN model and generates new molecules.
 
@@ -67,8 +87,11 @@ class QsarGan:
         :return: a list of unique SMILES strings representing the generated molecules
         :rtype: list
         """
-        self.gan.fit_gan(self._iterbatches(epochs, features), generator_steps=generator_steps,
-                         checkpoint_interval=checkpoint_interval)
+        self.gan.fit_gan(
+            self._iterbatches(epochs, features),
+            generator_steps=generator_steps,
+            checkpoint_interval=checkpoint_interval,
+        )
 
         generated_data = self.gan.predict_gan_generator(number_to_generate)
 

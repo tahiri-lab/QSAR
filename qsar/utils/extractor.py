@@ -1,5 +1,6 @@
-from typing import Dict, Tuple
 import os
+from typing import Dict, Tuple
+
 import pandas as pd
 
 
@@ -7,7 +8,8 @@ class Extractor:
     """
     Class for cross-validation related functionalities.
 
-    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to the CSV file.
+    :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to
+    the CSV file.
     :type paths: Dict[str, str]
 
     :ivar dfs: Extracted DataFrames from the paths provided during initialization.
@@ -53,7 +55,7 @@ class Extractor:
 
         :raises FileNotFoundError: If a path in the dictionary does not exist.
         """
-        self.dfs = dict()
+        self.dfs = {}
         for name, path in paths.items():
             if not os.path.exists(path):
                 raise FileNotFoundError(f"{path} does not exist.")
@@ -61,7 +63,7 @@ class Extractor:
         return self.dfs
 
     def split_x_y(
-            self, y_col: str
+        self, y_col: str
     ) -> Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]:
         """
         Splits the DataFrames into X and y DataFrames based on the specified column.
@@ -72,8 +74,8 @@ class Extractor:
          dictionary contains the y DataFrames, both keyed by the names of the original DataFrames.
         :rtype: Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]
         """
-        x_dfs = dict()
-        y_dfs = dict()
+        x_dfs = {}
+        y_dfs = {}
         for name, df in self.dfs.items():
             y_dfs[name] = df[[y_col]]
             x_dfs[name] = df.drop(columns=[y_col])

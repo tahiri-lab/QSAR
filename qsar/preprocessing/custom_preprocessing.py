@@ -11,12 +11,18 @@ class LowVarianceRemover(BaseEstimator, TransformerMixin):
         self.cols_to_ignore = cols_to_ignore
         self.verbose = verbose
 
-    def fit(self, X, y=None):
+    def fit(self, x, y=None):
         return self
 
-    def transform(self, X):
-        fs = FeatureSelector(X, self.y, self.cols_to_ignore)
-        return fs.remove_low_variance(self.y, self.variance_threshold, self.cols_to_ignore, self.verbose, inplace=True)
+    def transform(self, x):
+        fs = FeatureSelector(x, self.y, self.cols_to_ignore)
+        return fs.remove_low_variance(
+            self.y,
+            self.variance_threshold,
+            self.cols_to_ignore,
+            self.verbose,
+            inplace=True,
+        )
 
 
 class HighCorrelationRemover(BaseEstimator, TransformerMixin):
@@ -26,17 +32,30 @@ class HighCorrelationRemover(BaseEstimator, TransformerMixin):
         self.threshold = threshold
         self.verbose = verbose
 
-    def fit(self, X, y=None):
+    def fit(self, x, y=None):
         return self
 
-    def transform(self, X):
-        fs = FeatureSelector(X[0])
-        return fs.remove_highly_correlated(self.df_correlation, self.df_corr_y, X[0], self.threshold, self.verbose,
-                                           inplace=True)
+    def transform(self, x):
+        fs = FeatureSelector(x[0])
+        return fs.remove_highly_correlated(
+            self.df_correlation,
+            self.df_corr_y,
+            x[0],
+            self.threshold,
+            self.verbose,
+            inplace=True,
+        )
 
 
 class PreprocessingPipeline:
-    def __init__(self, target="Log_MP_RATIO", variance_threshold=0, cols_to_ignore=None, verbose=False, threshold=0.9):
+    def __init__(
+        self,
+        target="Log_MP_RATIO",
+        variance_threshold=0,
+        cols_to_ignore=None,
+        verbose=False,
+        threshold=0.9,
+    ):
         if cols_to_ignore is None:
             cols_to_ignore = []
         self.target = target
@@ -46,12 +65,26 @@ class PreprocessingPipeline:
         self.threshold = threshold
 
     def get_pipeline(self):
-        pipeline = Pipeline([
-            ('low_variance_remover',
-             LowVarianceRemover(y=self.target, variance_threshold=self.variance_threshold,
-                                cols_to_ignore=self.cols_to_ignore, verbose=self.verbose)),
-            ('high_correlation_remover',
-             HighCorrelationRemover(df_correlation=None, df_corr_y=None, threshold=self.threshold,
-                                    verbose=self.verbose))
-        ])
+        pipeline = Pipeline(
+            [
+                (
+                    "low_variance_remover",
+                    LowVarianceRemover(
+                        y=self.target,
+                        variance_threshold=self.variance_threshold,
+                        cols_to_ignore=self.cols_to_ignore,
+                        verbose=self.verbose,
+                    ),
+                ),
+                (
+                    "high_correlation_remover",
+                    HighCorrelationRemover(
+                        df_correlation=None,
+                        df_corr_y=None,
+                        threshold=self.threshold,
+                        verbose=self.verbose,
+                    ),
+                ),
+            ]
+        )
         return pipeline
