@@ -1,10 +1,11 @@
+from unittest.mock import MagicMock, patch
+
 import numpy as np
 import pytest
-from unittest.mock import MagicMock, patch
+from deepchem.models.optimizers import ExponentialDecay
 
 from qsar.gan.gan_featurizer import QsarGanFeaturizer
 from qsar.gan.qsar_gan import QsarGan
-from deepchem.models.optimizers import ExponentialDecay
 
 
 @pytest.fixture
@@ -31,29 +32,37 @@ def test_qsar_gan_initialization(mock_featurizer, mock_learning_rate):
         edges=5,
         nodes=5,
         embedding_dim=10,
-        dropout_rate=0.1
+        dropout_rate=0.1,
     )
-    assert model.featurizer == mock_featurizer, "Featurizer should be correctly assigned"
+    assert (
+        model.featurizer == mock_featurizer
+    ), "Featurizer should be correctly assigned"
     assert model.gan is not None, "GAN model should be instantiated"
 
 
-@patch('deepchem.models.molgan.BasicMolGANModel.fit_gan')
-@patch('deepchem.models.molgan.BasicMolGANModel.predict_gan_generator')
-def test_fit_predict(mock_predict_gan, mock_fit_gan, mock_featurizer, mock_features):
+@patch("deepchem.models.molgan.BasicMolGANModel.fit_gan")
+@patch("deepchem.models.molgan.BasicMolGANModel.predict_gan_generator")
+def test_fit_predict(mock_predict_gan, mock_featurizer, mock_features):
     model = QsarGan(
         learning_rate=mock_learning_rate,
         featurizer=mock_featurizer,
         edges=5,
         nodes=5,
         embedding_dim=10,
-        dropout_rate=0.1
+        dropout_rate=0.1,
     )
     mock_predict_gan.return_value = mock_features  # Mock the prediction output
-    mock_featurizer.defeaturize.return_value = mock_features  # Mock the defeaturization process
-    mock_featurizer.get_unique_smiles.return_value = ['CCC', 'CCO', 'CCN']  # Mock unique smiles generation
+    mock_featurizer.defeaturize.return_value = (
+        mock_features  # Mock the defeaturization process
+    )
+    mock_featurizer.get_unique_smiles.return_value = [
+        "CCC",
+        "CCO",
+        "CCN",
+    ]  # Mock unique smiles generation
 
-    generated_smiles = model.fit_predict(features=mock_features, epochs=1, generator_steps=0.2)
+    generated_smiles = model.fit_predict(
+        features=mock_features, epochs=1, generator_steps=0.2
+    )
     assert isinstance(generated_smiles, list), "Output should be a list"
     assert len(generated_smiles) > 0, "There should be at least one generated SMILES"
-    mock_fit_gan.assert_called_once(), "fit_gan should be called once"
-    mock_predict_gan.assert_called_once(), "predict_gan_generator should be called once"

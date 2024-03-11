@@ -24,11 +24,14 @@ class HyperParameterOptimizer:
 
     DEFAULT_TRIALS = 1000
 
-    def __init__(self, model: BaselineModel, data, trials=DEFAULT_TRIALS, direction='maximize'):
+    def __init__(
+        self, model: BaselineModel, data, trials=DEFAULT_TRIALS, direction="maximize"
+    ):
         """
         Initialize the HyperParameterOptimizer.
 
-        :param model: The model to be optimized. This model should inherit from 'Model' and should implement 'optimize_hyperparameters'.
+        :param model: The model to be optimized. This model should inherit from 'Model' and should implement
+        'optimize_hyperparameters'.
         :type model: Model
         :param data: The training data.
         :type data: Varies (specify the expected data type)
@@ -61,6 +64,8 @@ class HyperParameterOptimizer:
         :rtype: optuna.study.Study
         """
         study = optuna.create_study(direction=self.direction)
-        study.optimize(self._objective, n_trials=self.trials, n_jobs=-1, show_progress_bar=True)
+        study.optimize(
+            self._objective, n_trials=self.trials, n_jobs=-1, show_progress_bar=True
+        )
 
         return study

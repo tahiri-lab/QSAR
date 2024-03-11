@@ -11,8 +11,10 @@ class RandomForestModel(BaselineModel):
     A class used to represent a RandomForestModel, inheriting from the Model class. This class specifically handles the
     RandomForest Regressor from the sklearn library.
     """
-    def __init__(self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-                 params=None):
+
+    def __init__(
+        self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE, params=None
+    ):
         """
         Initialize the RandomForestModel with an optional random state and model parameters.
 
@@ -39,10 +41,10 @@ class RandomForestModel(BaselineModel):
         :rtype: float
         """
         self.params = {
-            'n_estimators': trial.suggest_int('n_estimators', 50, 1000),
-            'max_depth': trial.suggest_int('max_depth', 4, 50),
-            'min_samples_split': trial.suggest_int('min_samples_split', 2, 150),
-            'min_samples_leaf': trial.suggest_int('min_samples_leaf', 1, 60),
+            "n_estimators": trial.suggest_int("n_estimators", 50, 1000),
+            "max_depth": trial.suggest_int("max_depth", 4, 50),
+            "min_samples_split": trial.suggest_int("min_samples_split", 2, 150),
+            "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 60),
         }
 
         self.model.set_params(**self.params)

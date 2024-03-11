@@ -11,8 +11,13 @@ class RidgeModel(BaselineModel):
     A class used to represent a RidgeModel, inheriting from the Model class. This class specifically handles the Ridge
     Regressor from the sklearn library.
     """
-    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-                 params=None):
+
+    def __init__(
+        self,
+        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+        params=None,
+    ):
         """
         Initialize the RidgeModel with optional maximum iterations, random state, and model parameters.
 
@@ -39,9 +44,11 @@ class RidgeModel(BaselineModel):
         :rtype: float
         """
         self.params = {
-            "alpha": trial.suggest_float('alpha', 1e-10, 1e10, log=True),
-            "solver": trial.suggest_categorical('solver',
-                                                ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga"]),
+            "alpha": trial.suggest_float("alpha", 1e-10, 1e10, log=True),
+            "solver": trial.suggest_categorical(
+                "solver",
+                ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga"],
+            ),
         }
 
         self.model.set_params(**self.params)

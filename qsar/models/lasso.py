@@ -1,9 +1,8 @@
 import pandas as pd
 from optuna import Trial
-
-from qsar.models.baseline_model import BaselineModel
 from sklearn.linear_model import Lasso
 
+from qsar.models.baseline_model import BaselineModel
 from qsar.utils.cross_validator import CrossValidator
 
 
@@ -13,8 +12,12 @@ class LassoModel(BaselineModel):
     Regressor from the sklearn library.
     """
 
-    def __init__(self, max_iter: int = BaselineModel.DEFAULT_MAX_ITER, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-                 params=None):
+    def __init__(
+        self,
+        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+        params=None,
+    ):
         """
         Initialize the LassoModel with optional maximum iterations, random state, and model parameters.
 

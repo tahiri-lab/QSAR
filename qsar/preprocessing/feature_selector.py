@@ -2,22 +2,18 @@
 Feature selector class
 """
 
-import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import seaborn as sns
 from IPython.core.display_functions import display
-
-from scipy.spatial import distance
+from matplotlib import patches
 from scipy.cluster import hierarchy
-
-from sklearn import preprocessing, feature_selection
+from scipy.spatial import distance
+from sklearn import feature_selection, preprocessing
 from sklearn.cluster import KMeans
-
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
-
-from matplotlib import patches
-import matplotlib.pyplot as plt
 
 
 class FeatureSelector:
@@ -34,9 +30,7 @@ class FeatureSelector:
     :type cols_to_ignore: list, optional
     """
 
-    def __init__(
-        self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore=None
-    ):
+    def __init__(self, df: pd.DataFrame, y: str = "Log_MP_RATIO", cols_to_ignore=None):
         """
         Initializes the FeatureSelector class.
 
@@ -94,16 +88,21 @@ class FeatureSelector:
             self.df = df_normalized
         return df_normalized
 
-    # TODO: check avec Nadia "0.01 would mean dropping the column where 99% of the values are similar."
-    def remove_low_variance(self: "FeatureSelector", y: str = "", variance_threshold: float = 0,
-                            cols_to_ignore=None, verbose: bool = False,
-                            inplace: bool = False) -> tuple[pd.DataFrame, list]:
+    def remove_low_variance(
+        self: "FeatureSelector",
+        y: str = "",
+        variance_threshold: float = 0,
+        cols_to_ignore=None,
+        verbose: bool = False,
+        inplace: bool = False,
+    ) -> tuple[pd.DataFrame, list]:
         """
         Removes features from the DataFrame with variance below the specified threshold.
 
         :param df: DataFrame with continuous data describing observations and features.
         :type df: pd.DataFrame
-        :param y: The dependent variable which will be ignored in the feature removal process. Defaults to an empty string.
+        :param y: The dependent variable which will be ignored in the feature removal process.
+        Defaults to an empty string.
         :type y: str, optional
         :param variance_threshold: The threshold for variance below which features will be removed.
         :type variance_threshold: float
@@ -111,9 +110,11 @@ class FeatureSelector:
         :type cols_to_ignore: list, optional
         :param verbose: If True, displays descriptive text to help visualize changes. Defaults to False.
         :type verbose: bool, optional
-        :param inplace: If True, updates the attribute `df` of the FeatureSelector object with the resultant DataFrame. Defaults to False.
+        :param inplace: If True, updates the attribute `df` of the FeatureSelector object with the resultant DataFrame.
+        Defaults to False.
         :type inplace: bool, optional
-        :return: A tuple containing the DataFrame with low variance features removed and a list of the removed column names.
+        :return: A tuple containing the DataFrame with low variance features removed and a list of the removed column
+        names.
         :rtype: Tuple[pd.DataFrame, list]
         """
         if cols_to_ignore is None:
@@ -137,18 +138,26 @@ class FeatureSelector:
         computed_treshold: int = df_clone.var(axis=1).mean() * variance_threshold
         # computed_treshold = variance_threshold
 
-        Vt: feature_selection.VarianceThreshold = feature_selection.VarianceThreshold(threshold=computed_treshold)
-        high_variance = Vt.fit_transform(df_clone)
+        vt: feature_selection.VarianceThreshold = feature_selection.VarianceThreshold(
+            threshold=computed_treshold
+        )
+        high_variance = vt.fit_transform(df_clone)
         if verbose:
             print("===== CLEANED SHAPE =====")
             print(high_variance.shape)
 
-        deleted_features: list = [column for column in df_clone if column not in df_clone.columns[Vt.get_support()]]
+        deleted_features: list = [
+            column
+            for column in df_clone
+            if column not in df_clone.columns[vt.get_support()]
+        ]
         if verbose:
             print("===== DELETED FEATURES ======")
             print(deleted_features)
 
-        cleaned_df: pd.DataFrame = df_clone[df_clone.columns[Vt.get_support(indices=True)]].copy()
+        cleaned_df: pd.DataFrame = df_clone[
+            df_clone.columns[vt.get_support(indices=True)]
+        ].copy()
 
         cleaned_df[cols_to_ignore] = self.df[cols_to_ignore]
         if verbose:
@@ -160,8 +169,13 @@ class FeatureSelector:
 
         return cleaned_df, deleted_features
 
-    def get_correlation_to_y(self: "FeatureSelector", df: pd.DataFrame = None, y: str = "",
-                             cols_to_ignore=None, method: str = "kendall") -> pd.DataFrame:
+    def get_correlation_to_y(
+        self: "FeatureSelector",
+        df: pd.DataFrame = None,
+        y: str = "",
+        cols_to_ignore=None,
+        method: str = "kendall",
+    ) -> pd.DataFrame:
         """
         Calculates a correlation score for each feature in relation to the specified dependent variable.
 
@@ -171,7 +185,8 @@ class FeatureSelector:
         :type y: str, optional
         :param cols_to_ignore: List of columns where the function should not be executed. Defaults to an empty list.
         :type cols_to_ignore: list, optional
-        :param method: Method used to calculate correlation. Options include "pearson", "kendall", or "spearman". Defaults to "kendall".
+        :param method: Method used to calculate correlation. Options include "pearson", "kendall", or "spearman".
+        Defaults to "kendall".
         :type method: str, optional
         :return: A Series object with the correlation score for each feature relative to the y variable.
         :rtype: pd.Series
@@ -203,13 +218,16 @@ class FeatureSelector:
         """
         Calculates a correlation score for all features within a DataFrame.
 
-        :param df: DataFrame with only continuous data describing the observations and features. If None, uses the internal DataFrame. Defaults to None.
+        :param df: DataFrame with only continuous data describing the observations and features. If None, uses the
+        internal DataFrame. Defaults to None.
         :type df: pd.DataFrame, optional
-        :param y: Name of the column for the dependent variable to ignore in the collinearity test. Defaults to an empty string, indicating no dependent variable.
+        :param y: Name of the column for the dependent variable to ignore in the collinearity test. Defaults to an empty
+        string, indicating no dependent variable.
         :type y: str, optional
         :param cols_to_ignore: List of column names to ignore during correlation computation. Defaults to an empty list.
         :type cols_to_ignore: list, optional
-        :param method: Method used to calculate the correlation between the features. Options are "pearson", "kendall", or "spearman". Defaults to "kendall".
+        :param method: Method used to calculate the correlation between the features. Options are "pearson", "kendall",
+        or "spearman". Defaults to "kendall".
         :type method: str, optional
         :return: A DataFrame containing the correlation coefficients of the features.
         :rtype: pd.DataFrame
@@ -231,19 +249,28 @@ class FeatureSelector:
         df_corr = df_corr.corr(method)
         return df_corr.dropna(how="all", axis=1).dropna(how="all")
 
-    def remove_highly_correlated(self: "FeatureSelector", df_correlation: pd.DataFrame = None,
-                                 df_corr_y: pd.DataFrame = None, df: pd.DataFrame = None,
-                                 threshold: float = 0.9, verbose: bool = False,
-                                 inplace=False, graph: bool = False) -> pd.DataFrame:
+    def remove_highly_correlated(
+        self: "FeatureSelector",
+        df_correlation: pd.DataFrame = None,
+        df_corr_y: pd.DataFrame = None,
+        df: pd.DataFrame = None,
+        threshold: float = 0.9,
+        verbose: bool = False,
+        inplace=False,
+        graph: bool = False,
+    ) -> pd.DataFrame:
         # used: https://stackoverflow.com/a/61938339
         """
         Removes all the features from the DataFrame that have a correlation coefficient above the specified threshold.
 
-        :param df_correlation: A DataFrame representing the correlation matrix. Defaults to None, which will use the internal DataFrame's correlation matrix.
+        :param df_correlation: A DataFrame representing the correlation matrix. Defaults to None, which will use the
+        internal DataFrame's correlation matrix.
         :type df_correlation: pd.DataFrame, optional
-        :param df_corr_y: A DataFrame of correlation values correlating all features to the dependent variable. Defaults to None, which will calculate it from the internal DataFrame.
+        :param df_corr_y: A DataFrame of correlation values correlating all features to the dependent variable. Defaults
+        to None, which will calculate it from the internal DataFrame.
         :type df_corr_y: pd.DataFrame, optional
-        :param df: A DataFrame with only continuous data describing the observations and features. Defaults to None, which will use the internal DataFrame.
+        :param df: A DataFrame with only continuous data describing the observations and features. Defaults to None,
+        which will use the internal DataFrame.
         :type df: pd.DataFrame, optional
         :param threshold: The threshold where features correlated beyond should be dropped. Defaults to 0.9.
         :type threshold: float, optional
@@ -251,7 +278,8 @@ class FeatureSelector:
         :type verbose: bool, optional
         :param inplace: If True, replaces the internal DataFrame with the result. Defaults to False.
         :type inplace: bool, optional
-        :param graph: If True, draws a heatmap of all dropped features and their respective correlation to each other. Defaults to False.
+        :param graph: If True, draws a heatmap of all dropped features and their respective correlation to each other.
+        Defaults to False.
         :type graph: bool, optional
         :return: A DataFrame with highly correlated features removed.
         :rtype: pd.DataFrame
@@ -287,16 +315,23 @@ class FeatureSelector:
                 # B         ✓   ✓
                 # C             ✓
                 # D
-                item = df_correlation.iloc[j:(j + 1), (i + 1):(i + 2)]
+                item = df_correlation.iloc[j : (j + 1), (i + 1) : (i + 2)]
                 col: str = item.columns
                 row: int = item.index
                 value: int = abs(item.values)
 
                 # if correlation exceeds the threshold
                 if value >= threshold:
-                    # TODO: change this to drop either by either the lowest variance or the more correlated to y
                     if verbose:
-                        print("col: ", col.values[0], " | ", "row: ", row.values[0], " = ", round(value[0][0], 2))
+                        print(
+                            "col: ",
+                            col.values[0],
+                            " | ",
+                            "row: ",
+                            row.values[0],
+                            " = ",
+                            round(value[0][0], 2),
+                        )
                     # Check which feature is more correlated to y in the table
                     col_feature: str = abs(df_corr_y[col.values[0]])
                     row_feature: str = abs(df_corr_y[row.values[0]])
@@ -304,7 +339,11 @@ class FeatureSelector:
                     feature_to_drop: str = ""
 
                     # Select the feature to drop, the lowest correlation to y is selected
-                    feature_to_drop = col.values[0] if (col_feature < row_feature).all() else row.values[0]
+                    feature_to_drop = (
+                        col.values[0]
+                        if (col_feature < row_feature).all()
+                        else row.values[0]
+                    )
                     if feature_to_drop not in drop_cols:
                         drop_cols.append(feature_to_drop)
                         if verbose:
@@ -321,7 +360,9 @@ class FeatureSelector:
         if graph:
             removed_feat = df.columns.difference(dropped_df.columns)
             df_display = 1 - df_correlation.loc[removed_feat, removed_feat]
-            linkage = hierarchy.linkage(distance.squareform(df_display), method="average")
+            linkage = hierarchy.linkage(
+                distance.squareform(df_display), method="average"
+            )
             print(linkage)
             g = sns.clustermap(df_display, row_linkage=linkage, col_linkage=linkage)
 
@@ -338,7 +379,9 @@ class FeatureSelector:
 
     # WARNING: This function only works if the number of observations is higher or close to the number of features
     # https://stats.stackexchange.com/a/583502
-    def remove_multicollinearity(self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"):
+    def remove_multicollinearity(
+        self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"
+    ):
         if df is None:
             df = self.df.copy()
 
@@ -348,12 +391,13 @@ class FeatureSelector:
         df = add_constant(df)
 
         df_vif: pd.DataFrame = pd.DataFrame()
-        df_vif["VIF_factor"] = [variance_inflation_factor(df.values, i) for i in range(df.shape[1])]
+        df_vif["VIF_factor"] = [
+            variance_inflation_factor(df.values, i) for i in range(df.shape[1])
+        ]
         df_vif["features"] = df.columns
 
         print(df_vif)
 
-    # TODO: if time remains add all the options to fully custom this function
     def transform(self: "FeatureSelector") -> pd.DataFrame:
         """
         Removes low variance and highly correlated features from the DataFrame stored in the FeatureSelector object.
@@ -367,7 +411,8 @@ class FeatureSelector:
 
 
 def display_data_cluster(
-    df_corr: pd.DataFrame, n_clusters: int = 8, n_init: str = 500, max_iter: int = 1000
+    df_corr: pd.DataFrame,
+    n_clusters: int = 8,
 ) -> None:
     # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
     """
@@ -445,12 +490,12 @@ def display_data_cluster(
         feat_labels: np.ndarray, corr_matrix: pd.DataFrame
     ):
         lst_lab = list(feat_labels)
-        lst_feat = corr_matrix.columns
+        # lst_feat = corr_matrix.columns
 
         lab_feat_map = {i: lst_lab[i] for i in range(len(lst_lab))}
-        lab_feat_map_sorted = {
-            k: v for k, v in sorted(lab_feat_map.items(), key=lambda item: item[1])
-        }
+        lab_feat_map_sorted = dict(
+            sorted(lab_feat_map.items(), key=lambda item: item[1])
+        )
 
         clustered_features = list(map(int, lab_feat_map_sorted.keys()))
         print(len(clustered_features))
@@ -499,7 +544,6 @@ def display_elbow(df: pd.DataFrame, max_num_clusters: int = 15) -> None:
     corr_feat_mtx: np.ndarray = df.to_numpy()
 
     wcss: list = []
-    max_num_clusters = max_num_clusters
 
     for i in range(1, max_num_clusters):
         kmeans = KMeans(

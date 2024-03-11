@@ -1,3 +1,9 @@
+"""
+This module provides the DescriptorsExtractor class for extracting chemical descriptors
+from molecules using RDKit. The extracted descriptors include various molecular properties
+such as molecular weight, logP, and more, which are useful in cheminformatics for molecule analysis.
+"""
+
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors
@@ -19,7 +25,7 @@ class DescriptorsExtractor:
                  The descriptors are computed using the RDKit library.
         :rtype: pd.DataFrame
         """
-        all_discriptors = [(name, func) for name, func in Descriptors.descList]
+        all_discriptors = list(Descriptors.descList)
         features_from_smiles = [[]] * len(mols)
         descriptor_names = [name for name, _ in Descriptors.descList]
         for idx, molecule in enumerate(mols):
@@ -27,4 +33,6 @@ class DescriptorsExtractor:
             for name, func in all_discriptors:
                 features_from_smiles[idx].append(func(molecule))
         smiles = [Chem.MolToSmiles(mol) for mol in mols]
-        return pd.DataFrame(features_from_smiles, columns=descriptor_names, index=smiles)
+        return pd.DataFrame(
+            features_from_smiles, columns=descriptor_names, index=smiles
+        )

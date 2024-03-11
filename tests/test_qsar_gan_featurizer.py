@@ -13,7 +13,7 @@ def featurizer():
 
 @pytest.fixture
 def sample_smiles():
-    return pd.DataFrame({'smiles': ['CCO', 'N=C=O', 'C#N', '[Na]', 'C(C)(C)C=C']})
+    return pd.DataFrame({"smiles": ["CCO", "N=C=O", "C#N", "[Na]", "C(C)(C)C=C"]})
 
 
 def test_initialization(featurizer):
@@ -21,8 +21,12 @@ def test_initialization(featurizer):
 
 
 def test_get_atom_count():
-    assert QsarGanFeaturizer._get_atom_count('CCO') == 3, "Incorrect atom count for 'CCO'"
-    assert QsarGanFeaturizer._get_atom_count('') == 0, "Empty string should return 0 atoms"
+    assert (
+        QsarGanFeaturizer._get_atom_count("CCO") == 3
+    ), "Incorrect atom count for 'CCO'"
+    assert (
+        QsarGanFeaturizer._get_atom_count("") == 0
+    ), "Empty string should return 0 atoms"
 
 
 def test_determine_atom_count(featurizer, sample_smiles):
@@ -36,14 +40,17 @@ def test_determine_atom_count(featurizer, sample_smiles):
 
 
 def test_filter_smiles(featurizer, sample_smiles):
-    filtered = featurizer._filter_smiles(sample_smiles['smiles'], 3)
+    filtered = featurizer._filter_smiles(sample_smiles["smiles"], 3)
     assert isinstance(filtered, np.ndarray), "Filtered SMILES should be an ndarray"
-    assert len(filtered) <= len(sample_smiles), "Filtered SMILES should not exceed original count"
+    assert len(filtered) <= len(
+        sample_smiles
+    ), "Filtered SMILES should not exceed original count"
 
 
 def test_get_unique_smiles():
     unique_smiles = QsarGanFeaturizer.get_unique_smiles(
-        np.array([Chem.MolFromSmiles('CCO'), Chem.MolFromSmiles('CCO'), None]))
+        np.array([Chem.MolFromSmiles("CCO"), Chem.MolFromSmiles("CCO"), None])
+    )
     assert isinstance(unique_smiles, list), "Should return a list"
     assert len(unique_smiles) == 1, "Should only contain unique items"
 

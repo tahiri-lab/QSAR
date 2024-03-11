@@ -1,0 +1,102 @@
+[MASTER]
+# Specify a configuration file.
+rcfile=
+
+# Python code to execute, usually for sys.path manipulation such as
+# pylint --init-hook 'import sys; sys.path.append("./path/to/your/package")'
+init-hook=''
+
+# Add files or directories to the blacklist. They should be base names, not paths.
+ignore=CVS
+
+# Add files or directories matching the regex patterns to the blacklist. The regex matches against base names, not paths.
+ignore-patterns=
+
+# Python version used to run Pylint.
+py-version=3.10
+
+# Only show warnings with the listed confidence levels. Leave empty to show all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
+confidence=
+
+[MESSAGES CONTROL]
+# Only show these messages
+enable=
+
+# Disable the messages, separators are ',' and ':'
+disable=missing-docstring,too-few-public-methods,too-many-arguments,missing-module-docstring
+
+[REPORTS]
+# Set the output format. Available formats: text, parseable, colorized, msvs (visual studio) and html
+output-format=text
+
+# Tells whether to display a full report or only the messages
+reports=no
+
+# Activate the evaluation score.
+evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+
+[SPELLING]
+# Spelling dictionary name. Available dictionaries: none. To make it working, also set the --spelling-dict option.
+spelling-dict=
+
+# List of comma separated words that should not be checked.
+spelling-ignore-words=
+
+# A path to a file that contains private dictionary; one word per line.
+spelling-private-dict-file=
+
+# Tells whether to store unknown words to indicated private dictionary in --spelling-private-dict-file option instead of raising a message.
+spelling-store-unknown-words=no
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=120
+
+# Maximum number of lines in a module
+max-module-lines=1000
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1 tab).
+indent-string='    '
+
+[LOGGING]
+# Logging modules to check that the string format arguments are in logging function parameter format
+logging-modules=logging
+
+[TYPECHECK]
+# List of module names for which member attributes should not be checked (useful for modules with dynamically set attributes).
+ignored-modules=
+
+# List of classes to consider as mixin classes, that should not have too many public methods.
+ignored-classes=
+
+# List of members which are set dynamically and missed by Pylint inference system, and so shouldn't trigger E1101 when accessed.
+generated-members=
+
+[MISCELLANEOUS]
+# List of note tags to take in consideration, separated by a comma.
+notes=FIXME,XXX,TODO
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=5
+
+# Maximum number of attributes for a class (see R0902).
+max-attributes=7
+
+# Maximum number of boolean expressions in a if statement
+max-bool-expr=5
+
+# Maximum number of branch for function / method body
+max-branches=12
+
+# Maximum number of locals for function / method body
+max-locals=15
+
+# Maximum number of return / yield for function / method body
+max-returns=6
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+# Minimum number of public methods for a class (see R0903).
+min-public-methods=2
