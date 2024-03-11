@@ -1,8 +1,7 @@
 import pandas as pd
 from sklearn import clone
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
-
-from qsar.models.baseline_model import BaselineModel
+from sklearn.metrics import mean_squared_error
 
 
 class CrossValidator:
@@ -104,7 +103,7 @@ class CrossValidator:
 
         return sum(mean_cv_score) / len(mean_cv_score)
 
-    def evaluate_model_performance(self, model, X_train, y_train, X_test, y_test):
+    def evaluate_model_performance(self, model, X_train, y_train, X_test, y_test) -> dict:
         """
         Compute various scores for model evaluation.
 
@@ -139,7 +138,21 @@ class CrossValidator:
         CV = cross_val_score(model_scorer, X_train, y_train, cv=3, scoring="r2").mean()
         Q2 = model_scorer.score(X_test, y_test)
 
-        return R2, CV, custom_cv, Q2
+        y_pred_train, y_pred_test = self.get_predictions(model_scorer, X_train, y_train, X_test)
+
+        RMSE_train = mean_squared_error(y_train, y_pred_train, squared=False)
+        RMSE_test = mean_squared_error(y_test, y_pred_test, squared=False)
+
+        metrics = {
+            'R2': R2,
+            'CV': CV,
+            'Custom_CV': custom_cv,
+            'Q2': Q2,
+            'RMSE_Train': RMSE_train,
+            'RMSE_Test': RMSE_test
+        }
+
+        return metrics
 
     @staticmethod
     def get_predictions(
