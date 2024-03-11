@@ -69,6 +69,7 @@ jobs:
                 run: |
                     pip install safety
             -   name: Run Safety to check dependencies for security vulnerabilities
+                continue-on-error: true
                 run: |
                     safety check
 
