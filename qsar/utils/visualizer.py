@@ -51,30 +51,21 @@ class Visualizer:
         plt.tight_layout()
         plt.show()
 
-    def display_model_performance(
-            self, model_name: str, R2: float, CV: float, custom_cv: float, Q2: float
-    ):
+    def display_model_performance(self, model_name: str, metrics: dict):
         """
         Display the scores of the model in a table format.
 
         :param model_name: The name of the model to be evaluated.
         :type model_name: str
-        :param R2: R squared score.
-        :type R2: float
-        :param CV: Cross-validation score.
-        :type CV: float
-        :param custom_cv: Custom cross-validation score.
-        :type custom_cv: float
-        :param Q2: Q squared score.
-        :type Q2: float
+        :param metrics: Dictionary containing the scores.
+        :type metrics: dict
         """
         # Create a new figure
         fig, ax = plt.subplots(figsize=self.figsize)
 
         # Data for the table
         columns = ["Metric", "Score"]
-        rows = ["R2", "CV", "Custom CV", "Q2"]
-        data = [[rows[i], score] for i, score in enumerate([R2, CV, custom_cv, Q2])]
+        data = [[k, v] for k, v in metrics.items()]
 
         # Remove axes
         ax.axis("tight")
