@@ -34,7 +34,7 @@ class QsarGanFeaturizer(MolGanFeaturizer):
         mol = Chem.MolFromSmiles(smiles_val)
         return mol.GetNumHeavyAtoms() if mol else 0
 
-    def determine_atom_count(self, smiles: pd.DataFrame, quantile: float = 0.95) -> tuple[int, DataFrame]:
+    def determine_atom_count(self, smiles: pd.DataFrame, quantile: float = 0.95) -> tuple[int, pd.Series]:
         """
         Determines the atom count for a DataFrame of SMILES strings.
 
