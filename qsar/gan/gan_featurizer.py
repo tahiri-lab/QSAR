@@ -1,3 +1,10 @@
+"""
+The class supports operations such as counting heavy atoms in molecules, filtering molecules based on atom counts,
+determining the appropriate atom count based on a dataset's distribution, and converting SMILES strings into unique,
+feature-encoded molecular formats compatible with GAN inputs. The design aims to streamline the preparation of chemical
+datasets for QSAR modeling in a GAN framework, focusing on molecular feature extraction and preprocessing.
+"""
+
 from collections import OrderedDict
 
 import numpy as np
