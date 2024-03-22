@@ -59,6 +59,18 @@ conda env create -f environment.yaml
 conda activate qsar_env
 ```
 
+If you encounter any issues activating the environment, try sourcing the Conda script first and then retry activation:
+
+```bash
+source ~/miniconda3/bin/activate qsar_env
+```
+
+or if you installed Anaconda instead of Miniconda:
+```bash
+
+source ~/anaconda3/bin/activate qsar_env
+```
+
 ⚠️ We currently only support Python 3.10 due to some dependencies that are not yet compatible with Python 3.11+. We will
 update the package as soon as the dependencies are updated.
 
@@ -106,9 +118,16 @@ You can also refer to the [documentation](https://tahiri-lab.github.io/QSAR/) fo
 We generated the documentation using [Sphinx](https://www.sphinx-doc.org/en/master/). To generate the documentation
 locally, you can run the following command:
 
+Linux/Mac:
 ```bash
 cd docs/
 make html
+```
+
+Windows:
+```bash
+cd docs/
+.\make.bat html
 ```
 
 The documentation will be generated in the ```docs/build/html/``` folder. You can open the ```index.html``` file in your
