@@ -1,5 +1,7 @@
+.. _feature_selector:
+
 Feature Selector
-----------------
+================
 
 .. automodule:: qsar.preprocessing.feature_selector
    :members:

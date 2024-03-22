@@ -1,5 +1,13 @@
 """
-Feature selector class
+The FeatureSelector is intended to be used in a stepwise manner, starting with data normalization, followed by the
+removal of low-variance features, handling of multicollinearity, and the elimination of highly correlated features.
+It supports various strategies for feature selection, allowing users to customize the preprocessing pipeline according
+to their QSAR modeling needs.
+
+The class also provides methods for visualizing data clusters and determining the optimal number of clusters for
+analysis, enhancing the interpretability and analysis of QSAR datasets. This tool is essential for researchers and
+scientists working in the field of QSAR modeling, offering a systematic approach to feature selection and dataset
+preparation.
 """
 
 import matplotlib.pyplot as plt
@@ -102,7 +110,7 @@ class FeatureSelector:
         :param df: DataFrame with continuous data describing observations and features.
         :type df: pd.DataFrame
         :param y: The dependent variable which will be ignored in the feature removal process.
-        Defaults to an empty string.
+                 Defaults to an empty string.
         :type y: str, optional
         :param variance_threshold: The threshold for variance below which features will be removed.
         :type variance_threshold: float
@@ -111,10 +119,10 @@ class FeatureSelector:
         :param verbose: If True, displays descriptive text to help visualize changes. Defaults to False.
         :type verbose: bool, optional
         :param inplace: If True, updates the attribute `df` of the FeatureSelector object with the resultant DataFrame.
-        Defaults to False.
+                       Defaults to False.
         :type inplace: bool, optional
         :return: A tuple containing the DataFrame with low variance features removed and a list of the removed column
-        names.
+                names.
         :rtype: Tuple[pd.DataFrame, list]
         """
         if cols_to_ignore is None:
@@ -180,13 +188,13 @@ class FeatureSelector:
         Calculates a correlation score for each feature in relation to the specified dependent variable.
 
         :param df: DataFrame with continuous data describing observations and features.
-        :type df: pd.DataFrame
+        :type df: pd.DataFrame.
         :param y: The dependent variable to compare for correlation. Defaults to an empty string.
         :type y: str, optional
         :param cols_to_ignore: List of columns where the function should not be executed. Defaults to an empty list.
         :type cols_to_ignore: list, optional
         :param method: Method used to calculate correlation. Options include "pearson", "kendall", or "spearman".
-        Defaults to "kendall".
+                      Defaults to "kendall".
         :type method: str, optional
         :return: A Series object with the correlation score for each feature relative to the y variable.
         :rtype: pd.Series
@@ -218,19 +226,19 @@ class FeatureSelector:
         """
         Calculates a correlation score for all features within a DataFrame.
 
-        :param df: DataFrame with only continuous data describing the observations and features. If None, uses the
-        internal DataFrame. Defaults to None.
-        :type df: pd.DataFrame, optional
-        :param y: Name of the column for the dependent variable to ignore in the collinearity test. Defaults to an empty
-        string, indicating no dependent variable.
-        :type y: str, optional
+        :param df: DataFrame with only continuous data describing the observations and features.
+                  If None, uses the internal DataFrame. Defaults to None.
+        :type df: pd.DataFrame, optional.
+        :param y: Name of the column for the dependent variable to ignore in the collinearity test.
+                 Defaults to an empty string, indicating no dependent variable.
+        :type y: str, optional.
         :param cols_to_ignore: List of column names to ignore during correlation computation. Defaults to an empty list.
-        :type cols_to_ignore: list, optional
-        :param method: Method used to calculate the correlation between the features. Options are "pearson", "kendall",
-        or "spearman". Defaults to "kendall".
-        :type method: str, optional
+        :type cols_to_ignore: list, optional.
+        :param method: Method used to calculate the correlation between the features.
+                      Options are "pearson", "kendall", or "spearman". Defaults to "kendall".
+        :type method: str, optional.
         :return: A DataFrame containing the correlation coefficients of the features.
-        :rtype: pd.DataFrame
+        :rtype: pd.DataFrame.
         """
         if cols_to_ignore is None:
             cols_to_ignore = []
@@ -263,14 +271,14 @@ class FeatureSelector:
         """
         Removes all the features from the DataFrame that have a correlation coefficient above the specified threshold.
 
-        :param df_correlation: A DataFrame representing the correlation matrix. Defaults to None, which will use the
-        internal DataFrame's correlation matrix.
+        :param df_correlation: A DataFrame representing the correlation matrix.
+                              Defaults to None, which will use the internal DataFrame's correlation matrix.
         :type df_correlation: pd.DataFrame, optional
-        :param df_corr_y: A DataFrame of correlation values correlating all features to the dependent variable. Defaults
-        to None, which will calculate it from the internal DataFrame.
+        :param df_corr_y: A DataFrame of correlation values correlating all features to the dependent variable.
+                         Defaults to None, which will calculate it from the internal DataFrame.
         :type df_corr_y: pd.DataFrame, optional
-        :param df: A DataFrame with only continuous data describing the observations and features. Defaults to None,
-        which will use the internal DataFrame.
+        :param df: A DataFrame with only continuous data describing the observations and features.
+                  Defaults to None, which will use the internal DataFrame.
         :type df: pd.DataFrame, optional
         :param threshold: The threshold where features correlated beyond should be dropped. Defaults to 0.9.
         :type threshold: float, optional
@@ -279,7 +287,7 @@ class FeatureSelector:
         :param inplace: If True, replaces the internal DataFrame with the result. Defaults to False.
         :type inplace: bool, optional
         :param graph: If True, draws a heatmap of all dropped features and their respective correlation to each other.
-        Defaults to False.
+                     Defaults to False.
         :type graph: bool, optional
         :return: A DataFrame with highly correlated features removed.
         :rtype: pd.DataFrame
@@ -382,6 +390,14 @@ class FeatureSelector:
     def remove_multicollinearity(
         self: "FeatureSelector", df: pd.DataFrame = None, y: str = "Log_MP_RATIO"
     ):
+        """
+        Removes multicollinearity from the DataFrame.
+
+        :param df: DataFrame with continuous data describing the observations and features. Defaults to None.
+        :type df: pd.DataFrame, optional
+        :param y: Name of the column for the dependent variable. Defaults to 'Log_MP_RATIO'.
+        :type y: str, optional
+        """
         if df is None:
             df = self.df.copy()
 
@@ -473,6 +489,16 @@ def display_data_cluster(
 
     # Method to group together in correlation matrix features with same labels
     def clustering_corr_matrix(corr_matrix: pd.DataFrame, clustered_features: list):
+        """
+        Groups together features with the same labels in the correlation matrix based on the clustered features.
+
+        :param corr_matrix: Correlation matrix to be clustered based on labels.
+        :type corr_matrix: pd.DataFrame
+        :param clustered_features: List of clustered features to group together.
+        :type clustered_features: list
+        :return: A numpy array of the clustered correlation matrix based on labels.
+        :rtype: np.ndarray
+        """
         npm: np.ndarray = corr_matrix.to_numpy()
         # Creates an numpy array filled with zeros
         npm_zero: np.ndarray = np.zeros(shape=(len(npm), len(npm)))
@@ -489,6 +515,16 @@ def display_data_cluster(
     def processing_clustered_corr_matrix(
         feat_labels: np.ndarray, corr_matrix: pd.DataFrame
     ):
+        """
+        Processes the correlation matrix based on the clustered features.
+
+        :param feat_labels: Array of feature labels to be clustered.
+        :type feat_labels: np.ndarray
+        :param corr_matrix: Correlation matrix to be clustered.
+        :type corr_matrix: pd.DataFrame
+        :return: A numpy array of the clustered correlation matrix.
+        :rtype: np.ndarray
+        """
         lst_lab = list(feat_labels)
         # lst_feat = corr_matrix.columns
 
@@ -504,6 +540,14 @@ def display_data_cluster(
     def plot_clustered_matrix(
         clust_mtx: np.ndarray, feat_clust_list: np.ndarray
     ) -> None:
+        """
+        Plots the clustered matrix based on the correlation matrix.
+
+        :param clust_mtx: Clustered matrix based on the correlation matrix.
+        :type clust_mtx: np.ndarray
+        :param feat_clust_list: List of clustered features.
+        :type feat_clust_list: np.ndarray
+        """
         plt.figure()
 
         fig, ax = plt.subplots(1)
