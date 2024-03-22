@@ -1,3 +1,10 @@
+"""
+The class encapsulates all necessary components for conducting an extensive search over a predefined hyperparameter
+space, handling the iterative trial-and-error process automatically and recording the outcomes for analysis. The
+optimization process aims either to maximize or minimize a given metric, depending on the user's requirements and the
+nature of the QSAR problem being addressed.
+"""
+
 import optuna
 
 from qsar.models.baseline_model import BaselineModel

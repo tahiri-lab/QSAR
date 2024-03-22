@@ -1,5 +1,7 @@
+.. _optimizer:
+
 Hyper Parameter Optimizer
--------------------------
+=========================
 
 .. automodule:: qsar.utils.hyperparameter_optimizer
    :members:

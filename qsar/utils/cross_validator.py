@@ -1,3 +1,14 @@
+"""
+The CrossValidator is designed to be flexible and applicable to any model conforming to the scikit-learn interface,
+making it a valuable tool for QSAR model development and validation. The class supports both standard K-Fold and
+Stratified K-Fold cross-validation strategies, allowing for its use in a wide range of QSAR scenarios, including those
+with imbalanced datasets.
+
+The evaluation methods within the CrossValidator class enable the assessment of QSAR models based on various performance
+metrics such as R squared, cross-validation score, and mean squared error, providing comprehensive insights into model
+behavior and efficacy.
+"""
+
 import pandas as pd
 from sklearn import clone
 from sklearn.metrics import mean_squared_error
@@ -40,7 +51,7 @@ class CrossValidator:
         :param n_groups: Number of groups for stratified k-fold. Defaults to 5.
         :type n_groups: int, optional
         :returns: A tuple containing a list of feature sets, a list of targets, a DataFrame with fold information, the
-        target column name, and the number of folds.
+                 target column name, and the number of folds.
         :rtype: tuple
         """
         if df is None:
