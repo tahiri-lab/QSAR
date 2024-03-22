@@ -6,14 +6,21 @@
 Welcome to qsar's documentation!
 ================================
 
-QSAR Project aims to provide tools for developing, analyzing, and visualizing quantitative structure-activity
-relationship (QSAR) models. The project is currently under development.
+``qsarKit`` aims to provide tools for developing, analyzing, and visualizing quantitative structure-activity
+relationship (QSAR) models using regression and ensemble learning techniques. The package also includes tools for data
+preprocessing, feature selection, visualization, model evaluation, and data augmentation using generative adversarial networks (GANs).
 
-Contents:
----------
+.. toctree::
+   :maxdepth: 1
+   :caption: User Guide
+
+   installation
+   quickstart
+   documentation
 
 .. toctree::
    :maxdepth: 2
+   :caption: Package Reference
 
    preprocessing
    gan
