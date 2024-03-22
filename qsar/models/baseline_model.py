@@ -1,3 +1,10 @@
+"""
+The BaselineModel leverages the Optuna library for hyperparameter optimization, facilitating an automated and
+efficient search for the best model parameters based on the provided data. This approach allows for the rapid
+development and comparison of different QSAR modeling strategies, enhancing the flexibility and robustness of
+the modeling process.
+"""
+
 from abc import ABC, abstractmethod
 
 import pandas as pd
