@@ -1,7 +1,9 @@
+.. _visualization:
+
 Visualizer
-----------
+==========
 
-.. toctree::
-   :maxdepth: 1
-
-   visualization/visualizer
+.. automodule:: qsar.utils.visualizer
+   :members:
+   :undoc-members:
+   :show-inheritance:

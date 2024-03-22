@@ -1,5 +1,7 @@
+.. _extractor:
+
 Extractor
----------
+=========
 
 .. automodule:: qsar.utils.extractor
    :members:

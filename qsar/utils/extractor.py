@@ -1,3 +1,8 @@
+"""
+The class supports the initialization with a dictionary mapping dataset names to file paths, automatically loads these datasets
+into memory, and provides methods for easy retrieval and manipulation of these datasets.
+"""
+
 import os
 from typing import Dict, Tuple
 
@@ -9,7 +14,7 @@ class Extractor:
     Class for cross-validation related functionalities.
 
     :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the path to
-    the CSV file.
+                 the CSV file.
     :type paths: Dict[str, str]
 
     :ivar dfs: Extracted DataFrames from the paths provided during initialization.
@@ -21,7 +26,7 @@ class Extractor:
         Initialize the Extractor instance.
 
         :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the
-         path to the CSV file.
+                     path to the CSV file.
         :type paths: Dict[str, str]
         """
         self.paths = paths
@@ -47,10 +52,10 @@ class Extractor:
         Extracts DataFrames from a dictionary of {name: path} pairs.
 
         :param paths: Dictionary of {str: str} pairs where the key is the name of the dataframe and the value is the
-         path to the CSV file. If not provided, defaults to the paths provided at initialization.
+                     path to the CSV file. If not provided, defaults to the paths provided at initialization.
         :type paths: Dict[str, str], optional
         :returns: Dictionary of {str: pd.DataFrame} pairs where the key is the name of the dataframe and the value is
-         the DataFrame itself.
+                 the DataFrame itself.
         :rtype: Dict[str, pd.DataFrame]
 
         :raises FileNotFoundError: If a path in the dictionary does not exist.
@@ -71,8 +76,8 @@ class Extractor:
         :param y_col: Name of the column to be used as the y values.
         :type y_col: str
         :returns: A tuple containing two dictionaries. The first dictionary contains the X DataFrames and the second
-         dictionary contains the y DataFrames, both keyed by the names of the original DataFrames.
-        :rtype: Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]]
+                 dictionary contains the y DataFrames, both keyed by the names of the original DataFrames.
+        :rtype: Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame]].
         """
         x_dfs = {}
         y_dfs = {}

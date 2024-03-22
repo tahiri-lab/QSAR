@@ -169,7 +169,7 @@ class Visualizer:
         plt.show()
 
     @staticmethod
-    def draw_generated_molecules(molecules: List[Chem.Mol]) -> Image:
+    def draw_generated_molecules(molecules: List[Chem.Mol]):
         """
         Draw the generated molecules.
 
