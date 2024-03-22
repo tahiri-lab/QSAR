@@ -1,7 +1,7 @@
 .. _documentation:
 
 qsarKit Documentation
-=======================
+=====================
 
 This page provides guidelines on how to build, modify, and update the documentation for the ``qsarKit`` project.
 

@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to qsar's documentation!
+Welcome to qsarkit's documentation!
 ================================
 
 ``qsarKit`` aims to provide tools for developing, analyzing, and visualizing quantitative structure-activity
@@ -16,7 +16,6 @@ preprocessing, feature selection, visualization, model evaluation, and data augm
 
    installation
    quickstart
-   documentation
 
 .. toctree::
    :maxdepth: 2
@@ -27,6 +26,13 @@ preprocessing, feature selection, visualization, model evaluation, and data augm
    models
    utils
    visualization
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Developer Guide
+
+   contributing
+   documentation
 
 Indices and tables
 ==================

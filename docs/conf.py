@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'qsar'
+project = 'qsarKit'
 copyright = '2023, Mohammed Benabbassi, Nadia Tahiri'
 author = 'Mohammed Benabbassi, Nadia Tahiri'
 
@@ -21,7 +21,7 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-autosummary_generate = True
+# autosummary_generate = True
 
 # -- Options for HTML output -------------------------------------------------
 
