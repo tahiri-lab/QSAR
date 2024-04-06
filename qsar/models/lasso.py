@@ -13,10 +13,10 @@ class LassoModel(BaselineModel):
     """
 
     def __init__(
-        self,
-        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
-        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-        params=None,
+            self,
+            max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+            random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+            params=None,
     ):
         """
         Initialize the LassoModel with optional maximum iterations, random state, and model parameters.
@@ -44,7 +44,7 @@ class LassoModel(BaselineModel):
         :rtype: float
         """
         self.params = {
-            "alpha": trial.suggest_float("alpha", 1e-10, 1e10, log=True),
+            "alpha": trial.suggest_float("alpha", 1e-5, 1.0, log=True),
             "tol": trial.suggest_float("tol", 1e-10, 1e-2, log=False),
             "selection": trial.suggest_categorical("selection", ["cyclic", "random"]),
         }
