@@ -49,7 +49,7 @@ class Visualizer:
         plt.tight_layout()
         plt.show()
 
-    def display_model_performance(self, model_name: str, metrics: dict):
+    def display_model_performance(self, model_name: str, metrics: dict, metric_precision: int = 4):
         """
         Display the scores of the model in a table format.
 
@@ -57,13 +57,15 @@ class Visualizer:
         :type model_name: str
         :param metrics: Dictionary containing the scores.
         :type metrics: dict
+        :param metric_precision: Precision of the metric values. Defaults to 4.
+        :type metric_precision: int
         """
         # Create a new figure
         _, ax = plt.subplots(figsize=self.figsize)
 
         # Data for the table
         columns = ["Metric", "Score"]
-        data = [[k, v] for k, v in metrics.items()]
+        data = [[k, round(v, metric_precision)] for k, v in metrics.items()]
 
         # Remove axes
         ax.axis("tight")
@@ -82,12 +84,12 @@ class Visualizer:
         plt.show()
 
     def display_true_vs_predicted(
-        self,
-        model_name: str,
-        y_train: pd.DataFrame,
-        y_test: pd.DataFrame,
-        y_pred_train: pd.DataFrame,
-        y_pred_test: pd.DataFrame,
+            self,
+            model_name: str,
+            y_train: pd.DataFrame,
+            y_test: pd.DataFrame,
+            y_pred_train: pd.DataFrame,
+            y_pred_test: pd.DataFrame,
     ):
         """
         Display a scatter plot of true vs. predicted values for training and test sets.
@@ -188,9 +190,9 @@ class Visualizer:
         return img
 
     def display_data_cluster(
-        self,
-        df_corr: pd.DataFrame,
-        n_clusters: int = 8,
+            self,
+            df_corr: pd.DataFrame,
+            n_clusters: int = 8,
     ) -> None:
         # https://www.kaggle.com/code/ignacioalorre/clustering-features-based-on-correlation-and-tags/notebook
         """
@@ -273,7 +275,7 @@ class Visualizer:
 
         # Preprocessing the correlation matrix before starting the clustering based on labels
         def processing_clustered_corr_matrix(
-            feat_labels: np.ndarray, corr_matrix: pd.DataFrame
+                feat_labels: np.ndarray, corr_matrix: pd.DataFrame
         ):
             """
             Process the correlation matrix before clustering based on labels.
@@ -298,7 +300,7 @@ class Visualizer:
             return clustering_corr_matrix(corr_matrix, clustered_features)
 
         def plot_clustered_matrix(
-            clust_mtx: np.ndarray, feat_clust_list: np.ndarray
+                clust_mtx: np.ndarray, feat_clust_list: np.ndarray
         ) -> None:
             """
             Plot the clustered matrix.
