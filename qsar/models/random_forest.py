@@ -13,7 +13,7 @@ class RandomForestModel(BaselineModel):
     """
 
     def __init__(
-        self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE, params=None
+            self, random_state: int = BaselineModel.DEFAULT_RANDOM_STATE, params=None
     ):
         """
         Initialize the RandomForestModel with an optional random state and model parameters.
@@ -40,9 +40,10 @@ class RandomForestModel(BaselineModel):
         :return: the cross validation score of the model
         :rtype: float
         """
+
         self.params = {
             "n_estimators": trial.suggest_int("n_estimators", 50, 1000),
-            "max_depth": trial.suggest_int("max_depth", 4, 50),
+            "max_depth": trial.suggest_int("max_depth", 4, 100),
             "min_samples_split": trial.suggest_int("min_samples_split", 2, 150),
             "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 60),
         }
