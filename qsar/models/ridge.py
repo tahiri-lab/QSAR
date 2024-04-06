@@ -13,10 +13,10 @@ class RidgeModel(BaselineModel):
     """
 
     def __init__(
-        self,
-        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
-        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-        params=None,
+            self,
+            max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+            random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+            params=None,
     ):
         """
         Initialize the RidgeModel with optional maximum iterations, random state, and model parameters.
@@ -31,6 +31,8 @@ class RidgeModel(BaselineModel):
         super().__init__()
         self.model = Ridge(max_iter=max_iter, random_state=random_state)
         self.params = params
+        if self.params is not None:
+            self.model.set_params(**self.params)
 
     def optimize_hyperparameters(self, trial: Trial, df: pd.DataFrame) -> float:
         """
@@ -43,8 +45,9 @@ class RidgeModel(BaselineModel):
         :return: the cross validation score of the model
         :rtype: float
         """
+
         self.params = {
-            "alpha": trial.suggest_float("alpha", 1e-10, 1e10, log=True),
+            "alpha": trial.suggest_float("alpha", 1e-5, 1.0, log=True),
             "solver": trial.suggest_categorical(
                 "solver",
                 ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga"],
