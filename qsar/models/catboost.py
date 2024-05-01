@@ -13,10 +13,10 @@ class CatboostModel(BaselineModel):
     """
 
     def __init__(
-        self,
-        max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
-        random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
-        params=None,
+            self,
+            max_iter: int = BaselineModel.DEFAULT_MAX_ITER,
+            random_state: int = BaselineModel.DEFAULT_RANDOM_STATE,
+            params=None,
     ):
         """
         Initialize the CatboostModel with optional maximum iterations, random state, and model parameters.
@@ -48,8 +48,8 @@ class CatboostModel(BaselineModel):
             "objective": trial.suggest_categorical(
                 "objective", ["RMSE", "MAE", "Poisson", "Quantile", "MAPE"]
             ),
-            "learning_rate": trial.suggest_float("learning_rate", 0.001, 0.3, log=True),
-            "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1),
+            "learning_rate": trial.suggest_float("learning_rate", 1e-5, 1, log=True),
+            "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.3, 1),
             "max_depth": trial.suggest_int("max_depth", 1, 15),
             "boosting_type": trial.suggest_categorical(
                 "boosting_type", ["Ordered", "Plain"]
@@ -58,7 +58,6 @@ class CatboostModel(BaselineModel):
                 "bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]
             ),
         }
-
         self.model.set_params(**self.params)
 
         estimator = CrossValidator(df)
