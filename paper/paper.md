@@ -59,6 +59,8 @@ The **qsarKit** package introduces a comprehensive approach to developing QSAR m
 preprocessing, augmentation, and model training with an integrated pipeline designed for both flexibility and
 efficiency.
 
+![qsarKit pipeline. \label{fig:pipeline}](qsarKit_h.png)
+
 ## Preprocessing
 
 The preprocessing phase in **qsarKit** (\autoref{fig:pipeline}.b) begins with feature
@@ -73,17 +75,18 @@ for model prediction, thereby improving both model interpretability and performa
 
 ## Data Augmentation Using Generative Adversarial Networks
 
-To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN (\autoref{fig:
-pipeline}.c) for data augmentation. This approach addresses the shortcomings of traditional datasets by generating new,
-plausible molecular structures, thereby expanding the diversity and size of the training set [@decao2018molgan]. The GAN
-module comprises a *Featurizer*, which prepares molecular structures in SMILES format for processing, followed by the
-GAN itself, which trains on available data to produce new molecular structures. The generated structures are then
-converted back into quantitative features through the *Descriptor Extraction* process, making them suitable for
-subsequent QSAR modeling.
+To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN
+(\autoref{fig:pipeline}.c) for data augmentation. This approach addresses the shortcomings of traditional datasets by
+generating new, plausible molecular structures, thereby expanding the diversity and size of the training
+set [@decao2018molgan]. The GAN module comprises a *Featurizer*, which prepares molecular structures in SMILES format
+for processing, followed by the GAN itself, which trains on available data to produce new molecular structures. The
+generated structures are then converted back into quantitative features through the *Descriptor Extraction* process,
+making them suitable for subsequent QSAR modeling.
 
 ## Model Training and Optimization
 
-**qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for QSAR
+**qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for
+QSAR
 analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
 objectives. Model training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the
 models' generalization capabilities to unseen data. Special emphasis is placed on maintaining the original distribution
@@ -122,7 +125,7 @@ the optimal settings for each QSAR model converging to an optimal set of hyperpa
 At its core, **qsarKit** is designed as a modular and comprehensive pipeline (\autoref{fig:pipeline}), encapsulating the
 entire QSAR modeling process from initial data preprocessing to final prediction and evaluation. The pipeline allows for
 the seamless integration of data augmentation, model training, and evaluation, supporting a range of evaluation metrics
-\autoref{metrics}, including $R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the
+(\autoref{metrics}), including $R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the
 package permits users to engage with specific components individually or utilize the entire pipeline for end-to-end
 processing, accommodating diverse research needs and objectives in the QSAR domain.
 
@@ -133,8 +136,6 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 | Coefficient of Determination R | $R^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i)^2}$, where $y_i \in D_{train}$ |
 | Coefficient of Determination Q |  $Q^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i^2}$, where $y_i \in D_{test}$  |
 | Root Mean Square Error         |                             $RMSE = \sqrt{\frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{N}}$                             |
-
-![qsarKit pipeline. \label{fig:pipeline}](qsarKit_h.png)
 
 # Application and Results: QSAR Modeling in the Breastfeeding Context
 
