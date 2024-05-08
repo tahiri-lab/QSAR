@@ -86,8 +86,7 @@ making them suitable for subsequent QSAR modeling.
 ## Model Training and Optimization
 
 **qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for
-QSAR
-analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
+QSAR analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
 objectives. Model training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the
 models' generalization capabilities to unseen data. Special emphasis is placed on maintaining the original distribution
 of chemical properties and response variables through strategic binning and stratification, thereby preserving the
@@ -140,9 +139,9 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 # Application and Results: QSAR Modeling in the Breastfeeding Context
 
 The **qsarKit** package has been specifically designed and applied to address a significant healthcare question: deliver
-a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk, a crucial consideration
-for breastfeeding mothers' and infants' health. This application underscores the importance of understanding and
-predicting the Milk-to-Plasma concentration ratio [@anderson2016], denoted as
+a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk (\autoref{pipeline}.a), a
+crucial consideration for breastfeeding mothers' and infants' health. This application underscores the importance of
+understanding and predicting the Milk-to-Plasma concentration ratio [@anderson2016], denoted as
 \begin{equation}\label{eq:mp_ratio}
 M/P_{ratio} = \frac{AUC_{milk}}{AUC_{plasma}}
 \end{equation}
@@ -154,9 +153,9 @@ chemicals can transfer into breast milk.
 
 The foundational data employed in this study originate from a diverse set of molecules, including pharmaceutical drugs
 and environmental chemicals, contextualized within the breastfeeding scenario. The primary focus is on the quantitative
-prediction of the $M/P_{ratio}$, which is necessary for assessing the safety and exposure risks of breastfeeding infants
-to these substances [@verstegen2022]. By applying **qsarKit** to this domain, we aim to effectively provide a free
-framework to help in the domain of breastfeeding research.
+prediction of the $M/P_{ratio}$ (\autoref{eq:mp_ratio}), which is necessary for assessing the safety and exposure risks
+of breastfeeding infants to these substances [@verstegen2022]. By applying **qsarKit** to this domain, we aim to
+effectively provide a free framework to help in the domain of breastfeeding research.
 
 ## Dataset Composition and Distribution
 
