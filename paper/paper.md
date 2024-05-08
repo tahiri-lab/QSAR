@@ -13,6 +13,7 @@ authors:
         equal-contrib: true
         affiliation: 1
     -   name: Tahiri Nadia
+        equal-contrib: false
         corresponding: true
         affiliation: 1
 affiliations:
@@ -60,7 +61,7 @@ efficiency.
 
 ## Preprocessing
 
-The preprocessing phase in **qsarKit** (as illustrated in the figure\autoref{fig:pipeline}) begins with feature
+The preprocessing phase in **qsarKit** (\autoref{fig:pipeline}.b) begins with feature
 selection [@Comesana2022], aimed at enhancing model performance and interpretability. Features demonstrating low
 variance across the dataset are eliminated, as they contribute minimal predictive power. This selection is based on the
 variance threshold technique, ensuring that only features contributing significantly to model diversity are retained.
@@ -72,24 +73,24 @@ for model prediction, thereby improving both model interpretability and performa
 
 ## Data Augmentation Using Generative Adversarial Networks
 
-To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN\autoref{fig:pipeline}
-for data augmentation. This approach addresses the shortcomings of traditional datasets by generating new, plausible
-molecular structures, thereby expanding the diversity and size of the training set [@decao2018molgan]. The GAN module
-comprises a *Featurizer*, which prepares molecular structures in SMILES format for processing, followed by the GAN
-itself, which trains on available data to produce new molecular structures. The generated structures are then converted
-back into quantitative features through the *Descriptor Extraction* process, making them suitable for subsequent QSAR
-modeling.
+To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN (\autoref{fig:
+pipeline}.c) for data augmentation. This approach addresses the shortcomings of traditional datasets by generating new,
+plausible molecular structures, thereby expanding the diversity and size of the training set [@decao2018molgan]. The GAN
+module comprises a *Featurizer*, which prepares molecular structures in SMILES format for processing, followed by the
+GAN itself, which trains on available data to produce new molecular structures. The generated structures are then
+converted back into quantitative features through the *Descriptor Extraction* process, making them suitable for
+subsequent QSAR modeling.
 
 ## Model Training and Optimization
 
-**qsarKit** supports six core models\autoref{models}, including both regression and ensemble methods, tailored for QSAR
+**qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for QSAR
 analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
 objectives. Model training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the
 models' generalization capabilities to unseen data. Special emphasis is placed on maintaining the original distribution
 of chemical properties and response variables through strategic binning and stratification, thereby preserving the
 integrity and representativeness of the dataset.
 
-: Notations and variables used in **qsarKit**. []{label="notations"}
+: Notations and variables used in **qsarKit**. \label{notations}
 
 | Variable                |           Notation           |
 |-------------------------|:----------------------------:|
@@ -101,7 +102,7 @@ integrity and representativeness of the dataset.
 | Regularisation function |           $\Omega$           |
 | Decision trees          |            $f_k$             |
 
-: Available models in **qsarKit** and their respective loss functions. []{label="models"}
+: Available models in **qsarKit** and their respective loss functions. \label{models}
 
 | Models                                   |                                                                                    Equation                                                                                     |
 |------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -118,14 +119,14 @@ the optimal settings for each QSAR model converging to an optimal set of hyperpa
 
 ## Integrated Pipeline
 
-At its core, **qsarKit** is designed as a modular and comprehensive pipeline \autoref{fig:pipeline}, encapsulating the
+At its core, **qsarKit** is designed as a modular and comprehensive pipeline (\autoref{fig:pipeline}), encapsulating the
 entire QSAR modeling process from initial data preprocessing to final prediction and evaluation. The pipeline allows for
 the seamless integration of data augmentation, model training, and evaluation, supporting a range of evaluation metrics
 \autoref{metrics}, including $R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the
 package permits users to engage with specific components individually or utilize the entire pipeline for end-to-end
 processing, accommodating diverse research needs and objectives in the QSAR domain.
 
-: Evaluation metrics used in **qsarKit**. []{label="metrics"}
+: Evaluation metrics used in **qsarKit**. \label{metrics}
 
 | Evaluation metrics             |                                                     Equation                                                      |
 |--------------------------------|:-----------------------------------------------------------------------------------------------------------------:|
@@ -176,7 +177,7 @@ alternative to other solutions.
 
 Enhancing **qsarKit** involves addressing its limitations and identifying areas for development. Providing an
 alternative option to the GANs with Large Language Model (LLM) transformers could offer sophisticated data augmentation
-capabilities, utilizing advanced processing of LLMs for generating complex molecular structures ([@li2022]).
+capabilities, utilizing advanced processing of LLMs for generating complex molecular structures [@li2022].
 Improvements in feature extraction, specifically in adapting descriptor extraction from generated SMILES to more
 accurately match input datasets, are necessary for enhancing model predictions and the flexibility of the package.
 Moreover, broadening the model library of **qsarKit** with advanced models will keep the toolkit at the forefront of
