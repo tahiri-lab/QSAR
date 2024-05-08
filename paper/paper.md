@@ -207,11 +207,6 @@ testing
 and quality checks, enhancing reliability and security. We encourage community feedback and contributions, driving
 continual improvement and innovation.
 
-# Acknowledgements
-
-The authors would like to thank the Department of Computer Science, University of Sherbrooke, Quebec, Canada for
-providing the necessary resources to conduct this research.
-
 # Funding
 
 This work was supported by the Natural Sciences and Engineering Research Council of Canada, Fonds de recherche du
