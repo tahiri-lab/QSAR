@@ -9,9 +9,15 @@ tags:
     - QSAR
     - Drug Discovery
 authors:
-    -   name: Mohammed Benabbassi
+    -   name: Benabbassi Mohammed
         equal-contrib: true
         affiliation: 1
+    -   name: Raynal Julien
+        equal-contrib: true
+        affiliation: 2
+    -   name: de La Chaise Quentin
+        equal-contrib: false
+        affiliation: 3
     -   name: Tahiri Nadia
         equal-contrib: false
         corresponding: true
@@ -19,6 +25,10 @@ authors:
 affiliations:
     -   name: Department of Computer Science, University of Sherbrooke
         index: 1
+    -   name: Departement of Bioinformatics, University of Montpellier
+        index: 2
+    -   name: ENSEA (École Nationale Supérieure de l'Électronique et de ses Applications)
+        index: 3
 date: 25 April 2024
 bibliography: paper.bib
 ---
@@ -190,7 +200,8 @@ The breastfeeding safety analysis dataset alongside the comprehensive source cod
 repository. For ease of use and wider accessibility, **qsarKit** is also distributed through PyPI, facilitating
 straightforward installation for the Python ecosystem.
 
-Quality is fundamental in the development of **qsarKit**, ensured by a robust CI/CD pipeline for regular automated testing
+Quality is fundamental in the development of **qsarKit**, ensured by a robust CI/CD pipeline for regular automated
+testing
 and quality checks, enhancing reliability and security. We encourage community feedback and contributions, driving
 continual improvement and innovation.
 
