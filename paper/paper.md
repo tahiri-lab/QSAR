@@ -60,34 +60,36 @@ efficiency.
 
 ## Preprocessing
 
-The preprocessing phase in **qsarKit** begins with feature selection [@Comesana2022], aimed at enhancing model
-performance and interpretability. Features demonstrating low variance across the dataset are eliminated, as they
-contribute minimal predictive power. This selection is based on the variance threshold technique, ensuring that only
-features contributing significantly to model diversity are retained. Additionally, to address the challenge of
-multicollinearity[@remeseiro2019review], a correlation-based feature selection is applied using rank correlation
-coefficient of *Kendall* [@prematunga2012correlational]. Features exceeding this threshold are systematically
-removed [@hall2000correlation]. Further refinement is achieved through Recursive Feature Elimination (
-*RFE*) [@guyon2002gene], a process that systematically reduces the feature set to those most significant for model
-prediction, thereby improving both model interpretability and performance.
+The preprocessing phase in **qsarKit** (as illustrated in the figure\autoref{fig:pipeline}) begins with feature
+selection [@Comesana2022], aimed at enhancing model performance and interpretability. Features demonstrating low
+variance across the dataset are eliminated, as they contribute minimal predictive power. This selection is based on the
+variance threshold technique, ensuring that only features contributing significantly to model diversity are retained.
+Additionally, to address the challenge of multicollinearity[@remeseiro2019review], a correlation-based feature selection
+is applied using rank correlation coefficient of *Kendall* [@prematunga2012correlational]. Features exceeding this
+threshold are systematically removed [@hall2000correlation]. Further refinement is achieved through Recursive Feature
+Elimination (*RFE*) [@guyon2002gene], a process that systematically reduces the feature set to those most significant
+for model prediction, thereby improving both model interpretability and performance.
 
 ## Data Augmentation Using Generative Adversarial Networks
 
-To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN for data augmentation.
-This approach addresses the shortcomings of traditional datasets by generating new, plausible molecular structures,
-thereby expanding the diversity and size of the training set [@decao2018molgan]. The GAN module comprises a
-*Featurizer*, which prepares molecular structures in SMILES format for processing, followed by the GAN itself, which
-trains on available data to produce new molecular structures. The generated structures are then converted back into
-quantitative features through the *Descriptor Extraction* process, making them suitable for subsequent QSAR modeling.
+To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN\autoref{fig:pipeline}
+for data augmentation. This approach addresses the shortcomings of traditional datasets by generating new, plausible
+molecular structures, thereby expanding the diversity and size of the training set [@decao2018molgan]. The GAN module
+comprises a *Featurizer*, which prepares molecular structures in SMILES format for processing, followed by the GAN
+itself, which trains on available data to produce new molecular structures. The generated structures are then converted
+back into quantitative features through the *Descriptor Extraction* process, making them suitable for subsequent QSAR
+modeling.
 
 ## Model Training and Optimization
 
-<!-- todo add the sklearn model references -->
-**qsarKit** supports six core models, including both regression and ensemble methods, tailored for QSAR analysis. This
-selection grants users the flexibility to choose the most appropriate model for their data and objectives. Model
-training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the models' generalization
-capabilities to unseen data. Special emphasis is placed on maintaining the original distribution of chemical properties
-and response variables through strategic binning and stratification, thereby preserving the integrity and
-representativeness of the dataset.
+**qsarKit** supports six core models\autoref{models}, including both regression and ensemble methods, tailored for QSAR
+analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
+objectives. Model training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the
+models' generalization capabilities to unseen data. Special emphasis is placed on maintaining the original distribution
+of chemical properties and response variables through strategic binning and stratification, thereby preserving the
+integrity and representativeness of the dataset.
+
+: Notations and variables used in **qsarKit**. []{label="notations"}
 
 | Variable                |           Notation           |
 |-------------------------|:----------------------------:|
@@ -99,14 +101,16 @@ representativeness of the dataset.
 | Regularisation function |           $\Omega$           |
 | Decision trees          |            $f_k$             |
 
-| Models                                  |                                                                                    Equation                                                                                     |
-|-----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| Ridge Regression [@hoerl2000ridge]      |                                         ${\displaystyle J(\theta) = \sum_{i=1}^n (y_i-\hat {y_i})^2 + \lambda \sum_{j=1}^p \theta_j^2}$                                         |
-| Lasso Regression [@tibshirani1996lasso] |                                    ${\displaystyle J(\theta) = \sum_{i=1}^n (y_i-\hat {y_i})^2+\lambda \sum_{j=1}^{p}\vert\theta_{j}\vert}$                                     |
-| Elasticnet [@tay2021elasticnet]         |                  ${\displaystyle J(\theta) =\sum_{i=1}^n (y_i-\hat {y_i})^2 + \lambda_{1}\sum_{j=1}^p\vert\theta_j \vert+\lambda_{2}\sum_{j=1}^p\theta_j^{2}}$                  |
-| Random Forest                           | ${\displaystyle {\hat {y}}={\frac {1}{m}}\sum _{j=1}^{m}\sum _{i=1}^{n}W_{j}(x_{i},x')\,y_{i}=\sum _{i=1}^{n}\left({\frac {1}{m}}\sum _{j=1}^{m}W_{j}(x_{i},x')\right)\,y_{i}}$ |
-| XGBoost [@chen2016xgboost]              |                                             ${\displaystyle J(\theta) = \sum_{i=1}^n L(y_i,\hat {y_i}) + \sum_{k=1}^K \Omega(f_k)}$                                             |
-| CatBoost [@dorogush2018catboost]        |                                                    ${\displaystyle J(\theta) = \frac{1}{n}\sum_{i=1}^n (y_i-\hat {y_i})^2}$                                                     |
+: Available models in **qsarKit** and their respective loss functions. []{label="models"}
+
+| Models                                   |                                                                                    Equation                                                                                     |
+|------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Ridge Regression [@hoerl2000ridge]       |                                         ${\displaystyle J(\theta) = \sum_{i=1}^n (y_i-\hat {y_i})^2 + \lambda \sum_{j=1}^p \theta_j^2}$                                         |
+| Lasso Regression [@tibshirani1996lasso]  |                                    ${\displaystyle J(\theta) = \sum_{i=1}^n (y_i-\hat {y_i})^2+\lambda \sum_{j=1}^{p}\vert\theta_{j}\vert}$                                     |
+| Elasticnet [@tay2021elasticnet]          |                  ${\displaystyle J(\theta) =\sum_{i=1}^n (y_i-\hat {y_i})^2 + \lambda_{1}\sum_{j=1}^p\vert\theta_j \vert+\lambda_{2}\sum_{j=1}^p\theta_j^{2}}$                  |
+| Random Forest [@breiman2001randomforest] | ${\displaystyle {\hat {y}}={\frac {1}{m}}\sum _{j=1}^{m}\sum _{i=1}^{n}W_{j}(x_{i},x')\,y_{i}=\sum _{i=1}^{n}\left({\frac {1}{m}}\sum _{j=1}^{m}W_{j}(x_{i},x')\right)\,y_{i}}$ |
+| XGBoost [@chen2016xgboost]               |                                             ${\displaystyle J(\theta) = \sum_{i=1}^n L(y_i,\hat {y_i}) + \sum_{k=1}^K \Omega(f_k)}$                                             |
+| CatBoost [@dorogush2018catboost]         |                                                    ${\displaystyle J(\theta) = \frac{1}{n}\sum_{i=1}^n (y_i-\hat {y_i})^2}$                                                     |
 
 To optimize model performance, **qsarKit** employs *Optuna* for systematic hyperparameter tuning, leveraging Bayesian
 optimization techniques to explore the parameter space efficiently [@akiba2019optuna]. This process tries to identify
@@ -114,12 +118,14 @@ the optimal settings for each QSAR model converging to an optimal set of hyperpa
 
 ## Integrated Pipeline
 
-At its core, **qsarKit** is designed as a modular and comprehensive pipeline, encapsulating the entire QSAR modeling
-process from initial data preprocessing to final prediction and evaluation. The pipeline allows for the seamless
-integration of data augmentation, model training, and evaluation, supporting a range of evaluation metrics including
-$R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the package permits users to engage
-with specific components individually or utilize the entire pipeline for end-to-end processing, accommodating diverse
-research needs and objectives in the QSAR domain.
+At its core, **qsarKit** is designed as a modular and comprehensive pipeline \autoref{fig:pipeline}, encapsulating the
+entire QSAR modeling process from initial data preprocessing to final prediction and evaluation. The pipeline allows for
+the seamless integration of data augmentation, model training, and evaluation, supporting a range of evaluation metrics
+\autoref{metrics}, including $R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the
+package permits users to engage with specific components individually or utilize the entire pipeline for end-to-end
+processing, accommodating diverse research needs and objectives in the QSAR domain.
+
+: Evaluation metrics used in **qsarKit**. []{label="metrics"}
 
 | Evaluation metrics             |                                                     Equation                                                      |
 |--------------------------------|:-----------------------------------------------------------------------------------------------------------------:|
@@ -127,7 +133,7 @@ research needs and objectives in the QSAR domain.
 | Coefficient of Determination Q |  $Q^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i^2}$, where $y_i \in D_{test}$  |
 | Root Mean Square Error         |                             $RMSE = \sqrt{\frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{N}}$                             |
 
-<!-- todo pipeline containing all steps -->
+![qsarKit pipeline. \label{fig:pipeline}](qsarKit_h.png)
 
 # Application and Results: QSAR Modeling in the Breastfeeding Context
 
@@ -135,10 +141,11 @@ The **qsarKit** package has been specifically designed and applied to address a 
 a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk, a crucial consideration
 for breastfeeding mothers' and infants' health. This application underscores the importance of understanding and
 predicting the Milk-to-Plasma concentration ratio [@anderson2016], denoted as
-$$
+\begin{equation}\label{eq:mp_ratio}
 M/P_{ratio} = \frac{AUC_{milk}}{AUC_{plasma}}
-$$ where $AUC_{milk}$ and $AUC_{plasma}$ are the areas under the curve of the concentration of a molecule in the
-maternal in the plasma repectively. Which represents the extent to which various pharmaceutical drugs and environmental
+\end{equation}
+where $AUC_{milk}$ and $AUC_{plasma}$ are the areas under the curve of the concentration of a molecule in the
+maternal in the plasma respectively. Which represents the extent to which various pharmaceutical drugs and environmental
 chemicals can transfer into breast milk.
 
 ## Data Nature and Contextual Background
@@ -147,7 +154,7 @@ The foundational data employed in this study originate from a diverse set of mol
 and environmental chemicals, contextualized within the breastfeeding scenario. The primary focus is on the quantitative
 prediction of the $M/P_{ratio}$, which is necessary for assessing the safety and exposure risks of breastfeeding infants
 to these substances [@verstegen2022]. By applying **qsarKit** to this domain, we aim to effectively provide a free
-framework to help in the dmain of breastfeeding research.
+framework to help in the domain of breastfeeding research.
 
 ## Dataset Composition and Distribution
 
