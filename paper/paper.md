@@ -9,28 +9,28 @@ tags:
     - QSAR
     - Drug Discovery
 authors:
-    -   name: Benabbassi Mohammed
+    -   name: Mohammed Benabbassi
         equal-contrib: true
         affiliation: 1
-    -   name: Raynal Julien
+    -   name: Julien Raynal
         equal-contrib: true
         affiliation: 2
-    -   name: de La Chaise Quentin
+    -   name: Quentin de La Chaise
         equal-contrib: false
         affiliation: 3
-    -   name: Tahiri Nadia
+    -   name: Nadia Tahiri
         orcid: 0000-0002-1818-208X
         equal-contrib: false
         corresponding: true
         affiliation: 1
 affiliations:
-    -   name: Department of Computer Science, University of Sherbrooke
+    -   name: Department of Computer Science, University of Sherbrooke, 2500, boul. de l'Université, Sherbrooke, Quebec, Canada
         index: 1
-    -   name: Departement of Bioinformatics, University of Montpellier
+    -   name: Department of Bioinformatics, University of Montpellier, Place Eugène Bataillon 34095 Montpellier cedex 05, France
         index: 2
-    -   name: ENSEA (École Nationale Supérieure de l'Électronique et de ses Applications)
+    -   name: E.N.S.E.A. (École Nationale Supérieure de l'Électronique et de ses Applications), 6, avenue du Ponceau, 95014 Cergy-Pontoise, France
         index: 3
-date: 25 April 2024
+date: 08 May 2024
 bibliography: paper.bib
 ---
 
@@ -46,7 +46,8 @@ QSAR) [@leveque2022quantitative] approach leveraging machine learning to predict
 molecules across different scenarios. The package includes six distinct machine learning models, a Generative
 Adversarial Network (GAN) [@goodfellow2014generative] to augment the dataset, and robust training optimization and
 evaluation methods to enhance model performance. Details on the implementation of **qsarKit** can be accessed on
-GitHub: [https://github.com/tahiri-lab/QSAR](https://github.com/tahiri-lab/QSAR).
+GitHub: [https://github.com/tahiri-lab/QSAR](https://github.com/tahiri-lab/QSAR) and
+PyPI: [https://pypi.org/project/qsarKit/](https://pypi.org/project/qsarKit/).
 
 # Statement of need
 
@@ -70,7 +71,7 @@ The **qsarKit** package introduces a comprehensive approach to developing QSAR m
 preprocessing, augmentation, and model training with an integrated pipeline designed for both flexibility and
 efficiency.
 
-![qsarKit pipeline. \label{fig:pipeline}](qsarKit_h.png)
+![qsarKit: integrated QSAR modeling pipeline from a) data source to b) preprocessing, c) data augmentation, and d) modeling. \label{fig:pipeline}](qsarKit_h.png)
 
 ## Preprocessing
 
@@ -84,7 +85,7 @@ threshold are systematically removed [@hall2000correlation]. Further refinement 
 Elimination (*RFE*) [@guyon2002gene], a process that systematically reduces the feature set to those most significant
 for model prediction, thereby improving both model interpretability and performance.
 
-## Data Augmentation Using Generative Adversarial Networks
+## Data augmentation using generative adversarial networks
 
 To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN
 (\autoref{fig:pipeline}.c) for data augmentation. This approach addresses the shortcomings of traditional datasets by
@@ -94,7 +95,7 @@ for processing, followed by the GAN itself, which trains on available data to pr
 generated structures are then converted back into quantitative features through the *Descriptor Extraction* process,
 making them suitable for subsequent QSAR modeling.
 
-## Model Training and Optimization
+## Model training and optimization
 
 **qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for
 QSAR analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
@@ -130,7 +131,7 @@ To optimize model performance, **qsarKit** employs *Optuna* for systematic hyper
 optimization techniques to explore the parameter space efficiently [@akiba2019optuna]. This process tries to identify
 the optimal settings for each QSAR model converging to an optimal set of hyperparameters.
 
-## Integrated Pipeline
+## Integrated pipeline
 
 At its core, **qsarKit** is designed as a modular and comprehensive pipeline (\autoref{fig:pipeline}), encapsulating the
 entire QSAR modeling process from initial data preprocessing to final prediction and evaluation. The pipeline allows for
@@ -147,7 +148,7 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 | Coefficient of Determination Q | $Q^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i)^2}$, where $y_i \in D_{test}$  |
 | Root Mean Square Error         |                             $RMSE = \sqrt{\frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{N}}$                             |
 
-# Application and Results: QSAR Modeling in the Breastfeeding Context
+# Application and results: QSAR modeling in the breastfeeding context
 
 The **qsarKit** package has been specifically designed and applied to address a significant healthcare question: deliver
 a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk
@@ -161,7 +162,7 @@ where $AUC_{milk}$ and $AUC_{plasma}$ are the areas under the curve of the conce
 maternal in the plasma respectively. Which represents the extent to which various pharmaceutical drugs and environmental
 chemicals can transfer into breast milk.
 
-## Data Nature and Contextual Background
+## Data nature and contextual background
 
 The foundational data employed in this study originate from a diverse set of molecules, including pharmaceutical drugs
 and environmental chemicals, contextualized within the breastfeeding scenario. The primary focus is on the quantitative
@@ -169,7 +170,7 @@ prediction of the $M/P_{ratio}$ (\autoref{eq:mp_ratio}), which is necessary for 
 of breastfeeding infants to these substances [@verstegen2022]. By applying **qsarKit** to this domain, we aim to
 effectively provide a free framework to help in the domain of breastfeeding research.
 
-## Dataset Composition and Distribution
+## Dataset composition and distribution
 
 The dataset includes a mix of ionized, neutral, and full molecular profiles, accommodating the chemical diversity
 encountered in real-world scenarios. This diversified dataset was curated to assess the performances of the
@@ -195,7 +196,7 @@ accurately match input datasets, are necessary for enhancing model predictions a
 Moreover, broadening the model library of **qsarKit** with advanced models will keep the toolkit at the forefront of
 QSAR modeling, supporting a wider array of analysis scenarios.
 
-# Data, Code Availability, and Quality Control
+# Data, code availability, and quality control
 
 The breastfeeding safety analysis dataset alongside the comprehensive source code are hosted publicly on our GitHub
 repository. For ease of use and wider accessibility, **qsarKit** is also distributed through PyPI, facilitating
