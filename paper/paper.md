@@ -139,9 +139,10 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 # Application and Results: QSAR Modeling in the Breastfeeding Context
 
 The **qsarKit** package has been specifically designed and applied to address a significant healthcare question: deliver
-a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk (\autoref{pipeline}.a), a
-crucial consideration for breastfeeding mothers' and infants' health. This application underscores the importance of
-understanding and predicting the Milk-to-Plasma concentration ratio [@anderson2016], denoted as
+a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk
+(\autoref{fig:pipeline}.a), a crucial consideration for breastfeeding mothers' and infants' health. This application
+underscores the importance of understanding and predicting the Milk-to-Plasma concentration ratio [@anderson2016],
+denoted as
 \begin{equation}\label{eq:mp_ratio}
 M/P_{ratio} = \frac{AUC_{milk}}{AUC_{plasma}}
 \end{equation}
@@ -159,8 +160,8 @@ effectively provide a free framework to help in the domain of breastfeeding rese
 
 ## Dataset Composition and Distribution
 
-The dataset leverages includes a mix of ionized, neutral, and full molecular profiles, accommodating the chemical
-diversity encountered in real-world scenarios. This diversified dataset was curated to assess the performances of the
+The dataset includes a mix of ionized, neutral, and full molecular profiles, accommodating the chemical diversity
+encountered in real-world scenarios. This diversified dataset was curated to assess the performances of the
 QSAR models developed. The division into ionized, full, and neutral datasets allows for specialized model training,
 catering to the specific characteristics and behaviors of different molecule classes.
 
@@ -189,7 +190,7 @@ The breastfeeding safety analysis dataset alongside the comprehensive source cod
 repository. For ease of use and wider accessibility, **qsarKit** is also distributed through PyPI, facilitating
 straightforward installation for the Python ecosystem.
 
-Quality is fundamental in the development of qsarKit, ensured by a robust CI/CD pipeline for regular automated testing
+Quality is fundamental in the development of **qsarKit**, ensured by a robust CI/CD pipeline for regular automated testing
 and quality checks, enhancing reliability and security. We encourage community feedback and contributions, driving
 continual improvement and innovation.
 
