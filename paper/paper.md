@@ -143,7 +143,7 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 | Evaluation metrics             |                                                     Equation                                                      |
 |--------------------------------|:-----------------------------------------------------------------------------------------------------------------:|
 | Coefficient of Determination R | $R^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i)^2}$, where $y_i \in D_{train}$ |
-| Coefficient of Determination Q |  $Q^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i^2}$, where $y_i \in D_{test}$  |
+| Coefficient of Determination Q | $Q^2 = 1 - \frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{\sum_{i=1}^n (y_i-\overline y_i)^2}$, where $y_i \in D_{test}$  |
 | Root Mean Square Error         |                             $RMSE = \sqrt{\frac{\sum_{i=1}^n (y_i-\hat {y_i})^2}{N}}$                             |
 
 # Application and Results: QSAR Modeling in the Breastfeeding Context
