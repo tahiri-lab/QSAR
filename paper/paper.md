@@ -38,15 +38,15 @@ bibliography: paper.bib
 
 Breastfeeding offers numerous benefits for infants health and
 development [@binns2016long; @lawrence2000breastfeeding; @allen2005benefits]. However, it also presents a risk of
-transmitting harmful molecules from maternal plasma into breast milk. Recognizing the need to predict the transfer ratio
+transmitting harmful molecules from maternal plasma into breast milk (\autoref{fig:pipeline}.a). Recognizing the need to predict the transfer ratio
 of environmental chemicals and pharmaceuticals into breast milk [@ito2003drug], this paper introduces **qsarKit**, a
-predictive software package. **qsarKit** incorporates a comprehensive preprocessing and feature selection pipeline to
-optimize the input data, along with a multi-functional Quantitative Structure-Activity Relationship (
-QSAR) [@leveque2022quantitative] approach leveraging machine learning to predict the biological activity of various
+predictive software package. The **qsarKit** package incorporates a comprehensive preprocessing and feature selection pipeline to
+optimize the input data, along with a multi-functional Quantitative Structure-Activity Relationship (QSAR) [@leveque2022quantitative] 
+approach leveraging machine learning to predict the biological activity of various
 molecules across different scenarios. The package includes six distinct machine learning models, a Generative
 Adversarial Network (GAN) [@goodfellow2014generative] to augment the dataset, and robust training optimization and
 evaluation methods to enhance model performance. Details on the implementation of **qsarKit** can be accessed on
-GitHub: [https://github.com/tahiri-lab/QSAR](https://github.com/tahiri-lab/QSAR) and
+GitHub: [https://github.com/tahiri-lab/QSAR](https://github.com/tahiri-lab/QSAR) and available in
 PyPI: [https://pypi.org/project/qsarKit/](https://pypi.org/project/qsarKit/).
 
 # Statement of need
@@ -69,7 +69,7 @@ QSAR modeling tools like **qsarKit**.
 
 The **qsarKit** package introduces a comprehensive approach to developing QSAR models, addressing challenges in data
 preprocessing, augmentation, and model training with an integrated pipeline designed for both flexibility and
-efficiency.
+efficiency (\autoref{fig:pipeline}).
 
 ![qsarKit: integrated QSAR modeling pipeline from a) data source to b) preprocessing, c) data augmentation, and d) modeling. \label{fig:pipeline}](qsarKit_h.png)
 
@@ -79,7 +79,7 @@ The preprocessing phase in **qsarKit** (\autoref{fig:pipeline}.b) begins with fe
 selection [@Comesana2022], aimed at enhancing model performance and interpretability. Features demonstrating low
 variance across the dataset are eliminated, as they contribute minimal predictive power. This selection is based on the
 variance threshold technique, ensuring that only features contributing significantly to model diversity are retained.
-Additionally, to address the challenge of multicollinearity[@remeseiro2019review], a correlation-based feature selection
+Additionally, to address the challenge of multicollinearity [@remeseiro2019review], a correlation-based feature selection
 is applied using rank correlation coefficient of *Kendall* [@prematunga2012correlational]. Features exceeding this
 threshold are systematically removed [@hall2000correlation]. Further refinement is achieved through Recursive Feature
 Elimination (*RFE*) [@guyon2002gene], a process that systematically reduces the feature set to those most significant
@@ -90,17 +90,17 @@ for model prediction, thereby improving both model interpretability and performa
 To counter the prevalent issue of limited and imbalanced QSAR datasets, **qsarKit** employs a GAN
 (\autoref{fig:pipeline}.c) for data augmentation. This approach addresses the shortcomings of traditional datasets by
 generating new, plausible molecular structures, thereby expanding the diversity and size of the training
-set [@decao2018molgan]. The GAN module comprises a *Featurizer*, which prepares molecular structures in SMILES format
+set [@decao2018molgan]. The GAN module comprises a *Featurizer*, which prepares molecular structures in Simplified Molecular Input Line Entry System (*SMILES*) format
 for processing, followed by the GAN itself, which trains on available data to produce new molecular structures. The
 generated structures are then converted back into quantitative features through the *Descriptor Extraction* process,
 making them suitable for subsequent QSAR modeling.
 
 ## Model training and optimization
 
-**qsarKit** supports six core models (\autoref{models}), including both regression and ensemble methods, tailored for
+**qsarKit** supports six core models (\autoref{models} and \autoref{fig:pipeline}.d), including both regression and ensemble methods, tailored for
 QSAR analysis. This selection grants users the flexibility to choose the most appropriate model for their data and
 objectives. Model training in **qsarKit** is rigorously evaluated using cross-validation techniques, ensuring the
-models' generalization capabilities to unseen data. Special emphasis is placed on maintaining the original distribution
+generalization capabilities of the models to unseen data. Special emphasis is placed on maintaining the original distribution
 of chemical properties and response variables through strategic binning and stratification, thereby preserving the
 integrity and representativeness of the dataset.
 
@@ -108,7 +108,7 @@ integrity and representativeness of the dataset.
 
 | Variable                |           Notation           |
 |-------------------------|:----------------------------:|
-| Number  of Data         |             $n$              |
+| Number of Data          |             $n$              |
 | Target value            |            $y_i$             | 
 | Prediction of the model | $\hat {y_i} = h_\theta(y_i)$ | 
 | Penality term           |          $\lambda$           |
@@ -136,7 +136,7 @@ the optimal settings for each QSAR model converging to an optimal set of hyperpa
 At its core, **qsarKit** is designed as a modular and comprehensive pipeline (\autoref{fig:pipeline}), encapsulating the
 entire QSAR modeling process from initial data preprocessing to final prediction and evaluation. The pipeline allows for
 the seamless integration of data augmentation, model training, and evaluation, supporting a range of evaluation metrics
-(\autoref{metrics}), including $R^2$, $Q^2$, and $RMSE$ to assess model performance accurately. The modularity of the
+(\autoref{metrics}), including $R^2$, $Q^2$, and Root Mean Squared Error ($RMSE$) to assess model performance accurately. The modularity of the
 package permits users to engage with specific components individually or utilize the entire pipeline for end-to-end
 processing, accommodating diverse research needs and objectives in the QSAR domain.
 
@@ -152,8 +152,8 @@ processing, accommodating diverse research needs and objectives in the QSAR doma
 
 The **qsarKit** package has been specifically designed and applied to address a significant healthcare question: deliver
 a framework for the prediction of chemical transfer ratios from maternal plasma to breast milk
-(\autoref{fig:pipeline}.a), a crucial consideration for breastfeeding mothers' and infants' health. This application
-underscores the importance of understanding and predicting the Milk-to-Plasma concentration ratio [@anderson2016],
+(\autoref{fig:pipeline}.a), a crucial consideration for the health of breastfeeding mothers and infants. This application
+underscores the importance of understanding and predicting the Milk-to-Plasma concentration ratio ($M/P_{ratio}$) [@anderson2016],
 denoted as
 \begin{equation}\label{eq:mp_ratio}
 M/P_{ratio} = \frac{AUC_{milk}}{AUC_{plasma}}
