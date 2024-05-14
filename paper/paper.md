@@ -4,12 +4,14 @@ tags:
     - Python
     - Chemoinformatics
     - Bioinformatics
-    - Metrics
     - Machine learning
     - QSAR
     - Drug Discovery
+    - Data Augmentation
+    - Metrics
 authors:
-    -   name: Mohammed Benabbassi
+    -   name: Mohammed Abdelkader Benabbassi
+        orcid: 0009-0009-7392-1031
         equal-contrib: true
         affiliation: 1
     -   name: Julien Raynal
@@ -53,7 +55,7 @@ PyPI: [https://pypi.org/project/qsarKit/](https://pypi.org/project/qsarKit/).
 
 The advancement and accessibility of QSAR modeling tools are crucial for expediting research in chemical and
 pharmaceutical domains [@tropsha2010]. Despite their importance, many existing QSAR tools are encumbered with
-limitations such as prohibitive licensing fees and rigid frameworks, which do not cater to the diverse needs of the
+limitations such as prohibitive licensing fees and rigid frameworks, which do not accommodate to the diverse needs of the
 research community. A notable example is the MOE software [@MOE2022], whose high costs and lack of customization options
 restrict its usage among researchers with limited resources.
 
@@ -189,8 +191,8 @@ alternative to other solutions.
 # Limitations and future work
 
 Enhancing **qsarKit** involves addressing its limitations and identifying areas for development. Providing an
-alternative option to the GANs with Large Language Model (LLM) transformers could offer sophisticated data augmentation
-capabilities, utilizing advanced processing of LLMs for generating complex molecular structures [@li2022].
+alternative option to the GANs with transformer-based methods could offer sophisticated data augmentation
+capabilities by generating complex molecular structures [@li2022].
 Improvements in feature extraction, specifically in adapting descriptor extraction from generated SMILES to more
 accurately match input datasets, are necessary for enhancing model predictions and the flexibility of the package.
 Moreover, broadening the model library of **qsarKit** with advanced models will keep the toolkit at the forefront of
@@ -203,9 +205,8 @@ repository. For ease of use and wider accessibility, **qsarKit** is also distrib
 straightforward installation for the Python ecosystem.
 
 Quality is fundamental in the development of **qsarKit**, ensured by a robust CI/CD pipeline for regular automated
-testing
-and quality checks, enhancing reliability and security. We encourage community feedback and contributions, driving
-continual improvement and innovation.
+testing and quality checks, enhancing reliability and security. We encourage community feedback and contributions,
+driving continual improvement and innovation.
 
 # Funding
 
