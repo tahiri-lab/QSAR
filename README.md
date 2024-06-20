@@ -118,6 +118,7 @@ You can also refer to the [documentation](https://tahiri-lab.github.io/QSAR/) fo
 We generated the documentation using [Sphinx](https://www.sphinx-doc.org/en/master/). To generate the documentation
 locally, you can run the following command:
 
+
 Linux/Mac:
 ```bash
 cd docs/
