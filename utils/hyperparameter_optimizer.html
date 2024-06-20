@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hyper Parameter Optimizer &mdash; qsarKit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visualizer" href="../visualization.html" />
+    <link rel="prev" title="Cross Validator" href="cross_validator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            qsarKit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide for qsarKit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gan.html">Gan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../utils.html">Utils</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extractor.html">Extractor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross_validator.html">Cross Validator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hyper Parameter Optimizer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer"><code class="docutils literal notranslate"><span class="pre">HyperParameterOptimizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.DEFAULT_TRIALS"><code class="docutils literal notranslate"><span class="pre">HyperParameterOptimizer.DEFAULT_TRIALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.optimize"><code class="docutils literal notranslate"><span class="pre">HyperParameterOptimizer.optimize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Open source code repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">qsarKit Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">qsarKit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../utils.html">Utils</a></li>
+      <li class="breadcrumb-item active">Hyper Parameter Optimizer</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/tahiri-lab/QSAR/blob/main/docs/utils/hyperparameter_optimizer.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-qsar.utils.hyperparameter_optimizer">
+<span id="hyper-parameter-optimizer"></span><span id="optimizer"></span><h1>Hyper Parameter Optimizer<a class="headerlink" href="#module-qsar.utils.hyperparameter_optimizer" title="Link to this heading"></a></h1>
+<p>The class encapsulates all necessary components for conducting an extensive search over a predefined hyperparameter
+space, handling the iterative trial-and-error process automatically and recording the outcomes for analysis. The
+optimization process aims either to maximize or minimize a given metric, depending on the user’s requirements and the
+nature of the QSAR problem being addressed.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qsar.utils.hyperparameter_optimizer.</span></span><span class="sig-name descname"><span class="pre">HyperParameterOptimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../models/base_model.html#qsar.models.baseline_model.BaselineModel" title="qsar.models.baseline_model.BaselineModel"><span class="pre">BaselineModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'maximize'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for optimizing hyperparameters of a given model using Optuna.</p>
+<p>This optimizer handles the process of finding the best hyperparameters for a model, using the Optuna library for
+efficient optimization. It is designed to work with models that inherit from the ‘Model’ class and implement an
+‘optimize_hyperparameters’ method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>DEFAULT_TRIALS</strong> (<em>int</em>) – Default number of trials for optimization (class attribute).</p></li>
+<li><p><strong>model</strong> (<em>Model</em>) – Model instance to be optimized.</p></li>
+<li><p><strong>data</strong> – Training data on which the optimization is performed.</p></li>
+<li><p><strong>trials</strong> (<em>int</em>) – Number of optimization trials.</p></li>
+<li><p><strong>direction</strong> (<em>str</em>) – Direction for optimization, either ‘maximize’ or ‘minimize’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.DEFAULT_TRIALS">
+<span class="sig-name descname"><span class="pre">DEFAULT_TRIALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="headerlink" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.DEFAULT_TRIALS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Study</span></span></span><a class="headerlink" href="#qsar.utils.hyperparameter_optimizer.HyperParameterOptimizer.optimize" title="Link to this definition"></a></dt>
+<dd><p>Perform hyperparameter optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The optuna study object containing the results of the optimization.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>optuna.study.Study</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cross_validator.html" class="btn btn-neutral float-left" title="Cross Validator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../visualization.html" class="btn btn-neutral float-right" title="Visualizer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mohammed Benabbassi, Nadia Tahiri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart Guide for qsarKit &mdash; qsarKit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing" href="preprocessing.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            qsarKit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart Guide for qsarKit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-qsarkit">What is qsarKit?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-complete-pipeline">Running the Complete Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-package-functionalities-individually">Using Package Functionalities Individually</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-extraction-and-preprocessing">Data Extraction and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cross-validation-and-model-evaluation">Cross-validation and Model Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-training-and-hyperparameter-optimization">Model Training and Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#further-resources">Further Resources</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gan.html">Gan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Open source code repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">qsarKit Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">qsarKit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart Guide for qsarKit</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/tahiri-lab/QSAR/blob/main/docs/quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart-guide-for-qsarkit">
+<span id="quickstart"></span><h1>Quickstart Guide for qsarKit<a class="headerlink" href="#quickstart-guide-for-qsarkit" title="Link to this heading"></a></h1>
+<p>Welcome to the Quickstart Guide for <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code>! This guide aims to help new users get started with <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> by providing a brief overview, detailed installation instructions, and a simple example to demonstrate basic usage.</p>
+<section id="what-is-qsarkit">
+<h2>What is qsarKit?<a class="headerlink" href="#what-is-qsarkit" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> is a Python package designed for robust predictive modeling using Quantitative Structure-Activity Relationship (QSAR) analysis. It is tailored for researchers and health professionals working with environmental contaminants in breast milk. Developed by Professor Nadia Tahiri’s team, <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> integrates multiple predictive models and offers tools for synthetic data generation using Generative Adversarial Networks (GANs).</p>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<p>Once you have installed and activated your <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> environment, you are ready to use the package. <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> offers flexible ways to utilize its functionalities: you can either run the package as a complete pipeline or use its individual functionalities by importing each module.</p>
+</section>
+<section id="running-the-complete-pipeline">
+<h2>Running the Complete Pipeline<a class="headerlink" href="#running-the-complete-pipeline" title="Link to this heading"></a></h2>
+<p>To execute the entire pipeline, including preprocessing, data augmentation, model training/optimization, and prediction, you can use a single command. This approach is useful for users who wish to apply the standard workflow with minimal setup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span>--config<span class="w"> </span>ridge_model.yaml<span class="w"> </span>--output<span class="w"> </span>results/
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">ridge_model.yaml</span></code> should contain all the necessary configurations for each step of the pipeline. The results of each step will be saved in the <code class="docutils literal notranslate"><span class="pre">results/</span></code> directory.</p>
+<p>The advantages of running the full pipeline include simplicity and the assurance that all steps are executed in the correct order. However, this method provides less flexibility compared to running each step individually.</p>
+</section>
+<section id="using-package-functionalities-individually">
+<h2>Using Package Functionalities Individually<a class="headerlink" href="#using-package-functionalities-individually" title="Link to this heading"></a></h2>
+<p>In addition to running the complete <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> pipeline, users can leverage the package’s modular design to use individual functionalities. This approach provides greater flexibility and allows integration with other data processing or analysis workflows.</p>
+<section id="data-extraction-and-preprocessing">
+<h3>Data Extraction and Preprocessing<a class="headerlink" href="#data-extraction-and-preprocessing" title="Link to this heading"></a></h3>
+<p>Start by extracting and preprocessing your dataset. Use the <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> and <code class="docutils literal notranslate"><span class="pre">PreprocessingPipeline</span></code> classes for these tasks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qsar.utils.extractor</span> <span class="kn">import</span> <span class="n">Extractor</span>
+<span class="kn">from</span> <span class="nn">qsar.preprocessing.custom_preprocessing</span> <span class="kn">import</span> <span class="n">PreprocessingPipeline</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Configuration for data extraction</span>
+<span class="n">datasets_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;full_train&#39;</span><span class="p">:</span> <span class="s1">&#39;path/to/full_train_dataset.csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;full_test&#39;</span><span class="p">:</span> <span class="s1">&#39;path/to/full_test_dataset.csv&#39;</span>
+<span class="p">}</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s1">&#39;desired_target_column&#39;</span>
+
+<span class="c1"># Extract data</span>
+<span class="n">extractor</span> <span class="o">=</span> <span class="n">Extractor</span><span class="p">(</span><span class="n">datasets_config</span><span class="p">)</span>
+<span class="n">df_full</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">extractor</span><span class="o">.</span><span class="n">get_df</span><span class="p">(</span><span class="s2">&quot;full_train&quot;</span><span class="p">),</span> <span class="n">extractor</span><span class="o">.</span><span class="n">get_df</span><span class="p">(</span><span class="s2">&quot;full_test&quot;</span><span class="p">)])</span>
+
+<span class="c1"># Preprocess data</span>
+<span class="n">preprocessing</span> <span class="o">=</span> <span class="n">PreprocessingPipeline</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">variance_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">cols_to_ignore</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">get_pipeline</span><span class="p">()</span>
+<span class="n">df_processed</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_full</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="cross-validation-and-model-evaluation">
+<h3>Cross-validation and Model Evaluation<a class="headerlink" href="#cross-validation-and-model-evaluation" title="Link to this heading"></a></h3>
+<p>Perform cross-validation and evaluate model performance using the <code class="docutils literal notranslate"><span class="pre">CrossValidator</span></code> class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qsar.utils.cross_validator</span> <span class="kn">import</span> <span class="n">CrossValidator</span>
+<span class="kn">from</span> <span class="nn">qsar.utils.visualizer</span> <span class="kn">import</span> <span class="n">Visualizer</span>
+
+<span class="c1"># Setup cross-validation and visualization</span>
+<span class="n">cross_validator</span> <span class="o">=</span> <span class="n">CrossValidator</span><span class="p">(</span><span class="n">df_processed</span><span class="p">)</span>
+<span class="n">visualizer</span> <span class="o">=</span> <span class="n">Visualizer</span><span class="p">()</span>
+
+<span class="c1"># Create cross-validation folds</span>
+<span class="n">X_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_folds</span> <span class="o">=</span> <span class="n">cross_validator</span><span class="o">.</span><span class="n">create_cv_folds</span><span class="p">()</span>
+<span class="n">visualizer</span><span class="o">.</span><span class="n">display_cv_folds</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_folds</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="model-training-and-hyperparameter-optimization">
+<h3>Model Training and Hyperparameter Optimization<a class="headerlink" href="#model-training-and-hyperparameter-optimization" title="Link to this heading"></a></h3>
+<p>Dynamically load machine learning models, optimize their hyperparameters, and train them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qsar.utils.hyperparameter_optimizer</span> <span class="kn">import</span> <span class="n">HyperParameterOptimizer</span>
+<span class="kn">from</span> <span class="nn">qsar.utils</span> <span class="kn">import</span> <span class="n">get_class_from_path</span>
+
+<span class="c1"># Define model configurations</span>
+<span class="n">models_config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ridge&#39;</span><span class="p">,</span> <span class="s1">&#39;hyperparameters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}},</span>
+    <span class="c1"># Add more models as needed</span>
+<span class="p">]</span>
+
+<span class="c1"># Dynamically load and optimize models</span>
+<span class="k">for</span> <span class="n">model_config</span> <span class="ow">in</span> <span class="n">models_config</span><span class="p">:</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">model_config</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">model_class</span> <span class="o">=</span> <span class="n">get_class_from_path</span><span class="p">(</span><span class="s2">&quot;qsar.models.&quot;</span> <span class="o">+</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;Model&quot;</span><span class="p">)</span>
+    <span class="n">model_instance</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">()</span>
+
+    <span class="c1"># Optimize model</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">HyperParameterOptimizer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model_instance</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_processed</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">study</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+
+    <span class="c1"># Set best hyperparameters</span>
+    <span class="n">best_params</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span>
+    <span class="n">model_instance</span><span class="o">.</span><span class="n">set_hyperparameters</span><span class="p">(</span><span class="o">**</span><span class="n">best_params</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate model performance</span>
+    <span class="n">R2</span><span class="p">,</span> <span class="n">CV</span><span class="p">,</span> <span class="n">custom_cv</span><span class="p">,</span> <span class="n">Q2</span> <span class="o">=</span> <span class="n">cross_validator</span><span class="o">.</span><span class="n">evaluate_model_performance</span><span class="p">(</span><span class="n">model_instance</span><span class="p">,</span> <span class="n">X_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">)</span>
+    <span class="n">visualizer</span><span class="o">.</span><span class="n">display_model_performance</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">R2</span><span class="p">,</span> <span class="n">CV</span><span class="p">,</span> <span class="n">custom_cv</span><span class="p">,</span> <span class="n">Q2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Remember, this is just a guideline. You should adapt the code examples to fit your specific datasets, models, and requirements. The <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> package is designed to be modular, offering flexibility for diverse QSAR modeling needs.</p>
+<p>This approach allows you to customize each step of the pipeline according to your needs. You can modify the configurations, substitute modules, or integrate <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code>’s functionalities into larger systems.</p>
+<p>For further examples and detailed instructions on how to use each module, refer to the tutorials included with the package. The tutorials provide comprehensive guides on each component of <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code>, helping you to understand and utilize the full potential of the package.</p>
+</section>
+</section>
+<section id="further-resources">
+<h2>Further Resources<a class="headerlink" href="#further-resources" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Tutorials</strong>: Explore the <cite>tutorials/</cite> directory at <a class="reference external" href="https://github.com/tahiri-lab/QSAR/tree/main/tutorials">https://github.com/tahiri-lab/QSAR/tree/main/tutorials</a> for detailed guides on using <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code>, including model training, data preprocessing, and synthetic data generation.</p></li>
+<li><p><strong>Documentation</strong>: Visit the official <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> documentation at <a class="reference external" href="https://tahiri-lab.github.io/QSAR/">https://tahiri-lab.github.io/QSAR/</a> for comprehensive information on all features and functionalities.</p></li>
+<li><p><strong>Contact</strong>: For additional support or feedback, please contact Professor Nadia Tahiri at <a class="reference external" href="mailto:Nadia&#46;Tahiri&#37;&#52;&#48;USherbrooke&#46;ca">Nadia<span>&#46;</span>Tahiri<span>&#64;</span>USherbrooke<span>&#46;</span>ca</a>.</p></li>
+</ul>
+<p>Thank you for choosing <code class="docutils literal notranslate"><span class="pre">qsarKit</span></code> for your QSAR predictive modeling needs. We hope this guide helps you get started smoothly.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="Preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mohammed Benabbassi, Nadia Tahiri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

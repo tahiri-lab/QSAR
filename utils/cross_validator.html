@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cross Validator &mdash; qsarKit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Hyper Parameter Optimizer" href="hyperparameter_optimizer.html" />
+    <link rel="prev" title="Extractor" href="extractor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            qsarKit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide for qsarKit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gan.html">Gan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../utils.html">Utils</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extractor.html">Extractor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cross Validator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qsar.utils.cross_validator.CrossValidator"><code class="docutils literal notranslate"><span class="pre">CrossValidator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.cross_validator.CrossValidator.create_cv_folds"><code class="docutils literal notranslate"><span class="pre">CrossValidator.create_cv_folds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.cross_validator.CrossValidator.cross_value_score"><code class="docutils literal notranslate"><span class="pre">CrossValidator.cross_value_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.cross_validator.CrossValidator.evaluate_model_performance"><code class="docutils literal notranslate"><span class="pre">CrossValidator.evaluate_model_performance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qsar.utils.cross_validator.CrossValidator.get_predictions"><code class="docutils literal notranslate"><span class="pre">CrossValidator.get_predictions()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperparameter_optimizer.html">Hyper Parameter Optimizer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Open source code repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">qsarKit Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">qsarKit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../utils.html">Utils</a></li>
+      <li class="breadcrumb-item active">Cross Validator</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/tahiri-lab/QSAR/blob/main/docs/utils/cross_validator.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-qsar.utils.cross_validator">
+<span id="id1"></span><span id="cross-validator"></span><h1>Cross Validator<a class="headerlink" href="#module-qsar.utils.cross_validator" title="Link to this heading"></a></h1>
+<p>The CrossValidator is designed to be flexible and applicable to any model conforming to the scikit-learn interface,
+making it a valuable tool for QSAR model development and validation. The class supports both standard K-Fold and
+Stratified K-Fold cross-validation strategies, allowing for its use in a wide range of QSAR scenarios, including those
+with imbalanced datasets.</p>
+<p>The evaluation methods within the CrossValidator class enable the assessment of QSAR models based on various performance
+metrics such as R squared, cross-validation score, and mean squared error, providing comprehensive insights into model
+behavior and efficacy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qsar.utils.cross_validator.CrossValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qsar.utils.cross_validator.</span></span><span class="sig-name descname"><span class="pre">CrossValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qsar.utils.cross_validator.CrossValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for cross-validation related functionalities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – DataFrame containing the data.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qsar.utils.cross_validator.CrossValidator.create_cv_folds">
+<span class="sig-name descname"><span class="pre">create_cv_folds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Log_MP_RATIO'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_folds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#qsar.utils.cross_validator.CrossValidator.create_cv_folds" title="Link to this definition"></a></dt>
+<dd><p>Create cross-validation folds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – DataFrame to be used. If not provided, a default will be used.</p></li>
+<li><p><strong>y</strong> (<em>str</em><em>, </em><em>optional</em>) – Target column name. Defaults to ‘Log_MP_RATIO’.</p></li>
+<li><p><strong>n_folds</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of folds. Defaults to 3.</p></li>
+<li><p><strong>n_groups</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of groups for stratified k-fold. Defaults to 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing a list of feature sets, a list of targets, a DataFrame with fold information, the
+target column name, and the number of folds.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qsar.utils.cross_validator.CrossValidator.cross_value_score">
+<span class="sig-name descname"><span class="pre">cross_value_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#qsar.utils.cross_validator.CrossValidator.cross_value_score" title="Link to this definition"></a></dt>
+<dd><p>Compute cross-validation score for the given model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – The model to be evaluated.</p></li>
+<li><p><strong>df</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – DataFrame to be used, if not provided, default is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean cross-validation score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qsar.utils.cross_validator.CrossValidator.evaluate_model_performance">
+<span class="sig-name descname"><span class="pre">evaluate_model_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#qsar.utils.cross_validator.CrossValidator.evaluate_model_performance" title="Link to this definition"></a></dt>
+<dd><p>Compute various scores for model evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – The model to be evaluated.</p></li>
+<li><p><strong>x_train</strong> (<em>pd.DataFrame</em>) – Training feature set.</p></li>
+<li><p><strong>y_train</strong> (<em>pd.DataFrame</em>) – Training target set.</p></li>
+<li><p><strong>x_test</strong> (<em>pd.DataFrame</em>) – Testing feature set.</p></li>
+<li><p><strong>y_test</strong> (<em>pd.DataFrame</em>) – Testing target set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the R squared score, CV score, custom CV score, and Q squared score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qsar.utils.cross_validator.CrossValidator.get_predictions">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#qsar.utils.cross_validator.CrossValidator.get_predictions" title="Link to this definition"></a></dt>
+<dd><p>Get predictions using the provided model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>object</em><em> or </em><em>model instance</em>) – The model to be used for prediction.</p></li>
+<li><p><strong>x_train</strong> (<em>pd.DataFrame</em>) – Training feature set.</p></li>
+<li><p><strong>y_train</strong> (<em>pd.DataFrame</em>) – Training target set.</p></li>
+<li><p><strong>x_test</strong> (<em>pd.DataFrame</em>) – Testing feature set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing predictions on the training set and predictions on the testing set.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="extractor.html" class="btn btn-neutral float-left" title="Extractor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperparameter_optimizer.html" class="btn btn-neutral float-right" title="Hyper Parameter Optimizer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mohammed Benabbassi, Nadia Tahiri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
